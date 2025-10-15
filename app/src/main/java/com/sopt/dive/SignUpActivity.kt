@@ -1,5 +1,6 @@
 package com.sopt.dive
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +39,16 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onClick = { }
+                        onClick = { userId, userPw,userNickname, userDrinking ->
+                            val resultIntent = Intent(this, SignInActivity::class.java)
+                            resultIntent.putExtra("USER_ID", userId)
+                            resultIntent.putExtra("USER_PW",userPw)
+                            resultIntent.putExtra("USER_NICKNAME",userNickname)
+                            resultIntent.putExtra("USER_DRINKING",userDrinking)
+                            setResult(Activity.RESULT_OK, resultIntent)
+                            //TODO("Activity 생략 가능 왜?")
+                            finish()
+                        }
                     )
                 }
             }
@@ -52,19 +61,13 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: (String, String, String, String) -> Unit
 ){
 
     var inputId by remember { mutableStateOf("") }
     var inputPw by remember { mutableStateOf("") }
     var inputNickname by remember { mutableStateOf("") }
-    var inputDrinkingCapacity by remember { mutableStateOf("") }
-
-
-    val context = LocalContext.current
-    val intent = Intent(context, SignInActivity::class.java).apply {
-        //flags =
-    }
+    var inputDrinking by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -147,9 +150,9 @@ fun SignUpScreen(
 
                 )
                 CustomTextField(
-                    value = inputPw,
+                    value = inputDrinking,
                     onValueChange = {
-                        inputPw = it
+                        inputDrinking = it
                     },
                     label = "소주 주량을 입력하세요",
                     placeholder = "소주 주량을 입력해주세요",
@@ -157,26 +160,22 @@ fun SignUpScreen(
                 )
             }
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Button(
+            onClick = {
+                onClick(inputId,inputPw,inputNickname,inputDrinking)
+            },
             modifier = Modifier
-                .padding(bottom = 24.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Unspecified,
+            )
         ) {
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Unspecified,
+            Text(
+                text = "회원가입하기",
+                style = TextStyle(
+                    fontSize = 16.sp
                 )
-            ) {
-                Text(
-                    text = "회원가입하기",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-                )
-            }
+            )
         }
     }
 }
@@ -186,6 +185,6 @@ fun SignUpScreen(
 fun PreviewSignUpScreen(){
     SignUpScreen(
         modifier = Modifier,
-        onClick = {}
+        onClick = { } as (String, String, String, String) -> Unit
     )
 }

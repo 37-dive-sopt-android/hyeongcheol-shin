@@ -1,10 +1,14 @@
 package com.sopt.dive
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
@@ -37,14 +40,49 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        var signUpId by mutableStateOf("")
+        var signUpPw by  mutableStateOf("")
+        var signUpNickName by mutableStateOf("")
+        var signUpDrinking by mutableStateOf("")
+
+        val activityLauncherSignUpToSignIn = registerForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult()
+        ){ result ->
+            if(result.resultCode == RESULT_OK){
+                val intentData = result.data
+                signUpId = intentData?.getStringExtra("USER_ID") ?: ""
+                signUpPw = intentData?.getStringExtra("USER_PW") ?: ""
+                signUpNickName = intentData?.getStringExtra("USER_NICKNAME") ?: ""
+                signUpDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
+                 //TODO("비어 있으면 로그인 안 되도록 설정")
+            }
+        }
+
         setContent {
             DiveTheme {
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
                 ) { innerPadding ->
                     SignInScreen(
+                        signUpId = signUpId,
+                        signUpPw = signUpPw,
+                        signUpButton = {
+                            activityLauncherSignUpToSignIn.launch(
+                                Intent(this, SignUpActivity::class.java)
+                            )
+                        },
+                        signInButton = { signInId, signInPw ->
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("USER_ID",signInId)
+                            intent.putExtra("USER_PW", signInPw)
+                            intent.putExtra("USER_NICKNAME", signUpNickName)
+                            intent.putExtra("USER_DRINKING", signUpDrinking)
+                            setResult(Activity.RESULT_OK, intent)
+                            startActivity(intent)
+                            finish()
+                        },
                         modifier = Modifier
-                            .padding(innerPadding)
+                            .padding(innerPadding),
                         //찾아보기
                         //TODO("innerPadding이 왜 있는 것인가?")
                     )
@@ -57,16 +95,17 @@ class SignInActivity : ComponentActivity() {
 
 @Composable
 fun SignInScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    signUpId: String,
+    signUpPw: String,
+    signInButton: (String, String) -> Unit,
+    signUpButton: () -> Unit,
 ){
 
     var inputId by remember { mutableStateOf("") }
     var inputPw by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-    val intent = Intent(context, SignUpActivity::class.java).apply {
-        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -130,6 +169,16 @@ fun SignInScreen(
         ) {
             Button(
                 onClick = {},
+                onClick = {
+                    if(signUpId == inputId && signUpPw == inputPw){
+                        Log.d("SHC","SignIn Success")
+                        signInButton(inputId,inputPw)
+                    }
+                    else{
+                        Log.d("SHC","SignIn Failed")
+
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -148,7 +197,7 @@ fun SignInScreen(
                 modifier = Modifier
                     .clickable(
                         onClick = {
-                            context.startActivity(intent)
+                            signUpButton()
                         }
                     )
             )
@@ -178,8 +227,15 @@ fun CustomTextField(
     )
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
-    SignInScreen()
+    SignInScreen(
+        modifier = TODO(),
+        testText = TODO(),
+        signUpClick = TODO()
+    )
 }
+
+ */
