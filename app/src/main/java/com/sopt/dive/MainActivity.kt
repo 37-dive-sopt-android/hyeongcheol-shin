@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,22 +26,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        var userId by mutableStateOf("")
-        var userPw by  mutableStateOf("")
-        var userNickName by mutableStateOf("")
-        var userDrinking by mutableStateOf("")
-
-        val activityLauncherSignInToMain = registerForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult()
-        ){ result ->
-            if(result.resultCode == RESULT_OK){
-                val intentData = result.data
-                userId = intentData?.getStringExtra("USER_ID") ?: ""
-                userPw = intentData?.getStringExtra("USER_PW") ?: ""
-                userNickName = intentData?.getStringExtra("USER_NICKNAME") ?: ""
-                userDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
-            }
-        }
+        val userId  = intent.getStringExtra("USER_ID") ?: ""
+        val userPw = intent.getStringExtra("USER_PW") ?: ""
+        val userNickName = intent.getStringExtra("USER_NICKNAME") ?: ""
+        val userDrinking = intent.getStringExtra("USER_DRINKING")?: ""
 
         setContent {
             DiveTheme {
