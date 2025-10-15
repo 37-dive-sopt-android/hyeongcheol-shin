@@ -168,15 +168,23 @@ fun SignInScreen(
                 .padding(bottom = 24.dp)
         ) {
             Button(
-                onClick = {},
+                enabled = (inputId.isNotEmpty() && inputPw.isNotEmpty()),
                 onClick = {
                     if(signUpId == inputId && signUpPw == inputPw){
-                        Log.d("SHC","SignIn Success")
+                        Toast.makeText(
+                            context,
+                            "Success",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         signInButton(inputId,inputPw)
                     }
                     else{
-                        Log.d("SHC","SignIn Failed")
-
+                        Toast.makeText(
+                            context,
+                            "Fail",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        //TODO("argument 썼을때는 왜 안되는가")
                     }
                 },
                 modifier = Modifier
