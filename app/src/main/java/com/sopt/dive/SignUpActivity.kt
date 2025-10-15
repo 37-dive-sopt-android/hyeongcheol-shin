@@ -3,6 +3,7 @@ package com.sopt.dive
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
@@ -23,7 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
@@ -69,6 +73,8 @@ fun SignUpScreen(
     var inputNickname by remember { mutableStateOf("") }
     var inputDrinking by remember { mutableStateOf("") }
     var inputName by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -155,8 +161,9 @@ fun SignUpScreen(
                     onValueChange = {
                         inputDrinking = it
                     },
-                    label = "소주 주량을 입력하세요",
+                    label = "소주 주량을 입력하세요(숫자만 입력해주세요)",
                     placeholder = "소주 주량을 입력해주세요",
+                    keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -166,7 +173,6 @@ fun SignUpScreen(
                     style = TextStyle(
                         fontSize = 16.sp
                     )
-
                 )
                 CustomTextField(
                     value = inputName,
@@ -181,7 +187,27 @@ fun SignUpScreen(
         }
         Button(
             onClick = {
-                onClick(inputId,inputPw,inputNickname,inputDrinking, inputName)
+                if (
+                    inputId.length in 6..10 &&
+                    inputPw.length in 8..12 &&
+                    (inputNickname.isNotEmpty() && inputNickname.isNotBlank()) &&
+                    (inputDrinking.toIntOrNull() != null && inputDrinking.toInt() >= 0) &&
+                    (inputName.isNotEmpty() && inputName.isNotBlank())
+                ){
+                    Toast.makeText(
+                        context,
+                        "회원가입에 성공하셨습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    onClick(inputId, inputPw, inputNickname, inputDrinking, inputName)
+
+                } else{
+                    Toast.makeText(
+                        context,
+                        "조건을 확인해주세요",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             },
             modifier = Modifier
                 .fillMaxWidth(),
