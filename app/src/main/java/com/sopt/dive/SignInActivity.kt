@@ -142,6 +142,7 @@ fun SignInScreen(
                 },
                 label = "비밀번호를 입력하세요",
                 placeholder = "비밀번호를 입력해주세요",
+                passwordOption = true,
             )
         }
         Column(

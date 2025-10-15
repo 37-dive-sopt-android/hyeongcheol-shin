@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -23,6 +25,7 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
+    passwordOption: Boolean = false,
     keyboardOption: KeyboardOptions = KeyboardOptions.Default,
     ){
     Column(
@@ -49,6 +52,11 @@ fun CustomTextField(
                 disabledContainerColor = Color.Transparent,
             ),
             keyboardOptions = keyboardOption,
+            visualTransformation = if(passwordOption){
+                PasswordVisualTransformation()
+            }else {
+                VisualTransformation.None
+            },
             modifier = Modifier.fillMaxWidth(),
         )
     }
