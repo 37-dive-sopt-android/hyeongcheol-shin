@@ -125,42 +125,24 @@ fun SignInScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Column {
-                Text(
-                    text = "ID",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
-                )
-                CustomTextField(
-                    value = inputId,
-                    onValueChange = {
-                        inputId = it
-                    },
-                    label = "아이디를 입력해주세요",
-                    placeholder = "ID를 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column {
-                Text(
-                    text = "PW",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
-                )
-                CustomTextField(
-                    value = inputPw,
-                    onValueChange = {
-                        inputPw = it
-                    },
-                    label = "비밀번호를 입력하세요",
-                    placeholder = "비밀번호를 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            CustomTextField(
+                title = "ID",
+                value = inputId,
+                onValueChange = {
+                    inputId = it
+                },
+                label = "아이디를 입력해주세요",
+                placeholder = "ID를 입력해주세요",
+            )
+            CustomTextField(
+                title = "PW",
+                value = inputPw,
+                onValueChange = {
+                    inputPw = it
+                },
+                label = "비밀번호를 입력하세요",
+                placeholder = "비밀번호를 입력해주세요",
+            )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -168,7 +150,7 @@ fun SignInScreen(
                 .padding(bottom = 24.dp)
         ) {
             Button(
-                enabled = (inputId.isNotEmpty() && inputPw.isNotEmpty()),
+                //enabled = (inputId.isNotEmpty() && inputPw.isNotEmpty()),
                 onClick = {
                     if(signUpId == inputId && signUpPw == inputPw){
                         Toast.makeText(

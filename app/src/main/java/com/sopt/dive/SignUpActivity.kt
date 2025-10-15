@@ -94,96 +94,52 @@ fun SignUpScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Column {
-                Text(
-                    text = "ID",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
+            CustomTextField(
+                title = "ID",
+                value = inputId,
+                onValueChange = {
+                    inputId = it
+                },
+                label = "아이디를 입력해주세요",
+                placeholder = "ID를 입력해주세요",
+            )
+            CustomTextField(
+                title = "PW",
+                value = inputPw,
+                onValueChange = {
+                    inputPw = it
+                },
+                label = "비밀번호를 입력하세요",
+                placeholder = "비밀번호를 입력해주세요",
+            )
+            CustomTextField(
+                title = "NICKNAME",
+                value = inputNickname,
+                onValueChange = {
+                    inputNickname = it
+                },
+                label = "닉네임을 입력하세요",
+                placeholder = "닉네임을 입력해주세요",
+            )
+            CustomTextField(
+                title = "주량",
+                value = inputDrinking,
+                onValueChange = {
+                    inputDrinking = it
+                },
+                label = "소주 주량을 입력하세요(숫자만 입력해주세요)",
+                placeholder = "소주 주량을 입력해주세요",
+                keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+            CustomTextField(
+                title = "NAME",
+                value = inputName,
+                onValueChange = {
+                    inputName = it
+                },
+                label = "이름을 입력하세요",
+                placeholder = "이름을 입력해주세요",
                 )
-                CustomTextField(
-                    value = inputId,
-                    onValueChange = {
-                        inputId = it
-                    },
-                    label = "아이디를 입력해주세요",
-                    placeholder = "ID를 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column {
-                Text(
-                    text = "PW",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
-                )
-                CustomTextField(
-                    value = inputPw,
-                    onValueChange = {
-                        inputPw = it
-                    },
-                    label = "비밀번호를 입력하세요",
-                    placeholder = "비밀번호를 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column {
-                Text(
-                    text = "NICKNAME",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
-                )
-                CustomTextField(
-                    value = inputNickname,
-                    onValueChange = {
-                        inputNickname = it
-                    },
-                    label = "닉네임을 입력하세요",
-                    placeholder = "닉네임을 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column {
-                Text(
-                    text = "주량",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-
-                )
-                CustomTextField(
-                    value = inputDrinking,
-                    onValueChange = {
-                        inputDrinking = it
-                    },
-                    label = "소주 주량을 입력하세요(숫자만 입력해주세요)",
-                    placeholder = "소주 주량을 입력해주세요",
-                    keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column {
-                Text(
-                    text = "이름",
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    )
-                )
-                CustomTextField(
-                    value = inputName,
-                    onValueChange = {
-                        inputName = it
-                    },
-                    label = "이름을 입력하세요",
-                    placeholder = "이름을 입력해주세요",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
         }
         Button(
             onClick = {
