@@ -3,7 +3,6 @@ package com.sopt.dive
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,6 +43,7 @@ class SignInActivity : ComponentActivity() {
         var signUpPw by  mutableStateOf("")
         var signUpNickName by mutableStateOf("")
         var signUpDrinking by mutableStateOf("")
+        var signUpName by mutableStateOf("")
 
         val activityLauncherSignUpToSignIn = registerForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult()
@@ -54,6 +54,7 @@ class SignInActivity : ComponentActivity() {
                 signUpPw = intentData?.getStringExtra("USER_PW") ?: ""
                 signUpNickName = intentData?.getStringExtra("USER_NICKNAME") ?: ""
                 signUpDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
+                signUpName = intentData?.getStringExtra("USER_NAME") ?: ""
                  //TODO("비어 있으면 로그인 안 되도록 설정")
             }
         }
@@ -77,6 +78,7 @@ class SignInActivity : ComponentActivity() {
                             intent.putExtra("USER_PW", signInPw)
                             intent.putExtra("USER_NICKNAME", signUpNickName)
                             intent.putExtra("USER_DRINKING", signUpDrinking)
+                            intent.putExtra("USER_NAME", signUpName)
                             setResult(Activity.RESULT_OK, intent)
                             startActivity(intent)
                             finish()
@@ -110,7 +112,7 @@ fun SignInScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
     ) {

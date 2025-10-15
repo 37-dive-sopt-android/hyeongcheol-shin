@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
@@ -39,12 +38,13 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onClick = { userId, userPw,userNickname, userDrinking ->
+                        onClick = { userId, userPw,userNickname, userDrinking, userName ->
                             val resultIntent = Intent(this, SignInActivity::class.java)
                             resultIntent.putExtra("USER_ID", userId)
                             resultIntent.putExtra("USER_PW",userPw)
                             resultIntent.putExtra("USER_NICKNAME",userNickname)
                             resultIntent.putExtra("USER_DRINKING",userDrinking)
+                            resultIntent.putExtra("USER_NAME", userName)
                             setResult(Activity.RESULT_OK, resultIntent)
                             //TODO("Activity 생략 가능 왜?")
                             finish()
@@ -61,18 +61,19 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onClick: (String, String, String, String) -> Unit
+    onClick: (String, String, String, String, String) -> Unit
 ){
 
     var inputId by remember { mutableStateOf("") }
     var inputPw by remember { mutableStateOf("") }
     var inputNickname by remember { mutableStateOf("") }
     var inputDrinking by remember { mutableStateOf("") }
+    var inputName by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
     ) {
@@ -159,10 +160,28 @@ fun SignUpScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+            Column {
+                Text(
+                    text = "이름",
+                    style = TextStyle(
+                        fontSize = 16.sp
+                    )
+
+                )
+                CustomTextField(
+                    value = inputName,
+                    onValueChange = {
+                        inputName = it
+                    },
+                    label = "이름을 입력하세요",
+                    placeholder = "이름을 입력해주세요",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
         Button(
             onClick = {
-                onClick(inputId,inputPw,inputNickname,inputDrinking)
+                onClick(inputId,inputPw,inputNickname,inputDrinking, inputName)
             },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -180,11 +199,13 @@ fun SignUpScreen(
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignUpScreen(){
     SignUpScreen(
         modifier = Modifier,
-        onClick = { } as (String, String, String, String) -> Unit
+        onClick = { }
     )
 }
+*/

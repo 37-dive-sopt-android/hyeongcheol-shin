@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
         val userId  = intent.getStringExtra("USER_ID") ?: ""
         val userPw = intent.getStringExtra("USER_PW") ?: ""
         val userNickName = intent.getStringExtra("USER_NICKNAME") ?: ""
-        val userDrinking = intent.getStringExtra("USER_DRINKING")?: ""
+        val userDrinking = intent.getStringExtra("USER_DRINKING") ?: ""
+        val userName = intent.getStringExtra("USER_NAME") ?: ""
 
         setContent {
             DiveTheme {
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
                         userPw = userPw,
                         userNickName = userNickName,
                         userDrinking = userDrinking,
+                        userName = userName,
                         modifier = Modifier.padding(innerPadding),
                         )
                 }
@@ -53,6 +55,7 @@ fun MainScreen(
     userPw: String,
     userNickName: String,
     userDrinking: String,
+    userName: String,
     modifier: Modifier,
     ){
     Column(
@@ -69,9 +72,13 @@ fun MainScreen(
                         .size(20.dp),
                 ) {
                 }
-                Text("MyName")
+                Text(
+                    text = userName
+                )
             }
-            Text("안녕하세요")
+            Text(
+                text = "안녕하세요"
+            )
         }
         UserDetail(
             title = "ID",
@@ -120,5 +127,6 @@ fun PreviewMainActivity(){
         userPw = "test",
         userNickName = "Fe",
         userDrinking = "0",
+        userName = "SHC"
     )
 }
