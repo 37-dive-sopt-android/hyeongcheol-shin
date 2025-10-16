@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -77,7 +79,6 @@ fun SignUpScreen(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
@@ -86,12 +87,13 @@ fun SignUpScreen(
             text = "SIGN UP",
             style = TextStyle(
                 fontSize = 36.sp,
+                fontWeight = FontWeight.Bold
             ),
             modifier = Modifier
-                .padding(top = 32.dp)
+                .padding(top = 32.dp, bottom = 40.dp)
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             CustomTextField(
                 title = "ID",
@@ -99,8 +101,8 @@ fun SignUpScreen(
                 onValueChange = {
                     inputId = it
                 },
-                label = "아이디를 입력해주세요",
-                placeholder = "ID를 입력해주세요",
+                label = "ID를 입력하세요",
+                placeholder = "6 ~ 10 자리 입력",
             )
             CustomTextField(
                 title = "PW",
@@ -109,7 +111,7 @@ fun SignUpScreen(
                     inputPw = it
                 },
                 label = "비밀번호를 입력하세요",
-                placeholder = "비밀번호를 입력해주세요",
+                placeholder = "8 ~ 12 자리 입력",
             )
             CustomTextField(
                 title = "NICKNAME",
@@ -118,7 +120,7 @@ fun SignUpScreen(
                     inputNickname = it
                 },
                 label = "닉네임을 입력하세요",
-                placeholder = "닉네임을 입력해주세요",
+                placeholder = "한 글자 이상 입력",
             )
             CustomTextField(
                 title = "주량",
@@ -126,8 +128,8 @@ fun SignUpScreen(
                 onValueChange = {
                     inputDrinking = it
                 },
-                label = "소주 주량을 입력하세요(숫자만 입력해주세요)",
-                placeholder = "소주 주량을 입력해주세요",
+                label = "소주 주량을 입력하세요",
+                placeholder = "숫자만 입력",
                 keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             CustomTextField(
@@ -139,11 +141,13 @@ fun SignUpScreen(
                     }
                 },
                 label = "이름을 입력하세요",
-                placeholder = "이름을 입력해주세요",
+                placeholder = "한글로 입력",
                 )
         }
+        Spacer(Modifier.weight(1f))
         CustomButton(
             buttonText = "Sign Up",
+            modifier = Modifier.padding(vertical = 16.dp),
             onClick = {
                 if (
                     inputId.length in 6..10 &&
