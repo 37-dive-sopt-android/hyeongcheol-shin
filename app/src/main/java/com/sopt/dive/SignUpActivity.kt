@@ -144,7 +144,7 @@ fun SignUpScreen(
         }
         Spacer(Modifier.weight(1f))
         CustomButton(
-            buttonText = "Sign Up",
+            text = "Sign Up",
             modifier = Modifier.padding(vertical = 16.dp),
             onClick = {
                 if (

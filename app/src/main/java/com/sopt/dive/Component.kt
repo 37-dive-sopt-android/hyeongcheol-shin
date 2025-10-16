@@ -68,13 +68,13 @@ fun CustomTextField(
 
 @Composable
 fun CustomButton(
-    buttonText: String,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    buttonEnabled: Boolean = true,
+    enabled: Boolean = true,
 ) {
     Button(
-        enabled = buttonEnabled,
+        enabled = enabled,
         onClick = { onClick() },
         modifier = modifier
             .fillMaxWidth(),
@@ -83,7 +83,7 @@ fun CustomButton(
         )
     ) {
         Text(
-            text = buttonText,
+            text = text,
             style = TextStyle(
                 fontSize = 16.sp
             )
@@ -107,8 +107,8 @@ fun PreviewCustomTextField() {
 @Composable
 fun PreviewCustomButton() {
     CustomButton(
-        buttonText = "Test Button",
-        buttonEnabled = true,
+        text = "Test Button",
+        enabled = true,
         onClick = {}
     )
 }
