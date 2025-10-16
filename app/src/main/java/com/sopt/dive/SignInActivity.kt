@@ -34,22 +34,22 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        var signUpId by mutableStateOf("")
-        var signUpPw by mutableStateOf("")
-        var signUpNickName by mutableStateOf("")
-        var signUpDrinking by mutableStateOf("")
-        var signUpName by mutableStateOf("")
+        var registeredUserId by mutableStateOf("")
+        var registeredUserPw by mutableStateOf("")
+        var registeredUserNickname by mutableStateOf("")
+        var registeredUserDrinking by mutableStateOf("")
+        var registeredUserName by mutableStateOf("")
 
-        val activityLauncherSignUpToSignIn = registerForActivityResult(
+        val signUpResultLauncher = registerForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 val intentData = result.data
-                signUpId = intentData?.getStringExtra("USER_ID") ?: ""
-                signUpPw = intentData?.getStringExtra("USER_PW") ?: ""
-                signUpNickName = intentData?.getStringExtra("USER_NICKNAME") ?: ""
-                signUpDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
-                signUpName = intentData?.getStringExtra("USER_NAME") ?: ""
+                registeredUserId = intentData?.getStringExtra("USER_ID") ?: ""
+                registeredUserPw = intentData?.getStringExtra("USER_PW") ?: ""
+                registeredUserNickname = intentData?.getStringExtra("USER_NICKNAME") ?: ""
+                registeredUserDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
+                registeredUserName = intentData?.getStringExtra("USER_NAME") ?: ""
                 //TODO("비어 있으면 로그인 안 되도록 설정")
             }
         }
@@ -61,21 +61,21 @@ class SignInActivity : ComponentActivity() {
                         .fillMaxSize()
                 ) { innerPadding ->
                     SignInScreen(
-                        signUpId = signUpId,
-                        signUpPw = signUpPw,
-                        onSignInClick = { signInId, signInPw ->
+                        registeredUserId = registeredUserId,
+                        registeredUserPw = registeredUserPw,
+                        onSignInClick = { inputUserId, inputUserPw ->
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra("USER_ID", signInId)
-                            intent.putExtra("USER_PW", signInPw)
-                            intent.putExtra("USER_NICKNAME", signUpNickName)
-                            intent.putExtra("USER_DRINKING", signUpDrinking)
-                            intent.putExtra("USER_NAME", signUpName)
+                            intent.putExtra("USER_ID", inputUserId)
+                            intent.putExtra("USER_PW", inputUserPw)
+                            intent.putExtra("USER_NICKNAME", registeredUserNickname)
+                            intent.putExtra("USER_DRINKING", registeredUserDrinking)
+                            intent.putExtra("USER_NAME", registeredUserName)
                             setResult(RESULT_OK, intent)
                             startActivity(intent)
                             finish()
                         },
                         onSignUpClick = {
-                            activityLauncherSignUpToSignIn.launch(
+                            signUpResultLauncher.launch(
                                 Intent(this, SignUpActivity::class.java)
                             )
                         },
@@ -94,14 +94,14 @@ class SignInActivity : ComponentActivity() {
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
-    signUpId: String,
-    signUpPw: String,
+    registeredUserId: String,
+    registeredUserPw: String,
     onSignInClick: (String, String) -> Unit,
     onSignUpClick: () -> Unit,
 ) {
 
-    var inputId by remember { mutableStateOf("") }
-    var inputPw by remember { mutableStateOf("") }
+    var inputUserId by remember { mutableStateOf("") }
+    var inputUserPw by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -126,22 +126,22 @@ fun SignInScreen(
         ) {
             CustomTextField(
                 title = "ID",
-                value = inputId,
+                value = inputUserId,
                 onValueChange = {
-                    inputId = it
+                    inputUserId = it
                 },
                 label = "아이디를 입력해주세요",
                 placeholder = "아이디",
             )
             CustomTextField(
                 title = "PW",
-                value = inputPw,
+                value = inputUserPw,
                 onValueChange = {
-                    inputPw = it
+                    inputUserPw = it
                 },
                 label = "비밀번호를 입력하세요",
                 placeholder = "비밀번호",
-                passwordOption = true,
+                isTextHidden = true,
             )
         }
         Column(
@@ -152,15 +152,14 @@ fun SignInScreen(
         ) {
             CustomButton(
                 text = "Welcome to Sopt",
-                enabled = (inputId.isNotEmpty() && inputPw.isNotEmpty()),
                 onClick = {
-                    if (signUpId == inputId && signUpPw == inputPw) {
+                    if (registeredUserId == inputUserId && registeredUserPw == inputUserPw) {
                         Toast.makeText(
                             context,
                             "로그인 성공",
                             Toast.LENGTH_SHORT
                         ).show()
-                        onSignInClick(inputId, inputPw)
+                        onSignInClick(inputUserId, inputUserPw)
                     } else {
                         Toast.makeText(
                             context,
@@ -190,8 +189,8 @@ fun SignInScreen(
 fun PreviewSignInScreen() {
     SignInScreen(
         modifier = Modifier,
-        signUpId = "Test Id",
-        signUpPw = "Test Pw",
+        registeredUserId = "Test Id",
+        registeredUserPw = "Test Pw",
         onSignInClick = { id, pw -> },
         onSignUpClick = {}
     )

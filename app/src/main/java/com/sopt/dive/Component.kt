@@ -28,9 +28,9 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
+    isTextHidden: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     modifier: Modifier = Modifier,
-    passwordOption: Boolean = false,
-    keyboardOption: KeyboardOptions = KeyboardOptions.Default,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -55,8 +55,8 @@ fun CustomTextField(
                 unfocusedContainerColor = Color.Transparent,
                 disabledContainerColor = Color.Transparent,
             ),
-            keyboardOptions = keyboardOption,
-            visualTransformation = if (passwordOption) {
+            keyboardOptions = keyboardOptions,
+            visualTransformation = if (isTextHidden) {
                 PasswordVisualTransformation()
             } else {
                 VisualTransformation.None
@@ -70,11 +70,11 @@ fun CustomTextField(
 fun CustomButton(
     text: String,
     onClick: () -> Unit,
+    isEnabled: Boolean = true,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
 ) {
     Button(
-        enabled = enabled,
+        enabled = isEnabled,
         onClick = { onClick() },
         modifier = modifier
             .fillMaxWidth(),
@@ -108,7 +108,6 @@ fun PreviewCustomTextField() {
 fun PreviewCustomButton() {
     CustomButton(
         text = "Test Button",
-        enabled = true,
         onClick = {}
     )
 }

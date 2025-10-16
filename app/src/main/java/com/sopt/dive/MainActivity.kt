@@ -64,7 +64,7 @@ fun MainScreen(
     userNickName: String,
     userDrinking: String,
     userName: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(40.dp),
@@ -121,7 +121,7 @@ fun MainScreen(
             UserDetail(
                 title = "주량",
                 info = "$userDrinking 병",
-                uniqueText = (userDrinking.toInt() > 3)
+                isUniqueText = (userDrinking.toInt() > 3)
             )
         }
     }
@@ -131,7 +131,7 @@ fun MainScreen(
 fun UserDetail(
     title: String,
     info: String,
-    uniqueText: Boolean = false,
+    isUniqueText: Boolean = false,
 ) {
 
     val gradientColor = listOf(Color.Cyan, Color.Blue, Color.Magenta)
@@ -148,7 +148,7 @@ fun UserDetail(
             text = info,
             fontSize = 24.sp,
             fontWeight = FontWeight.Medium,
-            style = if (uniqueText) {
+            style = if (isUniqueText) {
                 TextStyle(
                     brush = Brush.linearGradient(
                         colors = gradientColor

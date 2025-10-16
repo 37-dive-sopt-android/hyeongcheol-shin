@@ -40,13 +40,13 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onClick = { userId, userPw, userNickname, userDrinking, userName ->
+                        onSignUpClick = { inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName ->
                             val resultIntent = Intent(this, SignInActivity::class.java)
-                            resultIntent.putExtra("USER_ID", userId)
-                            resultIntent.putExtra("USER_PW", userPw)
-                            resultIntent.putExtra("USER_NICKNAME", userNickname)
-                            resultIntent.putExtra("USER_DRINKING", userDrinking)
-                            resultIntent.putExtra("USER_NAME", userName)
+                            resultIntent.putExtra("USER_ID", inputUserId)
+                            resultIntent.putExtra("USER_PW", inputUserPw)
+                            resultIntent.putExtra("USER_NICKNAME", inputUserNickname)
+                            resultIntent.putExtra("USER_DRINKING", inputUserDrinking)
+                            resultIntent.putExtra("USER_NAME", inputUserName)
                             setResult(RESULT_OK, resultIntent)
                             //TODO("Activity 생략 가능 왜?")
                             finish()
@@ -62,14 +62,14 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onClick: (String, String, String, String, String) -> Unit,
+    onSignUpClick: (String, String, String, String, String) -> Unit,
 ) {
 
-    var inputId by remember { mutableStateOf("") }
-    var inputPw by remember { mutableStateOf("") }
-    var inputNickname by remember { mutableStateOf("") }
-    var inputDrinking by remember { mutableStateOf("") }
-    var inputName by remember { mutableStateOf("") }
+    var inputUserId by remember { mutableStateOf("") }
+    var inputUserPw by remember { mutableStateOf("") }
+    var inputUserNickname by remember { mutableStateOf("") }
+    var inputUserDrinking by remember { mutableStateOf("") }
+    var inputUserName by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -95,47 +95,47 @@ fun SignUpScreen(
         ) {
             CustomTextField(
                 title = "ID",
-                value = inputId,
+                value = inputUserId,
                 onValueChange = {
-                    inputId = it
+                    inputUserId = it
                 },
                 label = "ID를 입력하세요",
                 placeholder = "6 ~ 10 자리 입력",
             )
             CustomTextField(
                 title = "PW",
-                value = inputPw,
+                value = inputUserPw,
                 onValueChange = {
-                    inputPw = it
+                    inputUserPw = it
                 },
                 label = "비밀번호를 입력하세요",
                 placeholder = "8 ~ 12 자리 입력",
             )
             CustomTextField(
                 title = "NICKNAME",
-                value = inputNickname,
+                value = inputUserNickname,
                 onValueChange = {
-                    inputNickname = it
+                    inputUserNickname = it
                 },
                 label = "닉네임을 입력하세요",
                 placeholder = "한 글자 이상 입력",
             )
             CustomTextField(
                 title = "주량",
-                value = inputDrinking,
+                value = inputUserDrinking,
                 onValueChange = {
-                    inputDrinking = it
+                    inputUserDrinking = it
                 },
                 label = "소주 주량을 입력하세요",
                 placeholder = "숫자만 입력",
-                keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             CustomTextField(
                 title = "NAME",
-                value = inputName,
+                value = inputUserName,
                 onValueChange = {
                     if (koreanRegex.matches(it)) {
-                        inputName = it
+                        inputUserName = it
                     }
                 },
                 label = "이름을 입력하세요",
@@ -145,21 +145,20 @@ fun SignUpScreen(
         Spacer(Modifier.weight(1f))
         CustomButton(
             text = "Sign Up",
-            modifier = Modifier.padding(vertical = 16.dp),
             onClick = {
                 if (
-                    inputId.length in 6..10 &&
-                    inputPw.length in 8..12 &&
-                    (inputNickname.isNotEmpty() && inputNickname.isNotBlank()) &&
-                    (inputDrinking.toIntOrNull() != null && inputDrinking.toInt() >= 0) &&
-                    (inputName.isNotEmpty() && inputName.isNotBlank())
+                    inputUserId.length in 6..10 &&
+                    inputUserPw.length in 8..12 &&
+                    (inputUserNickname.isNotEmpty() && inputUserNickname.isNotBlank()) &&
+                    (inputUserDrinking.toIntOrNull() != null && inputUserDrinking.toInt() >= 0) &&
+                    (inputUserName.isNotEmpty() && inputUserName.isNotBlank())
                 ) {
                     Toast.makeText(
                         context,
                         "회원가입에 성공하셨습니다",
                         Toast.LENGTH_SHORT
                     ).show()
-                    onClick(inputId, inputPw, inputNickname, inputDrinking, inputName)
+                    onSignUpClick(inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName)
                 } else {
                     Toast.makeText(
                         context,
@@ -168,6 +167,7 @@ fun SignUpScreen(
                     ).show()
                 }
             },
+            modifier = Modifier.padding(vertical = 16.dp),
         )
     }
 }
@@ -178,6 +178,6 @@ fun SignUpScreen(
 fun PreviewSignUpScreen() {
     SignUpScreen(
         modifier = Modifier,
-        onClick = { id, pw, nickName, drinking, name -> }
+        onSignUpClick = { id, pw, nickName, drinking, name -> }
     )
 }
