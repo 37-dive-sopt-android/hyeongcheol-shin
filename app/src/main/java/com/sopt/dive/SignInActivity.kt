@@ -35,29 +35,30 @@ class SignInActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         var signUpId by mutableStateOf("")
-        var signUpPw by  mutableStateOf("")
+        var signUpPw by mutableStateOf("")
         var signUpNickName by mutableStateOf("")
         var signUpDrinking by mutableStateOf("")
         var signUpName by mutableStateOf("")
 
         val activityLauncherSignUpToSignIn = registerForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult()
-        ){ result ->
-            if(result.resultCode == RESULT_OK){
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
                 val intentData = result.data
                 signUpId = intentData?.getStringExtra("USER_ID") ?: ""
                 signUpPw = intentData?.getStringExtra("USER_PW") ?: ""
                 signUpNickName = intentData?.getStringExtra("USER_NICKNAME") ?: ""
                 signUpDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
                 signUpName = intentData?.getStringExtra("USER_NAME") ?: ""
-                 //TODO("비어 있으면 로그인 안 되도록 설정")
+                //TODO("비어 있으면 로그인 안 되도록 설정")
             }
         }
 
         setContent {
             DiveTheme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
                 ) { innerPadding ->
                     SignInScreen(
                         signUpId = signUpId,
@@ -69,7 +70,7 @@ class SignInActivity : ComponentActivity() {
                         },
                         signInButton = { signInId, signInPw ->
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra("USER_ID",signInId)
+                            intent.putExtra("USER_ID", signInId)
                             intent.putExtra("USER_PW", signInPw)
                             intent.putExtra("USER_NICKNAME", signUpNickName)
                             intent.putExtra("USER_DRINKING", signUpDrinking)
@@ -97,7 +98,7 @@ fun SignInScreen(
     signUpPw: String,
     signInButton: (String, String) -> Unit,
     signUpButton: () -> Unit,
-){
+) {
 
     var inputId by remember { mutableStateOf("") }
     var inputPw by remember { mutableStateOf("") }
@@ -153,15 +154,14 @@ fun SignInScreen(
                 buttonText = "Welcome to Sopt",
                 buttonEnabled = (inputId.isNotEmpty() && inputPw.isNotEmpty()),
                 onClick = {
-                    if(signUpId == inputId && signUpPw == inputPw){
+                    if (signUpId == inputId && signUpPw == inputPw) {
                         Toast.makeText(
                             context,
                             "로그인 성공",
                             Toast.LENGTH_SHORT
                         ).show()
-                        signInButton(inputId,inputPw)
-                    }
-                    else{
+                        signInButton(inputId, inputPw)
+                    } else {
                         Toast.makeText(
                             context,
                             "로그인 실패",
@@ -185,7 +185,6 @@ fun SignInScreen(
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
@@ -193,7 +192,7 @@ fun PreviewSignInScreen() {
         modifier = Modifier,
         signUpId = "Test Id",
         signUpPw = "Test Pw",
-        signInButton = {id, pw ->},
+        signInButton = { id, pw -> },
         signUpButton = {}
     )
 }

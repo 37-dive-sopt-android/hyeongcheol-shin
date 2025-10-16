@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val userId  = intent.getStringExtra("USER_ID") ?: ""
+        val userId = intent.getStringExtra("USER_ID") ?: ""
         val userPw = intent.getStringExtra("USER_PW") ?: ""
         val userNickName = intent.getStringExtra("USER_NICKNAME") ?: ""
         val userDrinking = intent.getStringExtra("USER_DRINKING") ?: ""
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         userDrinking = userDrinking,
                         userName = userName,
                         modifier = Modifier.padding(innerPadding),
-                        )
+                    )
                 }
             }
         }
@@ -65,7 +65,7 @@ fun MainScreen(
     userDrinking: String,
     userName: String,
     modifier: Modifier,
-    ){
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(40.dp),
         modifier = modifier
@@ -131,8 +131,8 @@ fun MainScreen(
 fun UserDetail(
     title: String,
     info: String,
-    uniqueText: Boolean = false
-){
+    uniqueText: Boolean = false,
+) {
 
     val gradientColor = listOf(Color.Cyan, Color.Blue, Color.Magenta)
 
@@ -148,13 +148,13 @@ fun UserDetail(
             text = info,
             fontSize = 24.sp,
             fontWeight = FontWeight.Medium,
-            style = if(uniqueText){
+            style = if (uniqueText) {
                 TextStyle(
                     brush = Brush.linearGradient(
                         colors = gradientColor
                     ) //1셈때 자료 보다가 그냥 넣어보고 싶었어요 ㅎㅎ
                 )
-            }else{
+            } else {
                 TextStyle(
                     color = Color.DarkGray
                 )
@@ -165,7 +165,7 @@ fun UserDetail(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewMainActivity(){
+fun PreviewMainActivity() {
     MainScreen(
         modifier = Modifier,
         userId = "test",

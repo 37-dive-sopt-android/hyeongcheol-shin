@@ -40,12 +40,12 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onClick = { userId, userPw,userNickname, userDrinking, userName ->
+                        onClick = { userId, userPw, userNickname, userDrinking, userName ->
                             val resultIntent = Intent(this, SignInActivity::class.java)
                             resultIntent.putExtra("USER_ID", userId)
-                            resultIntent.putExtra("USER_PW",userPw)
-                            resultIntent.putExtra("USER_NICKNAME",userNickname)
-                            resultIntent.putExtra("USER_DRINKING",userDrinking)
+                            resultIntent.putExtra("USER_PW", userPw)
+                            resultIntent.putExtra("USER_NICKNAME", userNickname)
+                            resultIntent.putExtra("USER_DRINKING", userDrinking)
                             resultIntent.putExtra("USER_NAME", userName)
                             setResult(RESULT_OK, resultIntent)
                             //TODO("Activity 생략 가능 왜?")
@@ -59,12 +59,11 @@ class SignUpActivity : ComponentActivity() {
 }
 
 
-
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onClick: (String, String, String, String, String) -> Unit
-){
+    onClick: (String, String, String, String, String) -> Unit,
+) {
 
     var inputId by remember { mutableStateOf("") }
     var inputPw by remember { mutableStateOf("") }
@@ -135,13 +134,13 @@ fun SignUpScreen(
                 title = "NAME",
                 value = inputName,
                 onValueChange = {
-                    if(koreanRegex.matches(it)) {
+                    if (koreanRegex.matches(it)) {
                         inputName = it
                     }
                 },
                 label = "이름을 입력하세요",
                 placeholder = "한글로 입력",
-                )
+            )
         }
         Spacer(Modifier.weight(1f))
         CustomButton(
@@ -154,14 +153,14 @@ fun SignUpScreen(
                     (inputNickname.isNotEmpty() && inputNickname.isNotBlank()) &&
                     (inputDrinking.toIntOrNull() != null && inputDrinking.toInt() >= 0) &&
                     (inputName.isNotEmpty() && inputName.isNotBlank())
-                ){
+                ) {
                     Toast.makeText(
                         context,
                         "회원가입에 성공하셨습니다",
                         Toast.LENGTH_SHORT
                     ).show()
                     onClick(inputId, inputPw, inputNickname, inputDrinking, inputName)
-                } else{
+                } else {
                     Toast.makeText(
                         context,
                         "조건을 확인해주세요",
@@ -176,9 +175,9 @@ fun SignUpScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewSignUpScreen(){
+fun PreviewSignUpScreen() {
     SignUpScreen(
         modifier = Modifier,
-        onClick = {id, pw, nickName, drinking, name ->}
+        onClick = { id, pw, nickName, drinking, name -> }
     )
 }

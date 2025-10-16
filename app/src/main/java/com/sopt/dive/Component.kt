@@ -31,7 +31,7 @@ fun CustomTextField(
     modifier: Modifier = Modifier,
     passwordOption: Boolean = false,
     keyboardOption: KeyboardOptions = KeyboardOptions.Default,
-    ){
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.Start,
@@ -48,7 +48,7 @@ fun CustomTextField(
         TextField(
             value = value,
             onValueChange = onValueChange,
-            label = {Text(label)},
+            label = { Text(label) },
             placeholder = { Text(placeholder) },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
@@ -56,9 +56,9 @@ fun CustomTextField(
                 disabledContainerColor = Color.Transparent,
             ),
             keyboardOptions = keyboardOption,
-            visualTransformation = if(passwordOption){
+            visualTransformation = if (passwordOption) {
                 PasswordVisualTransformation()
-            }else {
+            } else {
                 VisualTransformation.None
             },
             modifier = Modifier.fillMaxWidth(),
@@ -72,7 +72,7 @@ fun CustomButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     buttonEnabled: Boolean = true,
-    ){
+) {
     Button(
         enabled = buttonEnabled,
         onClick = { onClick() },
@@ -93,7 +93,7 @@ fun CustomButton(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCustomTextField(){
+fun PreviewCustomTextField() {
     CustomTextField(
         title = "Test Title",
         value = "Test Value",
@@ -105,7 +105,7 @@ fun PreviewCustomTextField(){
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCustomButton(){
+fun PreviewCustomButton() {
     CustomButton(
         buttonText = "Test Button",
         buttonEnabled = true,
