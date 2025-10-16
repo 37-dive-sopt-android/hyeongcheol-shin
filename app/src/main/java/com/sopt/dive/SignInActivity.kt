@@ -130,8 +130,8 @@ fun SignInScreen(
                 onValueChange = {
                     inputUserId = it
                 },
-                label = "아이디를 입력해주세요",
-                placeholder = "아이디",
+                label = "아이디",
+                placeholder = "아이디를 입력해주세요",
             )
             CustomTextField(
                 title = "PW",
@@ -139,8 +139,8 @@ fun SignInScreen(
                 onValueChange = {
                     inputUserPw = it
                 },
-                label = "비밀번호를 입력하세요",
-                placeholder = "비밀번호",
+                label = "비밀번호",
+                placeholder = "비밀번호를 입력하세요",
                 isTextHidden = true,
             )
         }

@@ -99,7 +99,7 @@ fun SignUpScreen(
                 onValueChange = {
                     inputUserId = it
                 },
-                label = "ID를 입력하세요",
+                label = "아이디",
                 placeholder = "6 ~ 10 자리 입력",
             )
             CustomTextField(
@@ -108,7 +108,7 @@ fun SignUpScreen(
                 onValueChange = {
                     inputUserPw = it
                 },
-                label = "비밀번호를 입력하세요",
+                label = "비밀번호",
                 placeholder = "8 ~ 12 자리 입력",
             )
             CustomTextField(
@@ -117,7 +117,7 @@ fun SignUpScreen(
                 onValueChange = {
                     inputUserNickname = it
                 },
-                label = "닉네임을 입력하세요",
+                label = "별명",
                 placeholder = "한 글자 이상 입력",
             )
             CustomTextField(
@@ -126,7 +126,7 @@ fun SignUpScreen(
                 onValueChange = {
                     inputUserDrinking = it
                 },
-                label = "소주 주량을 입력하세요",
+                label = "소주 몇병?",
                 placeholder = "숫자만 입력",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
@@ -138,7 +138,7 @@ fun SignUpScreen(
                         inputUserName = it
                     }
                 },
-                label = "이름을 입력하세요",
+                label = "이름",
                 placeholder = "한글로 입력",
             )
         }
