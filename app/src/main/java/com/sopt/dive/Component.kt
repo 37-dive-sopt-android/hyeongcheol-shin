@@ -28,13 +28,14 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
+    modifier: Modifier = Modifier,
     passwordOption: Boolean = false,
     keyboardOption: KeyboardOptions = KeyboardOptions.Default,
     ){
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(
             text = title,
@@ -68,13 +69,14 @@ fun CustomTextField(
 @Composable
 fun CustomButton(
     buttonText: String,
-    buttonEnabled: Boolean = true,
     onClick: () -> Unit,
-){
+    modifier: Modifier = Modifier,
+    buttonEnabled: Boolean = true,
+    ){
     Button(
         enabled = buttonEnabled,
         onClick = { onClick() },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Unspecified,
