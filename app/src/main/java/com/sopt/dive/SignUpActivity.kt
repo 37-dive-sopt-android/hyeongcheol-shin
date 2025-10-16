@@ -1,6 +1,5 @@
 package com.sopt.dive
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -48,7 +47,7 @@ class SignUpActivity : ComponentActivity() {
                             resultIntent.putExtra("USER_NICKNAME",userNickname)
                             resultIntent.putExtra("USER_DRINKING",userDrinking)
                             resultIntent.putExtra("USER_NAME", userName)
-                            setResult(Activity.RESULT_OK, resultIntent)
+                            setResult(RESULT_OK, resultIntent)
                             //TODO("Activity 생략 가능 왜?")
                             finish()
                         }
