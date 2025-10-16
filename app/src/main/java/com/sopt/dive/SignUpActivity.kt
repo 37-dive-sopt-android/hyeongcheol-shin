@@ -158,7 +158,7 @@ fun SignUpScreen(
                 ){
                     Toast.makeText(
                         context,
-                        "회원가입에 성공하셨습니다.",
+                        "회원가입에 성공하셨습니다",
                         Toast.LENGTH_SHORT
                     ).show()
                     onClick(inputId, inputPw, inputNickname, inputDrinking, inputName)

@@ -157,7 +157,7 @@ fun SignInScreen(
                     if(signUpId == inputId && signUpPw == inputPw){
                         Toast.makeText(
                             context,
-                            "Success",
+                            "로그인 성공",
                             Toast.LENGTH_SHORT
                         ).show()
                         signInButton(inputId,inputPw)
@@ -165,7 +165,7 @@ fun SignInScreen(
                     else{
                         Toast.makeText(
                             context,
-                            "Fail",
+                            "로그인 실패",
                             Toast.LENGTH_SHORT
                         ).show()
                         //TODO("argument 썼을때는 왜 안되는가")
