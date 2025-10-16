@@ -63,12 +63,7 @@ class SignInActivity : ComponentActivity() {
                     SignInScreen(
                         signUpId = signUpId,
                         signUpPw = signUpPw,
-                        signUpButton = {
-                            activityLauncherSignUpToSignIn.launch(
-                                Intent(this, SignUpActivity::class.java)
-                            )
-                        },
-                        signInButton = { signInId, signInPw ->
+                        onSignInClick = { signInId, signInPw ->
                             val intent = Intent(this, MainActivity::class.java)
                             intent.putExtra("USER_ID", signInId)
                             intent.putExtra("USER_PW", signInPw)
@@ -78,6 +73,11 @@ class SignInActivity : ComponentActivity() {
                             setResult(RESULT_OK, intent)
                             startActivity(intent)
                             finish()
+                        },
+                        onSignUpClick = {
+                            activityLauncherSignUpToSignIn.launch(
+                                Intent(this, SignUpActivity::class.java)
+                            )
                         },
                         modifier = Modifier
                             .padding(innerPadding),
@@ -96,8 +96,8 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
     signUpId: String,
     signUpPw: String,
-    signInButton: (String, String) -> Unit,
-    signUpButton: () -> Unit,
+    onSignInClick: (String, String) -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
 
     var inputId by remember { mutableStateOf("") }
@@ -160,7 +160,7 @@ fun SignInScreen(
                             "로그인 성공",
                             Toast.LENGTH_SHORT
                         ).show()
-                        signInButton(inputId, inputPw)
+                        onSignInClick(inputId, inputPw)
                     } else {
                         Toast.makeText(
                             context,
@@ -176,7 +176,7 @@ fun SignInScreen(
                 modifier = Modifier
                     .clickable(
                         onClick = {
-                            signUpButton()
+                            onSignUpClick()
                         }
                     )
             )
@@ -192,7 +192,7 @@ fun PreviewSignInScreen() {
         modifier = Modifier,
         signUpId = "Test Id",
         signUpPw = "Test Pw",
-        signInButton = { id, pw -> },
-        signUpButton = {}
+        onSignInClick = { id, pw -> },
+        onSignUpClick = {}
     )
 }
