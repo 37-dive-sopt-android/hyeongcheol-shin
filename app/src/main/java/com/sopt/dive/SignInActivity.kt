@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,12 +116,13 @@ fun SignInScreen(
             text = "Welcome To Sopt",
             style = TextStyle(
                 fontSize = 36.sp,
+                fontWeight = FontWeight.Bold
             ),
             modifier = Modifier
                 .padding(top = 32.dp)
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(40.dp)
         ) {
             CustomTextField(
                 title = "ID",
@@ -129,7 +131,7 @@ fun SignInScreen(
                     inputId = it
                 },
                 label = "아이디를 입력해주세요",
-                placeholder = "ID를 입력해주세요",
+                placeholder = "아이디",
             )
             CustomTextField(
                 title = "PW",
@@ -138,12 +140,13 @@ fun SignInScreen(
                     inputPw = it
                 },
                 label = "비밀번호를 입력하세요",
-                placeholder = "비밀번호를 입력해주세요",
+                placeholder = "비밀번호",
                 passwordOption = true,
             )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .padding(bottom = 24.dp)
         ) {
