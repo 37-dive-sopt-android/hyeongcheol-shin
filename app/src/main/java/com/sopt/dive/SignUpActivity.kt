@@ -73,6 +73,8 @@ fun SignUpScreen(
 
     val context = LocalContext.current
 
+    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣\\s]*$")
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -132,7 +134,9 @@ fun SignUpScreen(
                 title = "NAME",
                 value = inputName,
                 onValueChange = {
-                    inputName = it
+                    if(koreanRegex.matches(it)) {
+                        inputName = it
+                    }
                 },
                 label = "이름을 입력하세요",
                 placeholder = "이름을 입력해주세요",
