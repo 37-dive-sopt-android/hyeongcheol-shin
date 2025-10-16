@@ -1,6 +1,5 @@
 package com.sopt.dive
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -87,4 +87,26 @@ fun CustomButton(
             )
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewCustomTextField(){
+    CustomTextField(
+        title = "Test Title",
+        value = "Test Value",
+        onValueChange = {},
+        label = "Test Label",
+        placeholder = "Test PlaceHolder",
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewCustomButton(){
+    CustomButton(
+        buttonText = "Test Button",
+        buttonEnabled = true,
+        onClick = {}
+    )
 }

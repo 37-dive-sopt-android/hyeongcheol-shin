@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
@@ -73,7 +74,7 @@ class SignInActivity : ComponentActivity() {
                             intent.putExtra("USER_NICKNAME", signUpNickName)
                             intent.putExtra("USER_DRINKING", signUpDrinking)
                             intent.putExtra("USER_NAME", signUpName)
-                            setResult(Activity.RESULT_OK, intent)
+                            setResult(RESULT_OK, intent)
                             startActivity(intent)
                             finish()
                         },
@@ -182,15 +183,15 @@ fun SignInScreen(
 }
 
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
     SignInScreen(
-        modifier = TODO(),
-        testText = TODO(),
-        signUpClick = TODO()
+        modifier = Modifier,
+        signUpId = "Test Id",
+        signUpPw = "Test Pw",
+        signInButton = {id, pw ->},
+        signUpButton = {}
     )
 }
-
- */

@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
@@ -165,13 +166,12 @@ fun SignUpScreen(
     }
 }
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignUpScreen(){
     SignUpScreen(
         modifier = Modifier,
-        onClick = { }
+        onClick = {id, pw, nickName, drinking, name ->}
     )
 }
-*/
