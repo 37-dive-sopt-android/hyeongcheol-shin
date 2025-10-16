@@ -152,6 +152,7 @@ fun SignInScreen(
         ) {
             CustomButton(
                 text = "Welcome to Sopt",
+                isEnabled = (inputUserId.isNotEmpty() && inputUserPw.isNotEmpty()),
                 onClick = {
                     if (registeredUserId == inputUserId && registeredUserPw == inputUserPw) {
                         Toast.makeText(
