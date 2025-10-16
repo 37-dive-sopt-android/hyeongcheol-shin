@@ -1,9 +1,12 @@
 package com.sopt.dive
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -58,6 +61,30 @@ fun CustomTextField(
                 VisualTransformation.None
             },
             modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+fun CustomButton(
+    buttonText: String,
+    buttonEnabled: Boolean = true,
+    onClick: () -> Unit,
+){
+    Button(
+        enabled = buttonEnabled,
+        onClick = { onClick() },
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Unspecified,
+        )
+    ) {
+        Text(
+            text = buttonText,
+            style = TextStyle(
+                fontSize = 16.sp
+            )
         )
     }
 }

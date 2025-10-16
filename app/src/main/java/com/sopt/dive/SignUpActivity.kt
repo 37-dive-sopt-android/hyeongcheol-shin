@@ -10,11 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -141,7 +137,8 @@ fun SignUpScreen(
                 placeholder = "이름을 입력해주세요",
                 )
         }
-        Button(
+        CustomButton(
+            buttonText = "Sign Up",
             onClick = {
                 if (
                     inputId.length in 6..10 &&
@@ -156,7 +153,6 @@ fun SignUpScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                     onClick(inputId, inputPw, inputNickname, inputDrinking, inputName)
-
                 } else{
                     Toast.makeText(
                         context,
@@ -165,19 +161,7 @@ fun SignUpScreen(
                     ).show()
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Unspecified,
-            )
-        ) {
-            Text(
-                text = "회원가입하기",
-                style = TextStyle(
-                    fontSize = 16.sp
-                )
-            )
-        }
+        )
     }
 }
 
