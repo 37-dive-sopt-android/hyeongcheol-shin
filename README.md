@@ -1,8 +1,14 @@
 # 두🫛두🫛 SOPT 주간 다이어리 - 매주 안드로이드 캐릭터가 하나씩 추가됩니다!!
-<img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/ebb74f9b-f825-4189-ada4-cd75e938b378" />
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/bc0dd136-5105-4ec1-aa21-ff6d9c5fa21f" />
 
 (누가봐도 Gemini로 만든 이미지 ʅ(ᐙʅ) ㅎㅎ)
 
 ## 0주차
 - SOPT 스터디를 3개를 하게 되었다!! 컨퍼런스터디도 만들었는데 스터디가 어떻게 운영되는거지? 걱정이군 lllllㅇᯅㅇl||ll||l
 - 여러분 우리 목요일에 한강 번개에서 만나요!! ヾ(•̀ ヮ <)و
+
+## 1주차
+- 1셈 재밌게 들었습니다!! 팟장님 최고
+- 워크샵이 있어 이름을 외우기 시작했습니다. 여러분들은 제 이름 기억하시죠?
+- 과제라... 필수과제 생각보다 오래 걸리고, registerForActivityResult와 putExtra 사용 부분이 어색한데 잘 마무리...했나? 이제 심화랑 탐구 건드려봐야지
+- 모각공 성공 공공?
