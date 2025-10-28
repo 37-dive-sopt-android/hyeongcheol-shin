@@ -1,11 +1,9 @@
-package com.sopt.dive
+package com.sopt.dive.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -28,9 +26,9 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
+    modifier: Modifier = Modifier,
     isTextHidden: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -66,30 +64,6 @@ fun CustomTextField(
     }
 }
 
-@Composable
-fun CustomButton(
-    text: String,
-    onClick: () -> Unit,
-    isEnabled: Boolean = true,
-    modifier: Modifier = Modifier,
-) {
-    Button(
-        enabled = isEnabled,
-        onClick = { onClick() },
-        modifier = modifier
-            .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Unspecified,
-        )
-    ) {
-        Text(
-            text = text,
-            style = TextStyle(
-                fontSize = 16.sp
-            )
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -100,14 +74,5 @@ fun PreviewCustomTextField() {
         onValueChange = {},
         label = "Test Label",
         placeholder = "Test PlaceHolder",
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCustomButton() {
-    CustomButton(
-        text = "Test Button",
-        onClick = {}
     )
 }

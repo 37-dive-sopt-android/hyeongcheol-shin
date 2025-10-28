@@ -1,4 +1,4 @@
-package com.sopt.dive
+package com.sopt.dive.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -28,6 +28,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.ui.signin.SignInActivity
+import com.sopt.dive.ui.components.CustomButton
+import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.ui.theme.DiveTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -158,7 +161,13 @@ fun SignUpScreen(
                         "회원가입에 성공하셨습니다",
                         Toast.LENGTH_SHORT
                     ).show()
-                    onSignUpClick(inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName)
+                    onSignUpClick(
+                        inputUserId,
+                        inputUserPw,
+                        inputUserNickname,
+                        inputUserDrinking,
+                        inputUserName
+                    )
                 } else {
                     Toast.makeText(
                         context,
