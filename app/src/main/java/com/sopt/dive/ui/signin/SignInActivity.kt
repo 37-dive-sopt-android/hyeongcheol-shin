@@ -34,6 +34,7 @@ import com.sopt.dive.ui.main.MainActivity
 import com.sopt.dive.ui.signup.SignUpActivity
 import com.sopt.dive.ui.theme.DiveTheme
 import util.IntentKeys
+import util.clickableWithoutRipple
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,7 +179,7 @@ fun SignInScreen(
             Text(
                 text = "회원가입하기",
                 modifier = Modifier
-                    .clickable(
+                    .clickableWithoutRipple(
                         onClick = {
                             onSignUpClick()
                         }
