@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -85,16 +88,19 @@ fun SignUpScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
+            .imePadding()
+            .verticalScroll(rememberScrollState())
     ) {
+        Spacer(Modifier.height(32.dp))
         Text(
             text = "SIGN UP",
             style = TextStyle(
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier
-                .padding(top = 32.dp, bottom = 40.dp)
         )
+        Spacer(Modifier.height(40.dp))
+
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {

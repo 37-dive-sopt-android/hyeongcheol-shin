@@ -10,7 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -115,15 +118,15 @@ fun SignInScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
+            .imePadding()
     ) {
+        Spacer(Modifier.height(32.dp))
         Text(
             text = "Welcome To Sopt",
             style = TextStyle(
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier
-                .padding(top = 32.dp)
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -152,8 +155,6 @@ fun SignInScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-                .padding(bottom = 24.dp)
         ) {
             CustomButton(
                 text = "Welcome to Sopt",
@@ -185,6 +186,7 @@ fun SignInScreen(
                         }
                     )
             )
+            Spacer(Modifier.height(20.dp))
         }
     }
 }
