@@ -19,15 +19,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
+import com.sopt.dive.ui.components.UserDetail
 import com.sopt.dive.ui.theme.DiveTheme
 import com.sopt.dive.util.IntentKeys
 
@@ -126,42 +124,6 @@ fun MainScreen(
                 isUniqueText = (userDrinking.toInt() > 3)
             )
         }
-    }
-}
-
-@Composable
-fun UserDetail(
-    title: String,
-    info: String,
-    isUniqueText: Boolean = false,
-) {
-
-    val gradientColor = listOf(Color.Cyan, Color.Blue, Color.Magenta)
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        Text(
-            text = title,
-            fontSize = 32.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-        Text(
-            text = info,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Medium,
-            style = if (isUniqueText) {
-                TextStyle(
-                    brush = Brush.linearGradient(
-                        colors = gradientColor
-                    ) //1셈때 자료 보다가 그냥 넣어보고 싶었어요 ㅎㅎ
-                )
-            } else {
-                TextStyle(
-                    color = Color.DarkGray
-                )
-            }
-        )
     }
 }
 
