@@ -52,7 +52,6 @@ class SignUpActivity : ComponentActivity() {
                             resultIntent.putExtra(IntentKeys.USER_DRINKING, inputUserDrinking)
                             resultIntent.putExtra(IntentKeys.USER_NAME, inputUserName)
                             setResult(RESULT_OK, resultIntent)
-                            //TODO("Activity 생략 가능 왜?")
                             finish()
                         }
                     )
@@ -77,7 +76,7 @@ fun SignUpScreen(
 
     val context = LocalContext.current
 
-    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣\\s]*$")
+    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$")
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -153,9 +152,9 @@ fun SignUpScreen(
                 if (
                     inputUserId.length in 6..10 &&
                     inputUserPw.length in 8..12 &&
-                    (inputUserNickname.isNotEmpty() && inputUserNickname.isNotBlank()) &&
+                    inputUserNickname.isNotBlank() &&
                     (inputUserDrinking.toIntOrNull() != null && inputUserDrinking.toInt() >= 0) &&
-                    (inputUserName.isNotEmpty() && inputUserName.isNotBlank())
+                    inputUserName.isNotBlank()
                 ) {
                     Toast.makeText(
                         context,
