@@ -32,6 +32,7 @@ import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.ui.main.MainActivity
 import com.sopt.dive.ui.signup.SignUpActivity
 import com.sopt.dive.ui.theme.DiveTheme
+import util.IntentKeys
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +50,11 @@ class SignInActivity : ComponentActivity() {
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 val intentData = result.data
-                registeredUserId = intentData?.getStringExtra("USER_ID") ?: ""
-                registeredUserPw = intentData?.getStringExtra("USER_PW") ?: ""
-                registeredUserNickname = intentData?.getStringExtra("USER_NICKNAME") ?: ""
-                registeredUserDrinking = intentData?.getStringExtra("USER_DRINKING") ?: ""
-                registeredUserName = intentData?.getStringExtra("USER_NAME") ?: ""
-                //TODO("비어 있으면 로그인 안 되도록 설정")
+                registeredUserId = intentData?.getStringExtra(IntentKeys.USER_ID) ?: ""
+                registeredUserPw = intentData?.getStringExtra(IntentKeys.USER_PW) ?: ""
+                registeredUserNickname = intentData?.getStringExtra(IntentKeys.USER_NICKNAME) ?: ""
+                registeredUserDrinking = intentData?.getStringExtra(IntentKeys.USER_DRINKING) ?: ""
+                registeredUserName = intentData?.getStringExtra(IntentKeys.USER_NAME) ?: ""
             }
         }
 
@@ -69,12 +69,11 @@ class SignInActivity : ComponentActivity() {
                         registeredUserPw = registeredUserPw,
                         onSignInClick = { inputUserId, inputUserPw ->
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra("USER_ID", inputUserId)
-                            intent.putExtra("USER_PW", inputUserPw)
-                            intent.putExtra("USER_NICKNAME", registeredUserNickname)
-                            intent.putExtra("USER_DRINKING", registeredUserDrinking)
-                            intent.putExtra("USER_NAME", registeredUserName)
-                            setResult(RESULT_OK, intent)
+                            intent.putExtra(IntentKeys.USER_ID, inputUserId)
+                            intent.putExtra(IntentKeys.USER_PW, inputUserPw)
+                            intent.putExtra(IntentKeys.USER_NICKNAME, registeredUserNickname)
+                            intent.putExtra(IntentKeys.USER_DRINKING, registeredUserDrinking)
+                            intent.putExtra(IntentKeys.USER_NAME, registeredUserName)
                             startActivity(intent)
                             finish()
                         },
@@ -85,8 +84,6 @@ class SignInActivity : ComponentActivity() {
                         },
                         modifier = Modifier
                             .padding(innerPadding),
-                        //찾아보기
-                        //TODO("innerPadding이 왜 있는 것인가?")
                     )
                 }
             }

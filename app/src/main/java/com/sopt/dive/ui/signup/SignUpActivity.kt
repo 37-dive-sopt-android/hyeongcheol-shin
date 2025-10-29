@@ -32,6 +32,7 @@ import com.sopt.dive.ui.signin.SignInActivity
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.ui.theme.DiveTheme
+import util.IntentKeys
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +46,11 @@ class SignUpActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding),
                         onSignUpClick = { inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName ->
                             val resultIntent = Intent(this, SignInActivity::class.java)
-                            resultIntent.putExtra("USER_ID", inputUserId)
-                            resultIntent.putExtra("USER_PW", inputUserPw)
-                            resultIntent.putExtra("USER_NICKNAME", inputUserNickname)
-                            resultIntent.putExtra("USER_DRINKING", inputUserDrinking)
-                            resultIntent.putExtra("USER_NAME", inputUserName)
+                            resultIntent.putExtra(IntentKeys.USER_ID, inputUserId)
+                            resultIntent.putExtra(IntentKeys.USER_PW, inputUserPw)
+                            resultIntent.putExtra(IntentKeys.USER_NICKNAME, inputUserNickname)
+                            resultIntent.putExtra(IntentKeys.USER_DRINKING, inputUserDrinking)
+                            resultIntent.putExtra(IntentKeys.USER_NAME, inputUserName)
                             setResult(RESULT_OK, resultIntent)
                             //TODO("Activity 생략 가능 왜?")
                             finish()
