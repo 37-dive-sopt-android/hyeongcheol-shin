@@ -1,5 +1,6 @@
 # 두🫛두🫛 SOPT 주간 다이어리 - 매주 안드로이드 캐릭터가 하나씩 추가됩니다!!
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/bc0dd136-5105-4ec1-aa21-ff6d9c5fa21f" />
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/49090e61-4d3b-4475-a0e0-378300b6834c" />
+" />
 
 (누가봐도 Gemini로 만든 이미지 ʅ(ᐙʅ) ㅎㅎ)
 
@@ -12,3 +13,6 @@
 - 워크샵이 있어 이름을 외우기 시작했습니다. 여러분들은 제 이름 기억하시죠?
 - 과제라... 필수과제 생각보다 오래 걸리고, registerForActivityResult와 putExtra 사용 부분이 어색한데 잘 마무리...했나? 이제 심화랑 탐구 건드려봐야지
 - 모각공 성공 공공?
+
+## 2주차
+- 2셈 진짜 너무너무 재밌게 들었다. 1차 과제때 있던 탐구과제 덕분에 이해가 쏙쏙 재미도 쑥쑥 (՞•ω•՞) 콩 자라는 중
