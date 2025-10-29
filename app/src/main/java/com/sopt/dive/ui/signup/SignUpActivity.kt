@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -105,6 +106,7 @@ fun SignUpScreen(
                 },
                 label = "아이디",
                 placeholder = "6 ~ 10 자리 입력",
+                imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "PW",
@@ -114,6 +116,7 @@ fun SignUpScreen(
                 },
                 label = "비밀번호",
                 placeholder = "8 ~ 12 자리 입력",
+                imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "NICKNAME",
@@ -123,6 +126,7 @@ fun SignUpScreen(
                 },
                 label = "별명",
                 placeholder = "한 글자 이상 입력",
+                imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "주량",
@@ -132,7 +136,8 @@ fun SignUpScreen(
                 },
                 label = "소주 몇병?",
                 placeholder = "숫자만 입력",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "NAME",

@@ -1,5 +1,6 @@
 package com.sopt.dive.ui.components
 
+import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +35,8 @@ fun CustomTextField(
     placeholder: String,
     modifier: Modifier = Modifier,
     isTextHidden: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -57,12 +61,16 @@ fun CustomTextField(
                 unfocusedContainerColor = Color.Transparent,
                 disabledContainerColor = Color.Transparent,
             ),
-            keyboardOptions = keyboardOptions,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             visualTransformation = if (isTextHidden) {
                 PasswordVisualTransformation()
             } else {
                 VisualTransformation.None
             },
+            maxLines = 1,
             modifier = Modifier.fillMaxWidth(),
         )
     }
