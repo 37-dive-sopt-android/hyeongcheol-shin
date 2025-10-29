@@ -35,8 +35,8 @@ import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.ui.main.MainActivity
 import com.sopt.dive.ui.signup.SignUpActivity
 import com.sopt.dive.ui.theme.DiveTheme
-import util.IntentKeys
-import util.clickableWithoutRipple
+import com.sopt.dive.util.IntentKeys
+import com.sopt.dive.util.clickableWithoutRipple
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

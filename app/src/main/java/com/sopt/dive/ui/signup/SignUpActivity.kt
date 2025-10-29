@@ -36,7 +36,7 @@ import com.sopt.dive.ui.signin.SignInActivity
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.ui.theme.DiveTheme
-import util.IntentKeys
+import com.sopt.dive.util.IntentKeys
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

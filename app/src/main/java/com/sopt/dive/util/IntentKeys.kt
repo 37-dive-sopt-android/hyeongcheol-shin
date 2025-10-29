@@ -1,4 +1,4 @@
-package util
+package com.sopt.dive.util
 
 object IntentKeys {
     const val USER_ID = "USER_ID"
