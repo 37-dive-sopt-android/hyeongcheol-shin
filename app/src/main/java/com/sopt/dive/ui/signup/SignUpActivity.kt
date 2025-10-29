@@ -45,12 +45,13 @@ class SignUpActivity : ComponentActivity() {
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
                         onSignUpClick = { inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName ->
-                            val resultIntent = Intent(this, SignInActivity::class.java)
-                            resultIntent.putExtra(IntentKeys.USER_ID, inputUserId)
-                            resultIntent.putExtra(IntentKeys.USER_PW, inputUserPw)
-                            resultIntent.putExtra(IntentKeys.USER_NICKNAME, inputUserNickname)
-                            resultIntent.putExtra(IntentKeys.USER_DRINKING, inputUserDrinking)
-                            resultIntent.putExtra(IntentKeys.USER_NAME, inputUserName)
+                            val resultIntent = Intent(this, SignInActivity::class.java).apply {
+                                putExtra(IntentKeys.USER_ID, inputUserId)
+                                putExtra(IntentKeys.USER_PW, inputUserPw)
+                                putExtra(IntentKeys.USER_NICKNAME, inputUserNickname)
+                                putExtra(IntentKeys.USER_DRINKING, inputUserDrinking)
+                                putExtra(IntentKeys.USER_NAME, inputUserName)
+                            }
                             setResult(RESULT_OK, resultIntent)
                             finish()
                         }

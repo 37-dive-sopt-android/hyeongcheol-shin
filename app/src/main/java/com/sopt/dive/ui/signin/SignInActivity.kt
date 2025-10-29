@@ -68,12 +68,13 @@ class SignInActivity : ComponentActivity() {
                         registeredUserId = registeredUserId,
                         registeredUserPw = registeredUserPw,
                         onSignInClick = { inputUserId, inputUserPw ->
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra(IntentKeys.USER_ID, inputUserId)
-                            intent.putExtra(IntentKeys.USER_PW, inputUserPw)
-                            intent.putExtra(IntentKeys.USER_NICKNAME, registeredUserNickname)
-                            intent.putExtra(IntentKeys.USER_DRINKING, registeredUserDrinking)
-                            intent.putExtra(IntentKeys.USER_NAME, registeredUserName)
+                            val intent = Intent(this, MainActivity::class.java).apply {
+                                putExtra(IntentKeys.USER_ID, inputUserId)
+                                putExtra(IntentKeys.USER_PW, inputUserPw)
+                                putExtra(IntentKeys.USER_NICKNAME, registeredUserNickname)
+                                putExtra(IntentKeys.USER_DRINKING, registeredUserDrinking)
+                                putExtra(IntentKeys.USER_NAME, registeredUserName)
+                            }
                             startActivity(intent)
                             finish()
                         },
