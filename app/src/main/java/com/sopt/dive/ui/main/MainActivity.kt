@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.navigation.MainScreen
 import com.sopt.dive.navigation.NavigationMainScreen
+import com.sopt.dive.ui.components.BottomNavigationBar
 import com.sopt.dive.ui.theme.DiveTheme
 import com.sopt.dive.util.IntentKeys
 
@@ -30,7 +31,12 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    bottomBar = {},
+                    bottomBar = {
+                        BottomNavigationBar(
+                            navController = navController,
+                            modifier = Modifier,
+                        )
+                    },
                 ) { innerPadding ->
                     NavigationMainScreen(
                         navController = navController,
