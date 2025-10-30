@@ -9,22 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.sopt.dive.navigation.MainScreen
 import com.sopt.dive.navigation.NavigationMainScreen
 import com.sopt.dive.ui.components.BottomNavigationBar
 import com.sopt.dive.ui.theme.DiveTheme
-import com.sopt.dive.util.IntentKeys
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        val userId = intent.getStringExtra(IntentKeys.USER_ID) ?: ""
-        val userPw = intent.getStringExtra(IntentKeys.USER_PW) ?: ""
-        val userNickName = intent.getStringExtra(IntentKeys.USER_NICKNAME) ?: ""
-        val userDrinking = intent.getStringExtra(IntentKeys.USER_DRINKING) ?: ""
-        val userName = intent.getStringExtra(IntentKeys.USER_NAME) ?: ""
 
         setContent {
             DiveTheme {
@@ -40,13 +32,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavigationMainScreen(
                         navController = navController,
-                        userId = userId,
-                        userPw = userPw,
-                        userNickName = userNickName,
-                        userDrinking = userDrinking,
-                        userName = userName,
                         modifier = Modifier.padding(innerPadding),
-                        startDestination = MainScreen.MyPage.name,
                     )
                 }
             }

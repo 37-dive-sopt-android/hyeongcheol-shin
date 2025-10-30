@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.sopt.dive.navigation.MainScreen
+import com.sopt.dive.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(
@@ -18,9 +18,9 @@ fun BottomNavigationBar(
     modifier: Modifier,
 ) {
     val screens = listOf(
-        MainScreen.Home,
-        MainScreen.Search,
-        MainScreen.MyPage
+        Screen.Home,
+        Screen.Search,
+        Screen.MyPage
     )
 
     NavigationBar {

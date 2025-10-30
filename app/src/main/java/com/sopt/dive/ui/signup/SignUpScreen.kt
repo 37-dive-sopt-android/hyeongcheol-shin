@@ -1,11 +1,6 @@
 package com.sopt.dive.ui.signup
 
-import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +10,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,48 +23,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.ui.signin.SignInActivity
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
-import com.sopt.dive.ui.theme.DiveTheme
-import com.sopt.dive.util.IntentKeys
-
-class SignUpActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        setContent {
-            DiveTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SignUpScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        onSignUpClick = { inputUserId, inputUserPw, inputUserNickname, inputUserDrinking, inputUserName ->
-                            val resultIntent = Intent(this, SignInActivity::class.java).apply {
-                                putExtra(IntentKeys.USER_ID, inputUserId)
-                                putExtra(IntentKeys.USER_PW, inputUserPw)
-                                putExtra(IntentKeys.USER_NICKNAME, inputUserNickname)
-                                putExtra(IntentKeys.USER_DRINKING, inputUserDrinking)
-                                putExtra(IntentKeys.USER_NAME, inputUserName)
-                            }
-                            setResult(RESULT_OK, resultIntent)
-                            finish()
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
 fun SignUpScreen(
-    modifier: Modifier = Modifier,
     onSignUpClick: (String, String, String, String, String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     var inputUserId by remember { mutableStateOf("") }
@@ -178,7 +140,7 @@ fun SignUpScreen(
                         inputUserPw,
                         inputUserNickname,
                         inputUserDrinking,
-                        inputUserName
+                        inputUserName,
                     )
                 } else {
                     Toast.makeText(
@@ -193,12 +155,14 @@ fun SignUpScreen(
     }
 }
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignUpScreen() {
     SignUpScreen(
         modifier = Modifier,
-        onSignUpClick = { id, pw, nickName, drinking, name -> }
+        onSignUpClick = { "Test", "Test", "Test", "2", "Test" ->}
     )
 }
+
+ */
