@@ -1,8 +1,57 @@
 package com.sopt.dive.ui.main
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.sopt.dive.R
+import com.sopt.dive.data.getBoardGameDummyData
+import com.sopt.dive.ui.components.HomeItem
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    userName: String,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .fillMaxSize()
+    ) {
+        item {
+            HomeItem(
+                title = userName,
+                description = "Welcome To SOPT",
+                painter = painterResource(R.drawable.img_otter),
+                painterDescription = "달수",
+                painterSize = 60
+            )
+        }
+        items(getBoardGameDummyData()+getBoardGameDummyData()) { boardGame ->
+            HomeItem(
+                title = boardGame.title,
+                description = boardGame.description,
+                painter = boardGame.painter
+            )
+        }
+        // LazyColumn 사용을 위해 DummyData를 2번 넣었습니다.
+    }
+}
 
+@Composable
+@Preview(showBackground = true)
+fun PreviewHomeScreen() {
+    HomeScreen(
+        userName = "Test",
+        modifier = Modifier
+    )
 }

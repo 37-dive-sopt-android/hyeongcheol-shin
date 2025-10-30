@@ -31,7 +31,10 @@ fun NavigationMainScreen(
         startDestination = startDestination
     ) {
         composable(MainScreen.Home.name) {
-            HomeScreen()
+            HomeScreen(
+                userName = userName,
+                modifier = modifier,
+            )
         }
         composable(MainScreen.Search.name) {
             SearchScreen(
