@@ -12,7 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.dive.R
-import com.sopt.dive.data.getBoardGameDummyData
+import com.sopt.dive.data.getUserDummyData
 import com.sopt.dive.ui.components.HomeItem
 
 @Composable
@@ -36,11 +36,11 @@ fun HomeScreen(
                 painterSize = 60
             )
         }
-        items(getBoardGameDummyData()+getBoardGameDummyData()) { boardGame ->
+        items(getUserDummyData() + getUserDummyData()) { user ->
             HomeItem(
-                title = boardGame.title,
-                description = boardGame.description,
-                painter = boardGame.painter
+                title = user.name,
+                description = user.nickname,
+                painter = user.image,
             )
         }
         // LazyColumn 사용을 위해 DummyData를 2번 넣었습니다.
