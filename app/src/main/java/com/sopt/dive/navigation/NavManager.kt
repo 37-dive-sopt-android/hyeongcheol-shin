@@ -44,8 +44,12 @@ fun NavigationMainScreen(
                 SignInScreen(
                     onSignUpClick = { navController.navigate(Screen.SignUp.name) },
                     onSignInClick = {
-                        navController.popBackStack()
-                        navController.navigate(Screen.Home.name)
+                        navController.navigate(Screen.Home.name) {
+                            popUpTo(Screen.SignIn.name) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     },
                     modifier = modifier,
                     savedStateHandle = appHandle(),
@@ -67,7 +71,7 @@ fun NavigationMainScreen(
 
             composable(Screen.Home.name) {
                 HomeScreen(
-                    userName = appHandle().get<String>("user_id").orEmpty(),
+                    userName = appHandle().get<String>("user_name").orEmpty(),
                     modifier = modifier,
                 )
             }
@@ -83,7 +87,7 @@ fun NavigationMainScreen(
                     userNickName = appHandle().get<String>("user_nickname").orEmpty(),
                     userDrinking = appHandle().get<String>("user_drinking").orEmpty(),
                     userName = appHandle().get<String>("user_name").orEmpty(),
-                    modifier = Modifier,
+                    modifier = modifier,
                 )
             }
         }
