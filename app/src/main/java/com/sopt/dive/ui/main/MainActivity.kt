@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         if(currentRoute in mainScreen)BottomNavigationBar(
                             navController = navController,
-                            modifier = Modifier,
                         )
                     },
                 ) { innerPadding ->
