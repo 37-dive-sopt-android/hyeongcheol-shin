@@ -12,8 +12,10 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.navigation.Screen
 
 @Composable
@@ -62,4 +64,12 @@ fun BottomNavigationBar(
             )
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewBottomBar(){
+    BottomNavigationBar(
+        navController = rememberNavController()
+    )
 }

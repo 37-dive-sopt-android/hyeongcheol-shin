@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.components.CustomButton
@@ -118,7 +119,6 @@ fun SignInScreen(
     }
 }
 
-/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
@@ -126,8 +126,7 @@ fun PreviewSignInScreen() {
         modifier = Modifier,
         registeredUserId = "Test Id",
         registeredUserPw = "Test Pw",
-        onSignInClick = { id, pw -> },
-        onSignUpClick = {}
+        onSignInClick = { },
+        onSignUpClick = { }
     )
 }
- */
