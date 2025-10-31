@@ -29,10 +29,11 @@ import com.sopt.dive.util.clickableWithoutRipple
 
 @Composable
 fun SignInScreen(
+    registeredUserId: String,
+    registeredUserPw: String,
     onSignInClick: () -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
-    savedStateHandle: SavedStateHandle,
 ) {
 
     var inputUserId by remember { mutableStateOf("") }
@@ -88,9 +89,7 @@ fun SignInScreen(
                 text = "Welcome to Sopt",
                 isEnabled = (inputUserId.isNotEmpty() && inputUserPw.isNotEmpty()),
                 onClick = {
-                    val authHandleId = savedStateHandle.get<String>("user_id")
-                    val authHandlePw = savedStateHandle.get<String>("user_pw")
-                    if (authHandleId == inputUserId && authHandlePw == inputUserPw) {
+                    if (registeredUserId == inputUserId && registeredUserPw == inputUserPw) {
                         Toast.makeText(
                             context,
                             "로그인 성공",

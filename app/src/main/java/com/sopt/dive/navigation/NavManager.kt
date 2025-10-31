@@ -41,7 +41,12 @@ fun NavigationMainScreen(
                 navController.getBackStackEntry(Root).savedStateHandle
 
             composable(Screen.SignIn.name) {
+                val registeredUserId = appHandle().get<String>("user_id").orEmpty()
+                val registeredUserPw = appHandle().get<String>("user_pw").orEmpty()
+
                 SignInScreen(
+                    registeredUserId = registeredUserId,
+                    registeredUserPw = registeredUserPw,
                     onSignUpClick = { navController.navigate(Screen.SignUp.name) },
                     onSignInClick = {
                         navController.navigate(Screen.Home.name) {
@@ -52,7 +57,6 @@ fun NavigationMainScreen(
                         }
                     },
                     modifier = modifier,
-                    savedStateHandle = appHandle(),
                 )
             }
             composable(Screen.SignUp.name) {
