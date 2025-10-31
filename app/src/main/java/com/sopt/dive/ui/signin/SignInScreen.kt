@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.SavedStateHandle
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.util.clickableWithoutRipple
