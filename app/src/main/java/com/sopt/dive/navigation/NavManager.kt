@@ -76,6 +76,7 @@ fun NavigationMainScreen(
             composable(Screen.Home.name) {
                 HomeScreen(
                     userName = appHandle().get<String>("user_name").orEmpty(),
+                    userNickname = appHandle().get<String>("user_nickname").orEmpty(),
                     modifier = modifier,
                 )
             }

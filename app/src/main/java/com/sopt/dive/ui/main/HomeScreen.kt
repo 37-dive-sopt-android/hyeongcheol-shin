@@ -18,6 +18,7 @@ import com.sopt.dive.ui.components.HomeItem
 @Composable
 fun HomeScreen(
     userName: String,
+    userNickname: String,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -31,7 +32,7 @@ fun HomeScreen(
             HomeItem(
                 UserData(
                     name = userName,
-                    nickname = "Fe",
+                    nickname = userNickname,
                     image = R.drawable.img_otter,
                     imageDescription = "달수",
                 ),
@@ -53,6 +54,7 @@ fun HomeScreen(
 fun PreviewHomeScreen() {
     HomeScreen(
         userName = "Test",
+        userNickname = "Test",
         modifier = Modifier
     )
 }
