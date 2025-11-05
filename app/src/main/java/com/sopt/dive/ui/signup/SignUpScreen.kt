@@ -108,7 +108,7 @@ fun SignUpScreen(
                 title = "주량",
                 value = inputUser.drinking,
                 onValueChange = {
-                    inputUser = inputUser.copy(drinking = it)
+                    inputUser = inputUser.copy(drinking = it.filter { it.isDigit() })
                 },
                 label = "소주 몇병?",
                 placeholder = "숫자만 입력",
