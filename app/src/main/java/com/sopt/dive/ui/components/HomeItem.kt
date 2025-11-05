@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -49,17 +49,20 @@ fun HomeItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Surface(
-                color = Color.Gray,
-                shape = RoundedCornerShape(100),
-                modifier = Modifier.size(painterSize.dp)
-            ) {
-                if (painter != null) {
-                    Image(
-                        painter = painter,
-                        contentDescription = painterDescription,
-                        modifier = Modifier.fillMaxHeight()
-                    )
+            if(painter != null){
+                Image(
+                    painter = painter,
+                    contentDescription = painterDescription,
+                    modifier = Modifier.size(painterSize.dp)
+                )
+            }
+            else{
+                Surface(
+                    color = Color.Gray,
+                    shape = CircleShape,
+                    modifier = Modifier.size(painterSize.dp)
+                ) {
+
                 }
             }
             Column(
