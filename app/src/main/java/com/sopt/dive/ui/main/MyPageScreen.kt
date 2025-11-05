@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,18 +44,13 @@ fun MyPageScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Surface(
-                    shape = RoundedCornerShape(100),
-                    color = Color.Unspecified,
+                Image(
+                    painter = painterResource(R.drawable.img_otter),
+                    contentDescription = "달수",
                     modifier = Modifier
-                        .size(52.dp),
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.img_otter),
-                        contentDescription = "달수",
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                        .size(48.dp)
+                        .clip(CircleShape)
+                )
                 Text(
                     text = userName,
                     fontSize = 28.sp
