@@ -1,5 +1,6 @@
 package com.sopt.dive.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +30,7 @@ fun HomeItem(
     title: String,
     description: String,
     modifier: Modifier = Modifier,
-    painter: Painter? = null,
+    @DrawableRes painter: Int? = null,
     painterDescription: String? = null,
     painterSize: Int = 40,
 ) {
@@ -51,7 +51,7 @@ fun HomeItem(
         ) {
             if(painter != null){
                 Image(
-                    painter = painter,
+                    painter = painterResource(painter),
                     contentDescription = painterDescription,
                     modifier = Modifier.size(painterSize.dp)
                 )
@@ -102,7 +102,7 @@ fun PreviewHomeItemWithOtter() {
     HomeItem(
         title = "Test",
         description = "Test",
-        painter = painterResource(R.drawable.img_otter),
+        painter = R.drawable.img_otter,
         painterDescription = null,
         painterSize = 60,
     )

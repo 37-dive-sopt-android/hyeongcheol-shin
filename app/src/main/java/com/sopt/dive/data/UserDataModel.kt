@@ -1,6 +1,6 @@
 package com.sopt.dive.data
 
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.annotation.DrawableRes
 
 data class UserData(
     val id: String,
@@ -8,7 +8,7 @@ data class UserData(
     val nickname: String,
     val drinking: String,
     val name: String,
-    val image: Painter?,
+    @DrawableRes val image: Int?,
 )
 
 fun getUserDummyData(): List<UserData> {
