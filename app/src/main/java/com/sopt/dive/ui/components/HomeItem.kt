@@ -116,27 +116,22 @@ fun HomeItemUserText(
             Text(
                 text = user.name,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp ,
+                fontSize = 20.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            if (user.birth != null && user.birth == localDate)
-                Text(
-                    text = "생축!! ${user.nickname}",
-                    fontWeight = FontWeight.Normal,
-                    style = TextStyle(
+            Text(
+                text = if (isBirth) "생축!! ${user.nickname}" else user.nickname,
+                fontWeight = FontWeight.Normal,
+                style = if (isBirth) {
+                    TextStyle(
                         brush = Brush.linearGradient(
                             colors = listOf(Color.Cyan, Color.Blue, Color.Magenta)
                         )
-                    ),
-                    fontSize = 12.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            else Text(
-                text = user.nickname,
-                fontWeight = FontWeight.Normal,
-                color = Color.Gray,
+                    )
+                } else {
+                    TextStyle(color = Color.Gray)
+                },
                 fontSize = 12.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -172,23 +167,16 @@ fun HomeItemBoardGame(
             .padding(horizontal = 12.dp, vertical = 8.dp)
 
     ) {
-        if (boardGame.description != null) {
-            Text(
-                text = "${boardGame.title} - ${boardGame.description}",
-                color = Color.DarkGray,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f, fill = false)
-            )
-        } else
-            Text(
-                text = boardGame.title,
-                color = Color.DarkGray,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f, fill = false),
-            )
+
+        Text(
+            text = if (boardGame.description != null) "${boardGame.title} - ${boardGame.description}" else boardGame.title,
+            color = Color.DarkGray,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f, fill = false),
+        )
     }
+
 }
 
 @Composable
