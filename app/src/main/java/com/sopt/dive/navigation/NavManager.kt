@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.sopt.dive.data.User
 import com.sopt.dive.ui.main.HomeScreen
 import com.sopt.dive.ui.main.MyPageScreen
 import com.sopt.dive.ui.main.SearchScreen
@@ -61,12 +62,12 @@ fun NavigationMainScreen(
             }
             composable(Screen.SignUp.name) {
                 SignUpScreen(
-                    onSignUpClick = { id, pw, nickname, drinking, name ->
-                        appHandle().set("user_id", id)
-                        appHandle().set("user_pw", pw)
-                        appHandle().set("user_nickname", nickname)
-                        appHandle().set("user_drinking", drinking)
-                        appHandle().set("user_name", name)
+                    onSignUpClick = { user ->
+                        appHandle().set("user_id", user.id)
+                        appHandle().set("user_pw", user.pw)
+                        appHandle().set("user_nickname", user.nickname)
+                        appHandle().set("user_drinking", user.drinking)
+                        appHandle().set("user_name", user.name)
                         navController.popBackStack()
                     },
                     modifier = modifier,
@@ -86,11 +87,13 @@ fun NavigationMainScreen(
             }
             composable(Screen.MyPage.name) {
                 MyPageScreen(
-                    userId = appHandle().get<String>("user_id").orEmpty(),
-                    userPw = appHandle().get<String>("user_pw").orEmpty(),
-                    userNickName = appHandle().get<String>("user_nickname").orEmpty(),
-                    userDrinking = appHandle().get<String>("user_drinking").orEmpty(),
-                    userName = appHandle().get<String>("user_name").orEmpty(),
+                    user = User(
+                        id = appHandle().get<String>("user_id").orEmpty(),
+                        pw = appHandle().get<String>("user_pw").orEmpty(),
+                        nickname = appHandle().get<String>("user_nickname").orEmpty(),
+                        drinking = appHandle().get<String>("user_drinking").orEmpty(),
+                        name = appHandle().get<String>("user_name").orEmpty(),
+                    ),
                     modifier = modifier,
                 )
             }

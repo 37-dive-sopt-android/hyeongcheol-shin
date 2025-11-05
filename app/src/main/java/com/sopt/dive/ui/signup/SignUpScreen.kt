@@ -26,21 +26,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.data.User
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 
 
 @Composable
 fun SignUpScreen(
-    onSignUpClick: (String, String, String, String, String) -> Unit,
+    onSignUpClick: (User) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
-    var inputUserId by remember { mutableStateOf("") }
-    var inputUserPw by remember { mutableStateOf("") }
-    var inputUserNickname by remember { mutableStateOf("") }
-    var inputUserDrinking by remember { mutableStateOf("") }
-    var inputUserName by remember { mutableStateOf("") }
+    var inputUser by remember {
+        mutableStateOf(
+            User(
+                id = "",
+                pw = "",
+                nickname = "",
+                drinking = "",
+                name = "",
+            )
+        )
+    }
 
     val context = LocalContext.current
 
@@ -69,9 +76,9 @@ fun SignUpScreen(
         ) {
             CustomTextField(
                 title = "ID",
-                value = inputUserId,
+                value = inputUser.id,
                 onValueChange = {
-                    inputUserId = it
+                    inputUser = inputUser.copy(id = it)
                 },
                 label = "아이디",
                 placeholder = "6 ~ 10 자리 입력",
@@ -79,9 +86,9 @@ fun SignUpScreen(
             )
             CustomTextField(
                 title = "PW",
-                value = inputUserPw,
+                value = inputUser.pw,
                 onValueChange = {
-                    inputUserPw = it
+                    inputUser = inputUser.copy(pw = it)
                 },
                 label = "비밀번호",
                 placeholder = "8 ~ 12 자리 입력",
@@ -89,9 +96,9 @@ fun SignUpScreen(
             )
             CustomTextField(
                 title = "NICKNAME",
-                value = inputUserNickname,
+                value = inputUser.nickname,
                 onValueChange = {
-                    inputUserNickname = it
+                    inputUser = inputUser.copy(nickname = it)
                 },
                 label = "별명",
                 placeholder = "한 글자 이상 입력",
@@ -99,9 +106,9 @@ fun SignUpScreen(
             )
             CustomTextField(
                 title = "주량",
-                value = inputUserDrinking,
+                value = inputUser.drinking,
                 onValueChange = {
-                    inputUserDrinking = it
+                    inputUser = inputUser.copy(drinking = it)
                 },
                 label = "소주 몇병?",
                 placeholder = "숫자만 입력",
@@ -110,10 +117,10 @@ fun SignUpScreen(
             )
             CustomTextField(
                 title = "NAME",
-                value = inputUserName,
+                value = inputUser.name,
                 onValueChange = {
                     if (koreanRegex.matches(it)) {
-                        inputUserName = it
+                        inputUser = inputUser.copy(name = it)
                     }
                 },
                 label = "이름",
@@ -125,11 +132,11 @@ fun SignUpScreen(
             text = "Sign Up",
             onClick = {
                 if (
-                    inputUserId.length in 6..10 &&
-                    inputUserPw.length in 8..12 &&
-                    inputUserNickname.isNotBlank() &&
-                    (inputUserDrinking.toIntOrNull() != null && inputUserDrinking.toInt() >= 0) &&
-                    inputUserName.isNotBlank()
+                    inputUser.id.length in 6..10 &&
+                    inputUser.pw.length in 8..12 &&
+                    inputUser.nickname.isNotBlank() &&
+                    (inputUser.drinking.toIntOrNull() != null && inputUser.drinking.toInt() >= 0) &&
+                    inputUser.name.isNotBlank()
                 ) {
                     Toast.makeText(
                         context,
@@ -137,11 +144,7 @@ fun SignUpScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                     onSignUpClick(
-                        inputUserId,
-                        inputUserPw,
-                        inputUserNickname,
-                        inputUserDrinking,
-                        inputUserName,
+                        inputUser
                     )
                 } else {
                     Toast.makeText(
@@ -162,6 +165,6 @@ fun SignUpScreen(
 fun PreviewSignUpScreen() {
     SignUpScreen(
         modifier = Modifier,
-        onSignUpClick = { id, pw, nickname, drinking, name -> }
+        onSignUpClick = { user -> }
     )
 }

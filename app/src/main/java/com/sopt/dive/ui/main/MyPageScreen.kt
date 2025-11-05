@@ -19,15 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
+import com.sopt.dive.data.User
 import com.sopt.dive.ui.components.UserDetail
 
 @Composable
 fun MyPageScreen(
-    userId: String,
-    userPw: String,
-    userNickName: String,
-    userDrinking: String,
-    userName: String,
+    user: User,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -52,12 +49,12 @@ fun MyPageScreen(
                         .clip(CircleShape)
                 )
                 Text(
-                    text = userName,
+                    text = user.name,
                     fontSize = 28.sp
                 )
             }
             Text(
-                text = "$userName 님 SOPT에 오신 것을 환영합니다",
+                text = "${user.name} 님 SOPT에 오신 것을 환영합니다",
                 fontSize = 16.sp
             )
         }
@@ -67,20 +64,20 @@ fun MyPageScreen(
         ) {
             UserDetail(
                 title = "ID",
-                info = userId
+                info = user.id
             )
             UserDetail(
                 title = "PW",
-                info = userPw
+                info = user.pw
             )
             UserDetail(
                 title = "NICKNAME",
-                info = userNickName
+                info = user.nickname
             )
             UserDetail(
                 title = "주량",
-                info = "$userDrinking 병",
-                isUniqueText = (userDrinking.toInt() > 3)
+                info = "${user.drinking} 병",
+                isUniqueText = (user.drinking.toInt() > 3)
             )
         }
     }
@@ -90,11 +87,12 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     MyPageScreen(
-        modifier = Modifier,
-        userId = "test",
-        userPw = "test",
-        userNickName = "Fe",
-        userDrinking = "0",
-        userName = "SHC"
+        user = User(
+            id = "test",
+            pw = "test",
+            nickname = "Fe",
+            drinking = "0",
+            name = "SHC"
+        ),
     )
 }
