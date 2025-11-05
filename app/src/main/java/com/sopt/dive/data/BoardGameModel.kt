@@ -1,16 +1,18 @@
 package com.sopt.dive.data
 
-import androidx.annotation.DrawableRes
+import androidx.compose.ui.graphics.Color
 
-enum class Difficulty {
-    EASY,
-    NORMAL,
-    HARD
+enum class Difficulty(
+    val value: String,
+    val color: Color,
+) {
+    EASY("Easy", Color.Green),
+    NORMAL("Normal", Color.Yellow),
+    HARD("Hard", Color.Red),
 }
 
 data class BoardGame(
     val title: String,
-    val description: String,
+    val description: String? = null,
     val difficulty: Difficulty,
-    @DrawableRes val image: Int?,
 )
