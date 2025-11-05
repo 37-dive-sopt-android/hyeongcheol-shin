@@ -19,6 +19,7 @@ import com.sopt.dive.ui.components.HomeItem
 fun HomeScreen(
     userName: String,
     userNickname: String,
+    users: List<UserData>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -39,13 +40,12 @@ fun HomeScreen(
                 painterSize = 60,
             )
         }
-        items(getUserDummyData() + getUserDummyData()) { user ->
+        items(users) { user ->
             HomeItem(
                 user = user,
                 painterSize = 40,
             )
         }
-        // LazyColumn 사용을 위해 DummyData를 2번 넣었습니다.
     }
 }
 
@@ -55,6 +55,7 @@ fun PreviewHomeScreen() {
     HomeScreen(
         userName = "Test",
         userNickname = "Test",
+        users = getUserDummyData(),
         modifier = Modifier
     )
 }

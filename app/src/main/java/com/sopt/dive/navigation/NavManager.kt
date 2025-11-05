@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sopt.dive.data.User
+import com.sopt.dive.data.getUserDummyData
 import com.sopt.dive.ui.main.HomeScreen
 import com.sopt.dive.ui.main.MyPageScreen
 import com.sopt.dive.ui.main.SearchScreen
@@ -74,9 +75,12 @@ fun NavigationMainScreen(
             }
 
             composable(Screen.Home.name) {
+                val users = getUserDummyData() + getUserDummyData()
+
                 HomeScreen(
                     userName = appHandle().get<String>("user_name").orEmpty(),
                     userNickname = appHandle().get<String>("user_nickname").orEmpty(),
+                    users = users,
                     modifier = modifier,
                 )
             }
