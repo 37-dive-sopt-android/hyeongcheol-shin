@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +33,9 @@ fun HomeItem(
     painterDescription: String? = null,
     painterSize: Int = 40,
 ) {
-    Box(
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
             .border(
@@ -44,43 +45,37 @@ fun HomeItem(
             )
             .padding(horizontal = 8.dp, vertical = 12.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            if(painter != null){
-                Image(
-                    painter = painterResource(painter),
-                    contentDescription = painterDescription,
-                    modifier = Modifier.size(painterSize.dp)
-                )
-            }
-            else{
-                Surface(
-                    color = Color.Gray,
-                    shape = CircleShape,
-                    modifier = Modifier.size(painterSize.dp)
-                ) {
-
-                }
-            }
-            Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier,
+        if(painter != null){
+            Image(
+                painter = painterResource(painter),
+                contentDescription = painterDescription,
+                modifier = Modifier.size(painterSize.dp)
+            )
+        }
+        else{
+            Surface(
+                color = Color.Gray,
+                shape = CircleShape,
+                modifier = Modifier.size(painterSize.dp)
             ) {
-                Text(
-                    text = title,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
-                )
-                Text(
-                    text = description,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
+
             }
+        }
+        Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier,
+        ) {
+            Text(
+                text = title,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp
+            )
+            Text(
+                text = description,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp
+            )
         }
     }
 }
