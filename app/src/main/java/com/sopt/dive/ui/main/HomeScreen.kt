@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.dive.R
+import com.sopt.dive.data.UserData
 import com.sopt.dive.data.getUserDummyData
 import com.sopt.dive.ui.components.HomeItem
 
@@ -28,18 +29,19 @@ fun HomeScreen(
     ) {
         item {
             HomeItem(
-                title = userName,
-                description = "Welcome To SOPT",
-                painter = R.drawable.img_otter,
-                painterDescription = "달수",
-                painterSize = 60
+                UserData(
+                    name = userName,
+                    nickname = "Fe",
+                    image = R.drawable.img_otter,
+                    imageDescription = "달수",
+                ),
+                painterSize = 60,
             )
         }
         items(getUserDummyData() + getUserDummyData()) { user ->
             HomeItem(
-                title = user.name,
-                description = user.nickname,
-                painter = user.image,
+                user = user,
+                painterSize = 40,
             )
         }
         // LazyColumn 사용을 위해 DummyData를 2번 넣었습니다.
