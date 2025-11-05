@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.navigation.NavigationMainScreen
-import com.sopt.dive.navigation.Screen
 import com.sopt.dive.ui.components.BottomNavigationBar
+import com.sopt.dive.ui.components.MainScreenList
 import com.sopt.dive.ui.theme.DiveTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,18 +27,13 @@ class MainActivity : ComponentActivity() {
                 val entry by navController.currentBackStackEntryAsState()
                 val currentRoute = entry?.destination?.route
 
-                val mainScreen = listOf(
-                    Screen.Home.name,
-                    Screen.Search.name,
-                    Screen.MyPage.name
-                )
-
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        if(currentRoute in mainScreen)BottomNavigationBar(
-                            navController = navController,
-                        )
+                        if (currentRoute in MainScreenList.entries.map { it.screen.name })
+                            BottomNavigationBar(
+                                navController = navController
+                            )
                     },
                 ) { innerPadding ->
                     NavigationMainScreen(

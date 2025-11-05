@@ -19,30 +19,27 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.navigation.Screen
 
-data class BottomNavItem(
+enum class MainScreenList(
     val screen: Screen,
     val icon: ImageVector,
-)
-
+) {
+    HomeScreen(Screen.Home, Icons.Filled.Home),
+    SearchScreen(Screen.Search, Icons.Filled.Search),
+    MyPageScreen(Screen.MyPage, Icons.Filled.AccountCircle),
+}
 
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    val bottomNavItems = listOf(
-        BottomNavItem(Screen.Home, Icons.Filled.Home),
-        BottomNavItem(Screen.Search, Icons.Filled.Search),
-        BottomNavItem(Screen.MyPage, Icons.Filled.AccountCircle),
-    )
-
     NavigationBar(
         modifier = modifier,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        bottomNavItems.forEach { navItem ->
+        MainScreenList.entries.forEach { navItem ->
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -73,7 +70,7 @@ fun BottomNavigationBar(
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewBottomBar(){
+fun PreviewBottomBar() {
     BottomNavigationBar(
         navController = rememberNavController()
     )

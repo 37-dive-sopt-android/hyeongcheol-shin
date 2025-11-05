@@ -14,9 +14,8 @@ import com.sopt.dive.ui.main.SearchScreen
 import com.sopt.dive.ui.signin.SignInScreen
 import com.sopt.dive.ui.signup.SignUpScreen
 
-private const val Root = "Root"
-
 enum class Screen() {
+    Root,
     Home,
     Search,
     MyPage,
@@ -28,18 +27,18 @@ enum class Screen() {
 fun NavigationMainScreen(
     navController: NavHostController,
     modifier: Modifier,
-    startDestination: String = Root,
+    startDestination: String = Screen.Root.name,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
         navigation(
-            route = Root,
+            route = Screen.Root.name,
             startDestination = Screen.SignIn.name
         ) {
             fun appHandle(): SavedStateHandle =
-                navController.getBackStackEntry(Root).savedStateHandle
+                navController.getBackStackEntry(Screen.Root.name).savedStateHandle
 
             composable(Screen.SignIn.name) {
                 val registeredUserId = appHandle().get<String>("user_id").orEmpty()
