@@ -57,7 +57,7 @@ fun BottomNavigationBar(
                     unselectedIconColor = Color.LightGray,
                 ),
                 onClick = {
-                    navController.navigate(navItem.screen) {
+                    navController.navigate(navItem.screen.name) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
