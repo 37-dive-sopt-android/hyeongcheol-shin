@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -17,12 +18,14 @@ import androidx.compose.ui.unit.sp
 fun UserDetail(
     title: String,
     info: String,
+    modifier: Modifier = Modifier,
     isUniqueText: Boolean = false,
 ) {
     val gradientColor = listOf(Color.Cyan, Color.Blue, Color.Magenta)
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = modifier,
     ) {
         Text(
             text = title,

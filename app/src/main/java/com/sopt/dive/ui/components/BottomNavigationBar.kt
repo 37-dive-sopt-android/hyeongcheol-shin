@@ -11,6 +11,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -21,6 +22,7 @@ import com.sopt.dive.navigation.Screen
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
+    modifier: Modifier = Modifier,
 ) {
     val screens = listOf(
         Screen.Home,
@@ -28,7 +30,9 @@ fun BottomNavigationBar(
         Screen.MyPage
     )
 
-    NavigationBar {
+    NavigationBar(
+        modifier = modifier,
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
