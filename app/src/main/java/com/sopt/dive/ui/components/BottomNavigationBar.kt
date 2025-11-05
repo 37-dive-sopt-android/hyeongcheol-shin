@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -13,21 +12,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.navigation.Screen
 
+data class BottomNavItem(
+    val screen: Screen,
+    val icon: ImageVector,
+)
+
+
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    val screens = listOf(
-        Screen.Home,
-        Screen.Search,
-        Screen.MyPage
+    val bottomNavItems = listOf(
+        BottomNavItem(Screen.Home, Icons.Filled.Home),
+        BottomNavItem(Screen.Search, Icons.Filled.Search),
+        BottomNavItem(Screen.MyPage, Icons.Filled.AccountCircle),
     )
 
     NavigationBar(
@@ -36,27 +42,22 @@ fun BottomNavigationBar(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        screens.forEach { screen ->
+        bottomNavItems.forEach { navItem ->
             NavigationBarItem(
                 icon = {
                     Icon(
-                        imageVector = when (screen.name) {
-                            Screen.Home.name -> Icons.Filled.Home
-                            Screen.Search.name -> Icons.Filled.Search
-                            Screen.MyPage.name -> Icons.Filled.AccountCircle
-                            else -> Icons.Filled.Star
-                        },
-                        contentDescription = screen.name
+                        imageVector = navItem.icon,
+                        contentDescription = navItem.screen.name
                     )
                 },
-                selected = currentRoute == screen.name,
+                selected = currentRoute == navItem.screen.name,
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.Gray,
                     indicatorColor = Color.Transparent,
                     unselectedIconColor = Color.LightGray,
                 ),
                 onClick = {
-                    navController.navigate(screen.name) {
+                    navController.navigate(navItem.screen) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
