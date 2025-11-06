@@ -196,6 +196,59 @@ fun HomeItemBirth(
 
 @Composable
 @Preview(showBackground = true)
+fun PreviewHomeItemImage() {
+    HomeItemImage(
+        userImage = R.drawable.img_otter,
+        userImageDescription = "달수",
+        painterSize = 40
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewHomeItemUserText() {
+    HomeItemUserText(
+        user = UserData(
+            name = "SHC",
+            nickname = "Fe",
+            comment = "TestTestTestTestTestTestTestTestTestTest",
+        )
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewHomeItemUserIsBirth() {
+    HomeItemUserText(
+        user = UserData(
+            name = "SHC",
+            nickname = "Fe",
+            comment = "TestTestTestTestTestTestTestTestTestTest",
+        ),
+        isBirth = true
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewHomeItemBoardGame(){
+    HomeItemBoardGame(
+        boardGame = BoardGame(
+            title = "Test",
+            description = "test",
+            difficulty = com.sopt.dive.data.Difficulty.HARD
+        )
+    )
+}
+
+@Composable
+@Preview
+fun PreviewHomeItemBirth() {
+    HomeItemBirth()
+}
+
+@Composable
+@Preview(showBackground = true)
 fun PreviewHomeItem() {
     HomeItem(
         user = UserData(
