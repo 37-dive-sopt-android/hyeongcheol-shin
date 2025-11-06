@@ -101,7 +101,7 @@ fun HomeItemUserText(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
             .then(
-                if (isBirth || user.favoriteBoardGame !== null) {
+                if (isBirth || user.favoriteBoardGame != null) {
                     Modifier.fillMaxWidth(0.6f)
                 } else {
                     Modifier.fillMaxWidth()
@@ -165,9 +165,7 @@ fun HomeItemBoardGame(
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(horizontal = 12.dp, vertical = 8.dp)
-
     ) {
-
         Text(
             text = if (boardGame.description != null) "${boardGame.title} - ${boardGame.description}" else boardGame.title,
             color = Color.DarkGray,
@@ -176,7 +174,6 @@ fun HomeItemBoardGame(
             modifier = Modifier.weight(1f, fill = false),
         )
     }
-
 }
 
 @Composable
