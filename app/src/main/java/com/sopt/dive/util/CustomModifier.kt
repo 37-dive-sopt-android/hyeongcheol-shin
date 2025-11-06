@@ -1,4 +1,4 @@
-package util
+package com.sopt.dive.util
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
