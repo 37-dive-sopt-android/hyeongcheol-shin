@@ -1,6 +1,7 @@
 package com.sopt.dive.ui.components
 
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -69,7 +70,7 @@ fun HomeItem(
 
 @Composable
 fun HomeItemImage(
-    userImage: Int?,
+    @DrawableRes userImage: Int?,
     userImageDescription: String?,
     painterSize: Int,
     modifier: Modifier = Modifier,
