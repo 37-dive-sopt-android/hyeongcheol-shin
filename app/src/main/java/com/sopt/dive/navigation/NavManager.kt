@@ -48,7 +48,8 @@ fun NavigationMainScreen(
                 navController.getBackStackEntry(Screen.Root.name).savedStateHandle
 
             composable(Screen.SignIn.name) { backStackEntry ->
-                val rootEntry = remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
 
                 val registeredUserId = appHandle().get<String>("user_id").orEmpty()
@@ -93,12 +94,13 @@ fun NavigationMainScreen(
             }
 
             composable(Screen.Home.name) { backStackEntry ->
-                val rootEntry = remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
 
                 val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
-                if(uiState.userDataList.isEmpty()){
+                if (uiState.userDataList.isEmpty()) {
                     homeViewModel.setDummyUserDataList()
                 }
 
@@ -115,7 +117,8 @@ fun NavigationMainScreen(
                 )
             }
             composable(Screen.MyPage.name) { backStackEntry ->
-                val rootEntry = remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
 
                 MyPageScreen(
