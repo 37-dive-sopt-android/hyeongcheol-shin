@@ -6,5 +6,5 @@ import com.sopt.dive.data.getUserDummyData
 
 data class HomeUiState (
     val myData: User? = null,
-    val userDataList: List<UserData> = getUserDummyData()
+    val userDataList: List<UserData> = emptyList()
 )
