@@ -14,9 +14,8 @@ import java.time.LocalDate
 class HomeViewModel() : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-    val uiStateTest get() = _uiState
+    //val uiStateTest get() = _uiState
     //TODO("전에 다른 곳에서는 uiStateTest방법을 사용했는데, 둘이 차이점 알아보기")
-    //까먹을까봐 일단 2개 모두 작성해두었습니다.
 
     fun setMyProfile(user: User){
         _uiState.value = _uiState.value.copy(
