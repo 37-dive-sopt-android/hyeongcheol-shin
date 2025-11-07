@@ -34,7 +34,7 @@ fun NavigationMainScreen(
     modifier: Modifier,
     startDestination: String = Screen.Root.name,
 ) {
-    var homeViewModel: HomeViewModel? = null
+    val homeViewModel: HomeViewModel? = null
 
     NavHost(
         navController = navController,
