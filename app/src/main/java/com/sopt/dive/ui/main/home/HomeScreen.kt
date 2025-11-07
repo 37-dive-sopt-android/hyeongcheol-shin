@@ -1,4 +1,4 @@
-package com.sopt.dive.ui.main
+package com.sopt.dive.ui.main.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

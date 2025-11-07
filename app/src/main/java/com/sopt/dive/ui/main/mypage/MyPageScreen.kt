@@ -1,4 +1,4 @@
-package com.sopt.dive.ui.main
+package com.sopt.dive.ui.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

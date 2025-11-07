@@ -9,9 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sopt.dive.data.User
 import com.sopt.dive.data.getUserDummyData
-import com.sopt.dive.ui.main.HomeScreen
-import com.sopt.dive.ui.main.MyPageScreen
-import com.sopt.dive.ui.main.SearchScreen
+import com.sopt.dive.ui.main.home.HomeScreen
+import com.sopt.dive.ui.main.mypage.MyPageScreen
+import com.sopt.dive.ui.main.search.SearchScreen
 import com.sopt.dive.ui.signin.SignInScreen
 import com.sopt.dive.ui.signup.SignUpScreen
 
