@@ -44,6 +44,7 @@ fun SearchScreen(
     ) {
         Box(
             modifier = Modifier
+                .size(width = 300.dp, height = 500.dp)
                 .graphicsLayer(
                     rotationY = animateFloatAsState,
                     cameraDistance = 12f,
@@ -56,22 +57,21 @@ fun SearchScreen(
                         }
                     }
                 )
-                .wrapContentSize()
         ) {
             if (animateFloatAsState > 90) {
                 Image(
                     painter = painterResource(id = R.drawable.img_king),
                     contentDescription = "king",
                     modifier = Modifier
-                        .size(width = 300.dp, height = 500.dp),
+                        .fillMaxSize(),
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.img_card_back3),
                     contentDescription = "card",
                     modifier = Modifier
-                        .size(width = 300.dp, height = 500.dp),
-                    )
+                        .fillMaxSize(),
+                )
             }
         }
     }
