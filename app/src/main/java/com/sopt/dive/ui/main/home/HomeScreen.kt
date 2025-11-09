@@ -6,14 +6,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.dive.R
 import com.sopt.dive.data.UserData
 import com.sopt.dive.data.getUserDummyData
 import com.sopt.dive.ui.components.HomeItem
+
+@Composable
+fun HomeRoute(
+    homeViewModel: HomeViewModel,
+    modifier: Modifier = Modifier,
+) {
+    val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+    if (uiState.userDataList.isEmpty()) {
+        homeViewModel.setDummyUserDataList()
+    }
+
+    HomeScreen(
+        userName = uiState.myData?.name ?: "",
+        userNickname = uiState.myData?.nickname ?: "",
+        users = uiState.userDataList,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun HomeScreen(

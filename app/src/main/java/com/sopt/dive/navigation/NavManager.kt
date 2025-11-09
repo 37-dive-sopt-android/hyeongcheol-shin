@@ -1,23 +1,21 @@
 package com.sopt.dive.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sopt.dive.data.User
-import com.sopt.dive.ui.main.home.HomeScreen
 import com.sopt.dive.ui.main.home.HomeViewModel
-import com.sopt.dive.ui.main.mypage.MyPageScreen
-import com.sopt.dive.ui.main.search.SearchScreen
-import com.sopt.dive.ui.signin.SignInScreen
-import com.sopt.dive.ui.signup.SignUpScreen
+import com.sopt.dive.ui.auth.signin.SignInScreen
+import com.sopt.dive.ui.auth.signup.SignUpScreen
+import com.sopt.dive.ui.main.home.HomeRoute
+import com.sopt.dive.ui.main.mypage.MyPageRoute
+import com.sopt.dive.ui.main.search.SearchRoute
 
 enum class Screen() {
     Root,
@@ -98,21 +96,13 @@ fun NavigationMainScreen(
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
 
-                val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
-
-                if (uiState.userDataList.isEmpty()) {
-                    homeViewModel.setDummyUserDataList()
-                }
-
-                HomeScreen(
-                    userName = uiState.myData?.name ?: "",
-                    userNickname = uiState.myData?.nickname ?: "",
-                    users = homeViewModel.getUserList(),
+                HomeRoute(
+                    homeViewModel = homeViewModel,
                     modifier = modifier,
                 )
             }
             composable(Screen.Search.name) {
-                SearchScreen(
+                SearchRoute(
                     modifier = modifier,
                 )
             }
@@ -121,8 +111,8 @@ fun NavigationMainScreen(
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
 
-                MyPageScreen(
-                    user = homeViewModel.getMyProfile(),
+                MyPageRoute(
+                    homeViewModel = homeViewModel,
                     modifier = modifier,
                 )
             }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,9 +19,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.dive.R
 import com.sopt.dive.data.User
 import com.sopt.dive.ui.components.UserDetail
+import com.sopt.dive.ui.main.home.HomeViewModel
+
+@Composable
+fun MyPageRoute(
+    homeViewModel: HomeViewModel,
+    modifier: Modifier = Modifier
+) {
+    val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+    MyPageScreen(
+        user = uiState.myData!!,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun MyPageScreen(

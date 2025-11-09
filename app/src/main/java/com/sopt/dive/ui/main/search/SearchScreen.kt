@@ -26,6 +26,15 @@ import com.sopt.dive.util.clickableWithoutRipple
 enum class ImgState { Collapsed, Expanded }
 
 @Composable
+fun SearchRoute(
+    modifier: Modifier = Modifier
+) {
+    SearchScreen(
+        modifier = modifier
+    )
+}
+
+@Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
 ) {
