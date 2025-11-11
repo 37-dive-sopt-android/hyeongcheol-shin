@@ -16,6 +16,7 @@ import com.sopt.dive.ui.auth.signup.SignUpScreen
 import com.sopt.dive.ui.main.home.HomeRoute
 import com.sopt.dive.ui.main.mypage.MyPageRoute
 import com.sopt.dive.ui.main.search.SearchRoute
+import com.sopt.dive.util.AppHandleKey
 
 enum class Screen() {
     Root,
@@ -48,8 +49,8 @@ fun NavigationMainScreen(
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val homeViewModel: HomeViewModel = viewModel(rootEntry)
 
-                val registeredUserId = appHandle().get<String>("user_id").orEmpty()
-                val registeredUserPw = appHandle().get<String>("user_pw").orEmpty()
+                val registeredUserId = appHandle().get<String>(AppHandleKey.USER_ID).orEmpty()
+                val registeredUserPw = appHandle().get<String>(AppHandleKey.USER_PW).orEmpty()
 
                 SignInScreen(
                     registeredUserId = registeredUserId,
@@ -58,11 +59,11 @@ fun NavigationMainScreen(
                     onSignInClick = {
                         homeViewModel.setMyProfile(
                             User(
-                                id = appHandle().get<String>("user_id").orEmpty(),
-                                pw = appHandle().get<String>("user_pw").orEmpty(),
-                                nickname = appHandle().get<String>("user_nickname").orEmpty(),
-                                drinking = appHandle().get<String>("user_drinking").orEmpty(),
-                                name = appHandle().get<String>("user_name").orEmpty(),
+                                id = appHandle().get<String>(AppHandleKey.USER_ID).orEmpty(),
+                                pw = appHandle().get<String>(AppHandleKey.USER_PW).orEmpty(),
+                                nickname = appHandle().get<String>(AppHandleKey.USER_NICKNAME).orEmpty(),
+                                drinking = appHandle().get<String>(AppHandleKey.USER_DRINKING).orEmpty(),
+                                name = appHandle().get<String>(AppHandleKey.USER_NAME).orEmpty(),
                             )
                         )
                         navController.navigate(Screen.Home.name) {
@@ -78,11 +79,11 @@ fun NavigationMainScreen(
             composable(Screen.SignUp.name) {
                 SignUpScreen(
                     onSignUpClick = { user ->
-                        appHandle().set("user_id", user.id)
-                        appHandle().set("user_pw", user.pw)
-                        appHandle().set("user_nickname", user.nickname)
-                        appHandle().set("user_drinking", user.drinking)
-                        appHandle().set("user_name", user.name)
+                        appHandle().set(AppHandleKey.USER_ID, user.id)
+                        appHandle().set(AppHandleKey.USER_PW, user.pw)
+                        appHandle().set(AppHandleKey.USER_NICKNAME, user.nickname)
+                        appHandle().set(AppHandleKey.USER_DRINKING, user.drinking)
+                        appHandle().set(AppHandleKey.USER_NAME, user.name)
                         navController.popBackStack()
                     },
                     modifier = modifier,
