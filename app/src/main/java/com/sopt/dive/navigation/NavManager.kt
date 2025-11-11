@@ -32,8 +32,6 @@ fun NavigationMainScreen(
     modifier: Modifier,
     startDestination: String = Screen.Root.name,
 ) {
-    val homeViewModel: HomeViewModel? = null
-
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -48,7 +46,7 @@ fun NavigationMainScreen(
             composable(Screen.SignIn.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
-                val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
+                val homeViewModel: HomeViewModel = viewModel(rootEntry)
 
                 val registeredUserId = appHandle().get<String>("user_id").orEmpty()
                 val registeredUserPw = appHandle().get<String>("user_pw").orEmpty()
@@ -94,7 +92,7 @@ fun NavigationMainScreen(
             composable(Screen.Home.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
-                val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
+                val homeViewModel: HomeViewModel = viewModel(rootEntry)
 
                 HomeRoute(
                     homeViewModel = homeViewModel,
@@ -109,7 +107,7 @@ fun NavigationMainScreen(
             composable(Screen.MyPage.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
-                val homeViewModel: HomeViewModel = homeViewModel ?: viewModel(rootEntry)
+                val homeViewModel: HomeViewModel = viewModel(rootEntry)
 
                 MyPageRoute(
                     homeViewModel = homeViewModel,
