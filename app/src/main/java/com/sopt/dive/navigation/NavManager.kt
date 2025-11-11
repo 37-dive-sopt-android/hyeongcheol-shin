@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sopt.dive.data.User
+import com.sopt.dive.ui.auth.loading.LoadingRoute
 import com.sopt.dive.ui.main.home.HomeViewModel
 import com.sopt.dive.ui.auth.signin.SignInScreen
 import com.sopt.dive.ui.auth.signup.SignUpScreen
@@ -25,6 +26,7 @@ enum class Screen() {
     MyPage,
     SignIn,
     SignUp,
+    Loading,
 }
 
 @Composable
@@ -43,6 +45,26 @@ fun NavigationMainScreen(
         ) {
             fun appHandle(): SavedStateHandle =
                 navController.getBackStackEntry(Screen.Root.name).savedStateHandle
+
+            composable(Screen.Loading.name) {
+                LoadingRoute(
+                    authSingInSuccess = {
+                        navController.navigate(Screen.Home.name){
+                            popUpTo(Screen.Loading.name) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    authSingInFail = {
+                        navController.navigate(Screen.SignIn.name){
+                            popUpTo(Screen.Loading.name) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    modifier = modifier,
+                )
+            }
 
             composable(Screen.SignIn.name) { backStackEntry ->
                 val rootEntry =
