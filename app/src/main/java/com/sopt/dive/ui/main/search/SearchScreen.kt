@@ -5,7 +5,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -50,13 +49,19 @@ fun SearchScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Box(
+        Image(
+            if (animateFloatAsState > 90) {
+                painterResource(id = R.drawable.img_king)
+            } else {
+                painterResource(id = R.drawable.img_card_back3)
+            },
+            contentDescription = "card",
             modifier = Modifier
-                .size(width = 300.dp, height = 500.dp)
                 .graphicsLayer(
                     rotationY = animateFloatAsState,
                     cameraDistance = 12f,
                 )
+                .size(width = 300.dp, height = 500.dp)
                 .clickableWithoutRipple(
                     onClick = {
                         isEnabled = when (isEnabled) {
@@ -65,23 +70,7 @@ fun SearchScreen(
                         }
                     }
                 )
-        ) {
-            if (animateFloatAsState > 90) {
-                Image(
-                    painter = painterResource(id = R.drawable.img_king),
-                    contentDescription = "king",
-                    modifier = Modifier
-                        .fillMaxSize(),
-                )
-            } else {
-                Image(
-                    painter = painterResource(id = R.drawable.img_card_back3),
-                    contentDescription = "card",
-                    modifier = Modifier
-                        .fillMaxSize(),
-                )
-            }
-        }
+        )
     }
 }
 
