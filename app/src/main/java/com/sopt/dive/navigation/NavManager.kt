@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -45,9 +44,6 @@ fun NavigationMainScreen(
             route = Screen.Root.name,
             startDestination = Screen.Loading.name
         ) {
-            fun appHandle(): SavedStateHandle =
-                navController.getBackStackEntry(Screen.Root.name).savedStateHandle
-
             composable(Screen.Loading.name) {
                 LoadingRoute(
                     authSingInSuccess = {
