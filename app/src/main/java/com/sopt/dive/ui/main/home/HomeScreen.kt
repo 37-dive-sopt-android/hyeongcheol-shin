@@ -29,8 +29,8 @@ fun HomeRoute(
     }
 
     HomeScreen(
-        userName = uiState.myData?.name ?: "",
-        userNickname = uiState.myData?.nickname ?: "",
+        userName = uiState.myProfile?.name ?: "",
+        userNickname = uiState.myProfile?.nickname ?: "",
         users = uiState.userDataList,
         modifier = modifier,
     )

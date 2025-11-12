@@ -33,7 +33,7 @@ fun MyPageRoute(
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     MyPageScreen(
-        user = uiState.myData!!,
+        user = uiState.myProfile!!,
         modifier = modifier,
     )
 }

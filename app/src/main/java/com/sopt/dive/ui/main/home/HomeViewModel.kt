@@ -19,7 +19,7 @@ class HomeViewModel() : ViewModel() {
 
     fun setMyProfile(user: User) {
         _uiState.value = _uiState.value.copy(
-            myData = user
+            myProfile = user
         )
     }
 
