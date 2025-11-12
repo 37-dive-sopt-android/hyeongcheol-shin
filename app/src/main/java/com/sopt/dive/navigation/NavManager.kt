@@ -45,8 +45,17 @@ fun NavigationMainScreen(
             route = Screen.Root.name,
             startDestination = Screen.Loading.name
         ) {
-            composable(Screen.Loading.name) {
+            composable(Screen.Loading.name) { backStackEntry ->
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val authViewModel: AuthViewModel =
+                    viewModel(rootEntry, factory = AuthViewModelFactory(repository))
+
                 LoadingRoute(
+                    authViewModel = authViewModel,
                     authSingInSuccess = {
                         navController.navigate(Screen.Home.name) {
                             popUpTo(Screen.Loading.name) {

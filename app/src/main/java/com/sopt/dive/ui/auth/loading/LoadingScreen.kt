@@ -5,25 +5,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import com.sopt.dive.data.dataStore.MyProfileRepository
-import kotlinx.coroutines.flow.first
+import com.sopt.dive.ui.auth.AuthViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun LoadingRoute(
+    authViewModel: AuthViewModel,
     authSingInSuccess: () -> Unit,
     authSingInFail: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    val myProfileRepository = remember { MyProfileRepository(context) }
+    val authUiState by authViewModel.authUiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        val isSignedIn = myProfileRepository.getIsSignedIn().first()
-        if (isSignedIn) {
+    LaunchedEffect(Unit){
+        delay(500)
+        if (authUiState.isSignedIn) {
             authSingInSuccess()
         } else {
             authSingInFail()
