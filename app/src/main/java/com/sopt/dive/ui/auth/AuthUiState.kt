@@ -5,6 +5,6 @@ import com.sopt.dive.data.User
 data class AuthUiState(
     var inputUserId: String = "",
     var inputUserPw: String = "",
-    val registeredUser: User? = null,
-    val isSignIn: Boolean = false,
+    val myProfile: User? = null,
+    val isSignedIn: Boolean = false,
 )
