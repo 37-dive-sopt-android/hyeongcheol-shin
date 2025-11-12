@@ -21,18 +21,26 @@ class AuthViewModel(
         viewModelScope.launch {
             launch {
                 repository.getIsSignedIn().collect { isSignedIn ->
-                    _authUiState.update {
-                        it.copy(isSignedIn = isSignedIn)
-                    }
+                    getIsSignedIn(isSignedIn)
                 }
             }
             launch {
                 repository.getMyProfile().collect { myProfile ->
-                    _authUiState.update {
-                        it.copy(myProfile = myProfile)
-                    }
+                    getMyProfile(myProfile)
                 }
             }
+        }
+    }
+
+    fun getIsSignedIn(isSignedIn: Boolean) {
+        _authUiState.update {
+            it.copy(isSignedIn = isSignedIn)
+        }
+    }
+
+    fun getMyProfile(myProfile: User) {
+        _authUiState.update {
+            it.copy(myProfile = myProfile)
         }
     }
 
