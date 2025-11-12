@@ -22,7 +22,7 @@ fun LoadingRoute(
     val myProfileRepository = remember { MyProfileRepository(context) }
 
     LaunchedEffect(Unit) {
-        val isSignedIn = myProfileRepository.isSignedInFlow.first()
+        val isSignedIn = myProfileRepository.getIsSignedIn().first()
         if (isSignedIn) {
             authSingInSuccess()
         } else {
