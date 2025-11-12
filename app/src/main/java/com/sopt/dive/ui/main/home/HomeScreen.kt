@@ -24,10 +24,6 @@ fun HomeRoute(
 ) {
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.userDataList.isEmpty()) {
-        homeViewModel.setDummyUserDataList()
-    }
-
     HomeScreen(
         userName = uiState.myProfile?.name ?: "",
         userNickname = uiState.myProfile?.nickname ?: "",

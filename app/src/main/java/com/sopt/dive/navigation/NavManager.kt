@@ -17,6 +17,7 @@ import com.sopt.dive.ui.auth.signin.SignInRoute
 import com.sopt.dive.ui.main.home.HomeViewModel
 import com.sopt.dive.ui.auth.signup.SignUpRoute
 import com.sopt.dive.ui.main.home.HomeRoute
+import com.sopt.dive.ui.main.home.HomeViewModelFactory
 import com.sopt.dive.ui.main.mypage.MyPageRoute
 import com.sopt.dive.ui.main.search.SearchRoute
 
@@ -109,7 +110,12 @@ fun NavigationMainScreen(
             composable(Screen.Home.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
-                val homeViewModel: HomeViewModel = viewModel(rootEntry)
+
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val homeViewModel: HomeViewModel =
+                    viewModel(rootEntry, factory = HomeViewModelFactory(repository))
 
                 HomeRoute(
                     homeViewModel = homeViewModel,
@@ -124,7 +130,12 @@ fun NavigationMainScreen(
             composable(Screen.MyPage.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
-                val homeViewModel: HomeViewModel = viewModel(rootEntry)
+
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val homeViewModel: HomeViewModel =
+                    viewModel(rootEntry, factory = HomeViewModelFactory(repository))
 
                 MyPageRoute(
                     homeViewModel = homeViewModel,
