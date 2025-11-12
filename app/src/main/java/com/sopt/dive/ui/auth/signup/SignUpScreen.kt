@@ -1,4 +1,4 @@
-package com.sopt.dive.ui.signup
+package com.sopt.dive.ui.auth.signup
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -27,24 +27,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.data.User
+import com.sopt.dive.ui.auth.AuthViewModel
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 
+@Composable
+fun SignUpRoute(
+    authViewModel: AuthViewModel,
+    onSignUpClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SignUpScreen(
+        onSignUpClick = {
+            authViewModel.signUp(it)
+            onSignUpClick()
+        },
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun SignUpScreen(
     onSignUpClick: (User) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     var inputUser by remember {
         mutableStateOf(
             User(
-                id = "",
-                pw = "",
-                nickname = "",
-                drinking = "",
-                name = "",
+                id = "asdasd",
+                pw = "asdasdasd",
+                nickname = "GodBroderIron",
+                drinking = "1000000",
+                name = "신형철",
             )
         )
     }
