@@ -16,6 +16,7 @@ class AuthViewModel(
 ) : ViewModel() {
     private val _authUiState = MutableStateFlow(AuthUiState())
     val authUiState: StateFlow<AuthUiState> = _authUiState.asStateFlow()
+
     init {
         viewModelScope.launch {
             launch {
@@ -64,7 +65,7 @@ class AuthViewModel(
         val inputUserPw = _authUiState.value.inputUserPw
         viewModelScope.launch {
             val registeredUser = repository.getMyProfile().first()
-            if(inputUserId == registeredUser.id && inputUserPw == registeredUser.pw){
+            if (inputUserId == registeredUser.id && inputUserPw == registeredUser.pw) {
                 repository.setSignInStatus(true)
                 onSignInSuccess()
             }

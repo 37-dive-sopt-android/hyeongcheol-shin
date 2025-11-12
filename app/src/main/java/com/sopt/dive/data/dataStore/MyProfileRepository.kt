@@ -6,7 +6,7 @@ import com.sopt.dive.data.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MyProfileRepository(private val context: Context){
+class MyProfileRepository(private val context: Context) {
     private val dataStore = context.dataStore
     private val keys = DataStoreKey
 
@@ -24,7 +24,7 @@ class MyProfileRepository(private val context: Context){
         User(id, pw, nickname, drinking, name)
     }
 
-    suspend fun setSignInStatus(isSignedIn: Boolean){
+    suspend fun setSignInStatus(isSignedIn: Boolean) {
         dataStore.edit { prefs ->
             prefs[keys.IS_SIGNED_IN] = isSignedIn
         }

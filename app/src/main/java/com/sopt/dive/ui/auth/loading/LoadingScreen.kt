@@ -17,7 +17,7 @@ fun LoadingRoute(
     authSingInSuccess: () -> Unit,
     authSingInFail: () -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     val context = LocalContext.current
     val myProfileRepository = remember { MyProfileRepository(context) }
 
@@ -38,7 +38,7 @@ fun LoadingRoute(
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier
-){
+) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
