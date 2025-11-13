@@ -1,4 +1,4 @@
-package com.sopt.dive.ui.auth.loading
+package com.sopt.dive.ui.auth.signin
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,7 @@ import com.sopt.dive.ui.auth.AuthViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun LoadingRoute(
+fun AutoSignInRoute(
     authViewModel: AuthViewModel,
     authSingInSuccess: () -> Unit,
     authSingInFail: () -> Unit,
@@ -30,13 +30,13 @@ fun LoadingRoute(
         }
     }
 
-    LoadingScreen(
+    AutoSignInScreen(
         modifier = modifier
     )
 }
 
 @Composable
-fun LoadingScreen(
+fun AutoSignInScreen(
     modifier: Modifier = Modifier
 ) {
     Box(

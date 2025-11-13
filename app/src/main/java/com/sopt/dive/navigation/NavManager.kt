@@ -12,7 +12,7 @@ import androidx.navigation.navigation
 import com.sopt.dive.data.dataStore.MyProfileRepository
 import com.sopt.dive.ui.auth.AuthViewModel
 import com.sopt.dive.ui.auth.AuthViewModelFactory
-import com.sopt.dive.ui.auth.loading.LoadingRoute
+import com.sopt.dive.ui.auth.signin.AutoSignInRoute
 import com.sopt.dive.ui.auth.signin.SignInRoute
 import com.sopt.dive.ui.main.home.HomeViewModel
 import com.sopt.dive.ui.auth.signup.SignUpRoute
@@ -30,7 +30,7 @@ enum class Screen() {
     MyPage,
     SignIn,
     SignUp,
-    Loading,
+    AutoSignIn,
 }
 
 @Composable
@@ -45,9 +45,9 @@ fun NavigationMainScreen(
     ) {
         navigation(
             route = Screen.Root.name,
-            startDestination = Screen.Loading.name
+            startDestination = Screen.AutoSignIn.name
         ) {
-            composable(Screen.Loading.name) { backStackEntry ->
+            composable(Screen.AutoSignIn.name) { backStackEntry ->
                 val rootEntry =
                     remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
                 val context = LocalContext.current
@@ -56,18 +56,18 @@ fun NavigationMainScreen(
                 val authViewModel: AuthViewModel =
                     viewModel(rootEntry, factory = AuthViewModelFactory(repository))
 
-                LoadingRoute(
+                AutoSignInRoute(
                     authViewModel = authViewModel,
                     authSingInSuccess = {
                         navController.navigate(Screen.Home.name) {
-                            popUpTo(Screen.Loading.name) {
+                            popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true
                             }
                         }
                     },
                     authSingInFail = {
                         navController.navigate(Screen.SignIn.name) {
-                            popUpTo(Screen.Loading.name) {
+                            popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true
                             }
                         }
