@@ -16,14 +16,12 @@ import kotlinx.coroutines.delay
 @Composable
 fun AutoSignInRoute(
     signInViewModel: SignInViewModel,
-    autoSingInSuccess: () -> Unit,
-    autoSingInFail: () -> Unit,
+    autoSignInSuccess: () -> Unit,
+    autoSignInFail: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val authUiState by signInViewModel.signInUiState.collectAsState()
     val toastEvent by signInViewModel.toastEvent.collectAsState(initial = "")
     val context = LocalContext.current
-
 
     LaunchedEffect(toastEvent) {
         if (toastEvent.isNotEmpty()) {
@@ -32,14 +30,12 @@ fun AutoSignInRoute(
         }
     }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         delay(500)
-        if (authUiState.isSignedIn) {
-            autoSingInSuccess()
-            signInViewModel.setToastEvent("자동 로그인에 성공했습니다.")
-        } else {
-            autoSingInFail()
-        }
+        signInViewModel.isSignedInCheck(
+            autoSignInSuccess = autoSignInSuccess,
+            autoSignInFail = autoSignInFail
+        )
     }
 
     AutoSignInScreen(

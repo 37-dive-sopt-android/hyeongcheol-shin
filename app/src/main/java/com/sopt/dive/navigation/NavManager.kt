@@ -58,14 +58,14 @@ fun NavigationMainScreen(
 
                 AutoSignInRoute(
                     signInViewModel = authViewModel,
-                    autoSingInSuccess = {
+                    autoSignInSuccess = {
                         navController.navigate(Screen.Home.name) {
                             popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true
                             }
                         }
                     },
-                    autoSingInFail = {
+                    autoSignInFail = {
                         navController.navigate(Screen.SignIn.name) {
                             popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true

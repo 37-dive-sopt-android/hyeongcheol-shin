@@ -68,6 +68,15 @@ class SignInViewModel(
         }
     }
 
+    fun isSignedInCheck(autoSignInSuccess: () -> Unit, autoSignInFail: () -> Unit) {
+        if (_signInUiState.value.isSignedIn) {
+            autoSignInSuccess()
+            setToastEvent("자동 로그인에 성공했습니다.")
+        } else {
+            autoSignInFail()
+        }
+    }
+
     fun signIn(onSignInSuccess: () -> Unit) {
         val inputUserId = _signInUiState.value.inputUserId
         val inputUserPw = _signInUiState.value.inputUserPw
