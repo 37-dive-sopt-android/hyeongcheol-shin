@@ -42,6 +42,13 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
         }
     }
 
+    fun onSignOut(onSignOut: () -> Unit) {
+        viewModelScope.launch {
+            repository.setSignInStatus(false)
+            onSignOut()
+        }
+    }
+
     fun setDummyUserDataList() {
         _uiState.update {
             it.copy(

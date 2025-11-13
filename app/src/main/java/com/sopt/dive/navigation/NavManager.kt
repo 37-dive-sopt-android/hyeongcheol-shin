@@ -148,6 +148,15 @@ fun NavigationMainScreen(
 
                 MyPageRoute(
                     homeViewModel = homeViewModel,
+                    onSignOut = {
+                        navController.navigate(Screen.SignIn.name)
+                        {
+                            popUpTo(Screen.MyPage.name) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    },
                     modifier = modifier,
                 )
             }

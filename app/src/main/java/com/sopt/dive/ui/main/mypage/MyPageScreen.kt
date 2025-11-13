@@ -22,18 +22,21 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.dive.R
 import com.sopt.dive.data.User
+import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.UserDetail
 import com.sopt.dive.ui.main.home.HomeViewModel
 
 @Composable
 fun MyPageRoute(
     homeViewModel: HomeViewModel,
+    onSignOut: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     MyPageScreen(
         user = uiState.myProfile,
+        onSignOut = { homeViewModel.onSignOut(onSignOut) },
         modifier = modifier,
     )
 }
@@ -41,6 +44,7 @@ fun MyPageRoute(
 @Composable
 fun MyPageScreen(
     user: User,
+    onSignOut: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -96,9 +100,14 @@ fun MyPageScreen(
                 isUniqueText = (user.drinking.toInt() > 3)
             )
         }
+        CustomButton(
+            text = "로그아웃",
+            onClick = { onSignOut() }
+        )
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
@@ -112,3 +121,4 @@ fun PreviewMyPageScreen() {
         ),
     )
 }
+*/
