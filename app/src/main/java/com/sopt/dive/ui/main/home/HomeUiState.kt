@@ -4,6 +4,12 @@ import com.sopt.dive.data.User
 import com.sopt.dive.data.UserData
 
 data class HomeUiState(
-    val myProfile: User? = null,
+    val myProfile: User = User(
+        id = "",
+        pw = "",
+        nickname = "",
+        drinking = "",
+        name = ""
+    ),
     val userDataList: List<UserData> = emptyList(),
 )
