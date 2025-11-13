@@ -25,8 +25,8 @@ fun HomeRoute(
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScreen(
-        userName = uiState.myProfile?.name ?: "",
-        userNickname = uiState.myProfile?.nickname ?: "",
+        userName = uiState.myProfile.name,
+        userNickname = uiState.myProfile.nickname,
         users = uiState.userDataList,
         modifier = modifier,
     )
