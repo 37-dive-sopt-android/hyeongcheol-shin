@@ -84,8 +84,10 @@ class SignInViewModel(
             val registeredUser = repository.getMyProfile().first()
             if (inputUserId == registeredUser.id && inputUserPw == registeredUser.pw) {
                 repository.setSignInStatus(true)
-                onSignInSuccess()
+                updateInputUserId("")
+                updateInputUserPw("")
                 setToastEvent("로그인에 성공했습니다.")
+                onSignInSuccess()
             } else {
                 setToastEvent("아이디와 비밀번호를 확인해주세요")
             }
