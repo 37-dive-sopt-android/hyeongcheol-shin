@@ -10,10 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sopt.dive.data.dataStore.MyProfileRepository
-import com.sopt.dive.ui.auth.AuthViewModel
-import com.sopt.dive.ui.auth.AuthViewModelFactory
 import com.sopt.dive.ui.auth.signin.AutoSignInRoute
 import com.sopt.dive.ui.auth.signin.SignInRoute
+import com.sopt.dive.ui.auth.signin.SignInViewModel
+import com.sopt.dive.ui.auth.signin.SignInViewModelFactory
 import com.sopt.dive.ui.main.home.HomeViewModel
 import com.sopt.dive.ui.auth.signup.SignUpRoute
 import com.sopt.dive.ui.auth.signup.SignUpViewModel
@@ -53,19 +53,19 @@ fun NavigationMainScreen(
                 val context = LocalContext.current
                 val repository = remember { MyProfileRepository(context) }
 
-                val authViewModel: AuthViewModel =
-                    viewModel(rootEntry, factory = AuthViewModelFactory(repository))
+                val authViewModel: SignInViewModel =
+                    viewModel(rootEntry, factory = SignInViewModelFactory(repository))
 
                 AutoSignInRoute(
-                    authViewModel = authViewModel,
-                    authSingInSuccess = {
+                    signInViewModel = authViewModel,
+                    autoSingInSuccess = {
                         navController.navigate(Screen.Home.name) {
                             popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true
                             }
                         }
                     },
-                    authSingInFail = {
+                    autoSingInFail = {
                         navController.navigate(Screen.SignIn.name) {
                             popUpTo(Screen.AutoSignIn.name) {
                                 inclusive = true
@@ -82,11 +82,11 @@ fun NavigationMainScreen(
                 val context = LocalContext.current
                 val repository = remember { MyProfileRepository(context) }
 
-                val authViewModel: AuthViewModel =
-                    viewModel(rootEntry, factory = AuthViewModelFactory(repository))
+                val authViewModel: SignInViewModel =
+                    viewModel(rootEntry, factory = SignInViewModelFactory(repository))
 
                 SignInRoute(
-                    authViewModel = authViewModel,
+                    signInViewModel = authViewModel,
                     onSignUpClick = { navController.navigate(Screen.SignUp.name) },
                     onSignInClick = {
                         navController.navigate(Screen.Home.name) {

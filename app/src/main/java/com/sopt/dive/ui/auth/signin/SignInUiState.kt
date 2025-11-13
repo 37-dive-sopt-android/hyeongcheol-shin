@@ -1,8 +1,8 @@
-package com.sopt.dive.ui.auth
+package com.sopt.dive.ui.auth.signin
 
 import com.sopt.dive.data.User
 
-data class AuthUiState(
+data class SignInUiState(
     var inputUserId: String = "",
     var inputUserPw: String = "",
     val myProfile: User? = null,

@@ -1,5 +1,6 @@
 package com.sopt.dive.ui.auth.signin
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -19,31 +21,40 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.ui.auth.AuthViewModel
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 import com.sopt.dive.util.clickableWithoutRipple
 
 @Composable
 fun SignInRoute(
-    authViewModel: AuthViewModel,
+    signInViewModel: SignInViewModel,
     onSignUpClick: () -> Unit,
     onSignInClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val authUiState by authViewModel.authUiState.collectAsState()
+    val authUiState by signInViewModel.signInUiState.collectAsState()
+    val toastEvent by signInViewModel.toastEvent.collectAsState(initial = "")
+    val context = LocalContext.current
+
+
+    LaunchedEffect(toastEvent) {
+        if (toastEvent.isNotEmpty()) {
+            Toast.makeText(context, toastEvent, Toast.LENGTH_SHORT).show()
+            signInViewModel.setToastEvent("")
+        }
+    }
 
     SignInScreen(
         inputUserId = authUiState.inputUserId,
         inputUserPw = authUiState.inputUserPw,
         updateInputUserId = {
-            authViewModel.updateInputUserId(it)
+            signInViewModel.updateInputUserId(it)
         },
         updateInputUserPw = {
-            authViewModel.updateInputUserPw(it)
+            signInViewModel.updateInputUserPw(it)
         },
         onSignInClick = {
-            authViewModel.signIn(onSignInClick)
+            signInViewModel.signIn(onSignInClick)
         },
         onSignUpClick = onSignUpClick,
         modifier = modifier,
@@ -60,9 +71,6 @@ fun SignInScreen(
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    //Toast용도
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,

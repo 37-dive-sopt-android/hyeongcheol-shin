@@ -1,5 +1,6 @@
 package com.sopt.dive.ui.auth.signin
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -9,24 +10,35 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sopt.dive.ui.auth.AuthViewModel
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 
 @Composable
 fun AutoSignInRoute(
-    authViewModel: AuthViewModel,
-    authSingInSuccess: () -> Unit,
-    authSingInFail: () -> Unit,
+    signInViewModel: SignInViewModel,
+    autoSingInSuccess: () -> Unit,
+    autoSingInFail: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val authUiState by authViewModel.authUiState.collectAsState()
+    val authUiState by signInViewModel.signInUiState.collectAsState()
+    val toastEvent by signInViewModel.toastEvent.collectAsState(initial = "")
+    val context = LocalContext.current
+
+
+    LaunchedEffect(toastEvent) {
+        if (toastEvent.isNotEmpty()) {
+            Toast.makeText(context, toastEvent, Toast.LENGTH_SHORT).show()
+            signInViewModel.setToastEvent("")
+        }
+    }
 
     LaunchedEffect(Unit){
         delay(500)
         if (authUiState.isSignedIn) {
-            authSingInSuccess()
+            autoSingInSuccess()
+            signInViewModel.setToastEvent("자동 로그인에 성공했습니다.")
         } else {
-            authSingInFail()
+            autoSingInFail()
         }
     }
 
