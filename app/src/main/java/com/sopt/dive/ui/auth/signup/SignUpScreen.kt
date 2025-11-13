@@ -12,10 +12,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,24 +22,52 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.data.User
-import com.sopt.dive.ui.auth.AuthViewModel
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 
 @Composable
 fun SignUpRoute(
-    authViewModel: AuthViewModel,
+    signUpViewModel: SignUpViewModel,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val signUpUiState by signUpViewModel.signUpUiState.collectAsState()
+    val toastEvent by signUpViewModel.toastEvent.collectAsState(initial = "")
+    val context = LocalContext.current
+
+
+    LaunchedEffect(toastEvent) {
+        if (toastEvent.isNotEmpty()) {
+            Toast.makeText(context, toastEvent, Toast.LENGTH_SHORT).show()
+            signUpViewModel.setToastEvent("")
+        }
+    }
+
     SignUpScreen(
+        inputUserId = signUpUiState.inputUserId,
+        inputUserPw = signUpUiState.inputUserPw,
+        inputUserNickname = signUpUiState.inputUserNickname,
+        inputUserDrinking = signUpUiState.inputUserDrinking,
+        inputUserName = signUpUiState.inputUserName,
+        updateInputUserId = {
+            signUpViewModel.updateInputUserId(it)
+        },
+        updateInputUserPw = {
+            signUpViewModel.updateInputUserPw(it)
+        },
+        updateInputUserNickname = {
+            signUpViewModel.updateInputUserNickname(it)
+        },
+        updateInputUserDrinking = {
+            signUpViewModel.updateInputUserDrinking(it)
+        },
+        updateInputUserName = {
+            signUpViewModel.updateInputUserName(it)
+        },
         onSignUpClick = {
-            authViewModel.signUp(it)
-            onSignUpClick()
+            signUpViewModel.signUp(onSignUpClick)
         },
         modifier = modifier,
     )
@@ -48,25 +75,19 @@ fun SignUpRoute(
 
 @Composable
 fun SignUpScreen(
-    onSignUpClick: (User) -> Unit,
+    inputUserId: String,
+    inputUserPw: String,
+    inputUserNickname: String,
+    inputUserDrinking: String,
+    inputUserName: String,
+    updateInputUserId: (String) -> Unit,
+    updateInputUserPw: (String) -> Unit,
+    updateInputUserNickname: (String) -> Unit,
+    updateInputUserDrinking: (String) -> Unit,
+    updateInputUserName: (String) -> Unit,
+    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var inputUser by remember {
-        mutableStateOf(
-            User(
-                id = "asdasd",
-                pw = "asdasdasd",
-                nickname = "GodBroderIron",
-                drinking = "1000000",
-                name = "신형철",
-            )
-        )
-    }
-
-    val context = LocalContext.current
-
-    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$")
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -90,40 +111,32 @@ fun SignUpScreen(
         ) {
             CustomTextField(
                 title = "ID",
-                value = inputUser.id,
-                onValueChange = {
-                    inputUser = inputUser.copy(id = it)
-                },
+                value = inputUserId,
+                onValueChange = { updateInputUserId(it) },
                 label = "아이디",
                 placeholder = "6 ~ 10 자리 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "PW",
-                value = inputUser.pw,
-                onValueChange = {
-                    inputUser = inputUser.copy(pw = it)
-                },
+                value = inputUserPw,
+                onValueChange = { updateInputUserPw(it) },
                 label = "비밀번호",
                 placeholder = "8 ~ 12 자리 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "NICKNAME",
-                value = inputUser.nickname,
-                onValueChange = {
-                    inputUser = inputUser.copy(nickname = it)
-                },
+                value = inputUserNickname,
+                onValueChange = { updateInputUserNickname(it) },
                 label = "별명",
                 placeholder = "한 글자 이상 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "주량",
-                value = inputUser.drinking,
-                onValueChange = {
-                    inputUser = inputUser.copy(drinking = it.filter { it.isDigit() })
-                },
+                value = inputUserDrinking,
+                onValueChange = { updateInputUserDrinking(it) },
                 label = "소주 몇병?",
                 placeholder = "숫자만 입력",
                 keyboardType = KeyboardType.Number,
@@ -131,12 +144,8 @@ fun SignUpScreen(
             )
             CustomTextField(
                 title = "NAME",
-                value = inputUser.name,
-                onValueChange = {
-                    if (koreanRegex.matches(it)) {
-                        inputUser = inputUser.copy(name = it)
-                    }
-                },
+                value = inputUserName,
+                onValueChange = { updateInputUserName(it) },
                 label = "이름",
                 placeholder = "한글로 입력",
             )
@@ -145,35 +154,14 @@ fun SignUpScreen(
         CustomButton(
             text = "Sign Up",
             onClick = {
-                if (
-                    inputUser.id.length in 6..10 &&
-                    inputUser.pw.length in 8..12 &&
-                    inputUser.nickname.isNotBlank() &&
-                    (inputUser.drinking.toIntOrNull() != null && inputUser.drinking.toInt() >= 0) &&
-                    inputUser.name.isNotBlank()
-                ) {
-                    Toast.makeText(
-                        context,
-                        "회원가입에 성공하셨습니다",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    onSignUpClick(
-                        inputUser
-                    )
-                } else {
-                    Toast.makeText(
-                        context,
-                        "조건을 확인해주세요",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                onSignUpClick()
             },
             modifier = Modifier.padding(vertical = 16.dp),
         )
     }
 }
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignUpScreen() {
@@ -181,4 +169,4 @@ fun PreviewSignUpScreen() {
         modifier = Modifier,
         onSignUpClick = { user -> }
     )
-}
+}*/

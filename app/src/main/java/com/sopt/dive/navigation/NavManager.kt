@@ -16,6 +16,8 @@ import com.sopt.dive.ui.auth.loading.LoadingRoute
 import com.sopt.dive.ui.auth.signin.SignInRoute
 import com.sopt.dive.ui.main.home.HomeViewModel
 import com.sopt.dive.ui.auth.signup.SignUpRoute
+import com.sopt.dive.ui.auth.signup.SignUpViewModel
+import com.sopt.dive.ui.auth.signup.SignUpViewModelFactory
 import com.sopt.dive.ui.main.home.HomeRoute
 import com.sopt.dive.ui.main.home.HomeViewModelFactory
 import com.sopt.dive.ui.main.mypage.MyPageRoute
@@ -98,17 +100,15 @@ fun NavigationMainScreen(
                 )
             }
 
-            composable(Screen.SignUp.name) { backStackEntry ->
-                val rootEntry =
-                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+            composable(Screen.SignUp.name) {
                 val context = LocalContext.current
                 val repository = remember { MyProfileRepository(context) }
 
-                val authViewModel: AuthViewModel =
-                    viewModel(rootEntry, factory = AuthViewModelFactory(repository))
+                val signUpViewModel: SignUpViewModel =
+                    viewModel(factory = SignUpViewModelFactory(repository))
 
                 SignUpRoute(
-                    authViewModel = authViewModel,
+                    signUpViewModel = signUpViewModel,
                     onSignUpClick = {
                         navController.popBackStack()
                     },
