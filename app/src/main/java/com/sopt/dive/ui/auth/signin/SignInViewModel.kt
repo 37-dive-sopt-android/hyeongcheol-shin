@@ -1,16 +1,18 @@
 package com.sopt.dive.ui.auth.signin
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.User
 import com.sopt.dive.data.dataStore.MyProfileRepository
+import com.sopt.dive.network.factory.ServicePool
+import com.sopt.dive.network.model.signin.SignInRequest
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -62,6 +64,12 @@ class SignInViewModel(
         }
     }
 
+    fun setIsLoading(state: Boolean){
+        _signInUiState.update {
+            it.copy(isLoading = state)
+        }
+    }
+
     fun setToastEvent(event: String) {
         viewModelScope.launch {
             _toastEvent.emit(event)
@@ -81,15 +89,27 @@ class SignInViewModel(
         val inputUserId = _signInUiState.value.inputUserId
         val inputUserPw = _signInUiState.value.inputUserPw
         viewModelScope.launch {
-            val registeredUser = repository.getMyProfile().first()
-            if (inputUserId == registeredUser.id && inputUserPw == registeredUser.pw) {
-                repository.setSignInStatus(true)
-                updateInputUserId("")
-                updateInputUserPw("")
-                setToastEvent("로그인에 성공했습니다.")
-                onSignInSuccess()
-            } else {
-                setToastEvent("아이디와 비밀번호를 확인해주세요")
+            try {
+                setIsLoading(true)
+                val signInRequest = SignInRequest(
+                    userName = "testUser_sas",
+                    password = "Asdasdasd1!"
+                )
+                val signInResponse = ServicePool.signInService.signIn(signInRequest)
+                if(signInResponse.success){
+                    repository.setSignInStatus(true)
+                    updateInputUserId("")
+                    updateInputUserPw("")
+                    setToastEvent("로그인에 성공했습니다.")
+                    onSignInSuccess()
+                }else{
+                    setToastEvent("로그인에 실패했습니다.")
+                }
+            } catch (e: Exception){
+                setToastEvent("네트워크 오류가 발생했습니다")
+                Log.e("SHC", "${e.message}")
+            } finally {
+                setIsLoading(false)
             }
         }
     }

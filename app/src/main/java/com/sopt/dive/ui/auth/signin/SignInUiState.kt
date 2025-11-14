@@ -7,4 +7,5 @@ data class SignInUiState(
     var inputUserPw: String = "",
     val myProfile: User? = null,
     val isSignedIn: Boolean = false,
+    val isLoading: Boolean = false
 )

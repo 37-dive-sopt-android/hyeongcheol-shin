@@ -2,6 +2,7 @@ package com.sopt.dive.network.factory
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.dive.BuildConfig
+import com.sopt.dive.network.service.SignInService
 import com.sopt.dive.network.service.SignUpService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -34,5 +35,9 @@ object ApiFactory {
 object ServicePool {
     val signUpService: SignUpService by lazy {
         ApiFactory.create<SignUpService>()
+    }
+
+    val signInService: SignInService by lazy {
+        ApiFactory.create<SignInService>()
     }
 }
