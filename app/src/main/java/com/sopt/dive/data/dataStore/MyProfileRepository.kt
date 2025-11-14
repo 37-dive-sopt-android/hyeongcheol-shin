@@ -14,7 +14,7 @@ class MyProfileRepository(private val context: Context) {
         prefs[keys.IS_SIGNED_IN] ?: false
     }
 
-    fun getUserId(): Flow<Int> = dataStore.data.map { prefs ->
+    fun getUserId(): Flow<Long> = dataStore.data.map { prefs ->
         prefs[keys.USER_ID] ?: 0
     }
 
@@ -34,7 +34,7 @@ class MyProfileRepository(private val context: Context) {
         }
     }
 
-    suspend fun saveMyId(userId: Int) {
+    suspend fun saveMyId(userId: Long) {
         dataStore.edit { prefs ->
             prefs[keys.USER_ID] = userId
         }

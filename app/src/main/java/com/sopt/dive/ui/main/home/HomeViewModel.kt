@@ -13,6 +13,7 @@ import com.sopt.dive.network.factory.ServicePool
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -118,7 +119,7 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
         viewModelScope.launch {
             try{
                 setIsLoading(true)
-                val userId: Long = 346
+                val userId = repository.getUserId().first()
                 val myPageResponse = ServicePool.myPageService.getMyProfile(userId)
                 Log.d("SHC", "${myPageResponse.data}")
             } catch (e: Exception) {

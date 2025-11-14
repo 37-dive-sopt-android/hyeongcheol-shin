@@ -86,7 +86,7 @@ class SignInViewModel(
                 val signInResponse = ServicePool.signInService.signIn(signInRequest)
                 if (signInResponse.success) {
                     repository.setSignInStatus(true)
-                    Log.d("SHC", "${signInResponse.data.userId}")
+                    repository.saveMyId(signInResponse.data.userId)
                     updateInputUserId("")
                     updateInputUserPw("")
                     setToastEvent("로그인에 성공했습니다.")

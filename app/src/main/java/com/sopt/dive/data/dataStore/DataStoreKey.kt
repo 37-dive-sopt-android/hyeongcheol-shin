@@ -2,6 +2,7 @@ package com.sopt.dive.data.dataStore
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 object DataStoreKey {
@@ -11,5 +12,5 @@ object DataStoreKey {
     val USER_NICKNAME = stringPreferencesKey("user_nickname")
     val USER_EMAIL = stringPreferencesKey("user_email")
     val USER_AGE = intPreferencesKey("user_age")
-    val USER_ID = intPreferencesKey("user_id")
+    val USER_ID = longPreferencesKey("user_id")
 }
