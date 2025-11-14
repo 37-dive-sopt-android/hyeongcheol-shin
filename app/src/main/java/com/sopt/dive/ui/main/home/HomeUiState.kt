@@ -5,11 +5,11 @@ import com.sopt.dive.data.UserData
 
 data class HomeUiState(
     val myProfile: User = User(
-        id = "",
+        name = "",
         pw = "",
         nickname = "",
-        drinking = "",
-        name = ""
+        email = "",
+        age = 0
     ),
     val userDataList: List<UserData> = emptyList(),
     val isLoading: Boolean = false
