@@ -28,9 +28,9 @@ class SignUpViewModel(
 
     val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$")
 
-    fun updateInputUserId(inputUserId: String) {
+    fun updateInputUserName(inputUserName: String) {
         _signUpUiState.update {
-            it.copy(inputUserId = inputUserId)
+            it.copy(inputUserName = inputUserName)
         }
     }
 
@@ -40,25 +40,25 @@ class SignUpViewModel(
         }
     }
 
-    fun updateInputUserDrinking(inputUserDrinking: String) {
-        _signUpUiState.update {
-            it.copy(inputUserDrinking = inputUserDrinking.filter { drinking -> drinking.isDigit() })
-        }
-    }
-
     fun updateInputUserNickname(inputUserNickname: String) {
         _signUpUiState.update {
             it.copy(inputUserNickname = inputUserNickname)
         }
     }
 
-    fun updateInputUserName(inputUserName: String) {
+    fun updateInputUserEmail(inputUserEmail: String) {
         _signUpUiState.update {
-            if (koreanRegex.matches(inputUserName)) {
-                it.copy(inputUserName = inputUserName)
+            if (koreanRegex.matches(inputUserEmail)) {
+                it.copy(inputUserName = inputUserEmail)
             } else {
                 it
             }
+        }
+    }
+
+    fun updateInputUserAge(inputUserAge: String) {
+        _signUpUiState.update {
+            it.copy(inputUserAge = inputUserAge.filter { it.isDigit() }.toInt())
         }
     }
 
@@ -71,21 +71,21 @@ class SignUpViewModel(
     fun getSignUpUser(): User {
         val inputUserData = _signUpUiState.value
         return User(
-            id = inputUserData.inputUserId,
+            name = inputUserData.inputUserName,
             pw = inputUserData.inputUserPw,
             nickname = inputUserData.inputUserNickname,
-            drinking = inputUserData.inputUserDrinking,
-            name = inputUserData.inputUserName
+            email = inputUserData.inputUserEmail,
+            age = inputUserData.inputUserAge
         )
     }
 
     fun isSignUpCheck(): Boolean {
         val inputUserData = _signUpUiState.value
-        return inputUserData.inputUserId.length in 6..10 &&
+        return inputUserData.inputUserName.length in 6..10 &&
                 inputUserData.inputUserPw.length in 8..12 &&
                 inputUserData.inputUserNickname.isNotBlank() &&
-                (inputUserData.inputUserDrinking.toIntOrNull() != null && inputUserData.inputUserDrinking.toInt() >= 0) &&
-                inputUserData.inputUserName.isNotBlank()
+                inputUserData.inputUserEmail.isNotBlank() &&
+                (inputUserData.inputUserAge >= 0)
     }
 
 
@@ -99,11 +99,11 @@ class SignUpViewModel(
                     }
                     val signUpUser = getSignUpUser()
                     val signUpRequest = SignUpRequest(
-                        userName = "testUser_sas",
-                        password = "Asdasdasd1!",
-                        name = "TestShc",
-                        email = "hcshin0717@naver.com",
-                        age = 25
+                        userName = signUpUser.name,
+                        password = signUpUser.pw,
+                        name = signUpUser.nickname,
+                        email = signUpUser.email,
+                        age = signUpUser.age
                     )
 
                     val response = ServicePool.signUpService.createAccount(signUpRequest)
