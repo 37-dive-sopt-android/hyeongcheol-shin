@@ -1,9 +1,10 @@
 package com.sopt.dive.ui.auth.signup
 
 data class SignUpUiState(
-    var inputUserId: String = "",
-    var inputUserPw: String = "",
-    var inputUserDrinking: String = "",
-    var inputUserNickname: String = "",
-    var inputUserName: String = "",
+    var inputUserId: String = "asdasd",
+    var inputUserPw: String = "asdasdasd",
+    var inputUserDrinking: String = "1",
+    var inputUserNickname: String = "Fe",
+    var inputUserName: String = "신",
+    val isLoading: Boolean = false
 )

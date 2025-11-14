@@ -66,6 +66,7 @@ fun SignUpRoute(
         updateInputUserName = {
             signUpViewModel.updateInputUserName(it)
         },
+        isLoading = signUpUiState.isLoading,
         onSignUpClick = {
             signUpViewModel.signUp(onSignUpClick)
         },
@@ -85,6 +86,7 @@ fun SignUpScreen(
     updateInputUserNickname: (String) -> Unit,
     updateInputUserDrinking: (String) -> Unit,
     updateInputUserName: (String) -> Unit,
+    isLoading: Boolean,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -154,8 +156,11 @@ fun SignUpScreen(
         CustomButton(
             text = "Sign Up",
             onClick = {
-                onSignUpClick()
+                if(!isLoading){
+                    onSignUpClick()
+                }
             },
+            isEnabled = !isLoading,
             modifier = Modifier.padding(vertical = 16.dp),
         )
     }

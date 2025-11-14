@@ -1,9 +1,12 @@
 package com.sopt.dive.ui.auth.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.User
 import com.sopt.dive.data.dataStore.MyProfileRepository
+import com.sopt.dive.network.factory.ServicePool
+import com.sopt.dive.network.model.signup.SignUpRequest
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,6 +15,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class SignUpViewModel(
     private val repository: MyProfileRepository
@@ -85,13 +89,44 @@ class SignUpViewModel(
     }
 
 
-    fun signUp(onSignInSuccess: () -> Unit) {
+    fun signUp(onSignUpSuccess: () -> Unit) {
         if (isSignUpCheck()) {
             viewModelScope.launch {
-                repository.saveMyProfile(getSignUpUser())
-                repository.setSignInStatus(false)
-                setToastEvent("회원가입에 성공했습니다.")
-                onSignInSuccess()
+
+                try {
+                    _signUpUiState.update {
+                        it.copy(isLoading = true)
+                    }
+                    val signUpUser = getSignUpUser()
+                    val signUpRequest = SignUpRequest(
+                        userName = "testUser_sas",
+                        password = "Asdasdasd1!",
+                        name = "TestShc",
+                        email = "hcshin0717@naver.com",
+                        age = 25
+                    )
+
+                    val response = ServicePool.signUpService.createAccount(signUpRequest)
+                    if (response.success) {
+                        repository.saveMyProfile(signUpUser)
+                        repository.setSignInStatus(false)
+                        setToastEvent("회원가입에 성공했습니다.")
+                        onSignUpSuccess()
+                    } else {
+                        setToastEvent("회원가입에 실패하였습니다.")
+                    }
+                } catch (e: Exception) {
+                    _signUpUiState.update {
+                        Log.d("SHC", "${e.message}")
+                        setToastEvent("네트워크 오류가 발생했습니다: ${e.message}")
+                        it.copy(isLoading = false)
+                    }
+                } finally {
+                    _signUpUiState.update {
+                        it.copy(isLoading = false)
+                    }
+                }
+
             }
         } else {
             viewModelScope.launch {
