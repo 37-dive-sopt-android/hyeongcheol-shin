@@ -26,8 +26,6 @@ class SignUpViewModel(
     private val _toastEvent = MutableSharedFlow<String>()
     val toastEvent: SharedFlow<String> = _toastEvent.asSharedFlow()
 
-    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$")
-
     fun updateInputUserName(inputUserName: String) {
         _signUpUiState.update {
             it.copy(inputUserName = inputUserName)
@@ -48,11 +46,7 @@ class SignUpViewModel(
 
     fun updateInputUserEmail(inputUserEmail: String) {
         _signUpUiState.update {
-            if (koreanRegex.matches(inputUserEmail)) {
-                it.copy(inputUserName = inputUserEmail)
-            } else {
-                it
-            }
+            it.copy(inputUserEmail = inputUserEmail)
         }
     }
 
