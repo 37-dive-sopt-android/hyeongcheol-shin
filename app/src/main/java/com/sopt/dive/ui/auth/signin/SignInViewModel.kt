@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    private val repository: MyProfileRepository
+    private val repository: MyProfileRepository,
 ) : ViewModel() {
     private val _signInUiState = MutableStateFlow(SignInUiState())
     val signInUiState: StateFlow<SignInUiState> = _signInUiState.asStateFlow()
@@ -32,23 +32,12 @@ class SignInViewModel(
                     setIsSignedIn(isSignedIn)
                 }
             }
-            launch {
-                repository.getMyProfile().collect { myProfile ->
-                    setMyProfile(myProfile)
-                }
-            }
         }
     }
 
     fun setIsSignedIn(isSignedIn: Boolean) {
         _signInUiState.update {
             it.copy(isSignedIn = isSignedIn)
-        }
-    }
-
-    fun setMyProfile(myProfile: User) {
-        _signInUiState.update {
-            it.copy(myProfile = myProfile)
         }
     }
 
@@ -64,7 +53,7 @@ class SignInViewModel(
         }
     }
 
-    fun setIsLoading(state: Boolean){
+    fun setIsLoading(state: Boolean) {
         _signInUiState.update {
             it.copy(isLoading = state)
         }
@@ -92,21 +81,21 @@ class SignInViewModel(
             try {
                 setIsLoading(true)
                 val signInRequest = SignInRequest(
-                    userName = "testUser_sas",
-                    password = "Asdasdasd1!"
+                    userName = inputUserId,
+                    password = inputUserPw
                 )
                 val signInResponse = ServicePool.signInService.signIn(signInRequest)
-                if(signInResponse.success){
+                if (signInResponse.success) {
                     repository.setSignInStatus(true)
                     Log.d("SHC", "${signInResponse.data.userId}")
                     updateInputUserId("")
                     updateInputUserPw("")
                     setToastEvent("로그인에 성공했습니다.")
                     onSignInSuccess()
-                }else{
+                } else {
                     setToastEvent("로그인에 실패했습니다.")
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 setToastEvent("네트워크 오류가 발생했습니다")
                 Log.e("SHC", "${e.message}")
             } finally {
