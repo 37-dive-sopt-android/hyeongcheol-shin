@@ -12,4 +12,5 @@ data class HomeUiState(
         name = ""
     ),
     val userDataList: List<UserData> = emptyList(),
+    val isLoading: Boolean = false
 )
