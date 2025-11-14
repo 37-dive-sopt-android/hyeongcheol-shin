@@ -14,14 +14,18 @@ class MyProfileRepository(private val context: Context) {
         prefs[keys.IS_SIGNED_IN] ?: false
     }
 
+    fun getUserId(): Flow<Int> = dataStore.data.map { prefs ->
+        prefs[keys.USER_ID] ?: 0
+    }
+
     fun getMyProfile(): Flow<User> = dataStore.data.map { prefs ->
-        val id = prefs[keys.USER_ID] ?: ""
+        val name = prefs[keys.USER_NAME] ?: ""
         val pw = prefs[keys.USER_PW] ?: ""
         val nickname = prefs[keys.USER_NICKNAME] ?: ""
-        val drinking = prefs[keys.USER_DRINKING] ?: ""
-        val name = prefs[keys.USER_NAME] ?: ""
+        val email = prefs[keys.USER_EMAIL] ?: ""
+        val age = prefs[keys.USER_AGE] ?: 0
 
-        User(id, pw, nickname, drinking, name)
+        User(name, pw, nickname, email, age)
     }
 
     suspend fun setSignInStatus(isSignedIn: Boolean) {
@@ -30,13 +34,19 @@ class MyProfileRepository(private val context: Context) {
         }
     }
 
+    suspend fun saveMyId(userId: Int) {
+        dataStore.edit { prefs ->
+            prefs[keys.USER_ID] = userId
+        }
+    }
+
     suspend fun saveMyProfile(user: User) {
         dataStore.edit { prefs ->
-            prefs[keys.USER_ID] = user.id
+            prefs[keys.USER_NAME] = user.name
             prefs[keys.USER_PW] = user.pw
             prefs[keys.USER_NICKNAME] = user.nickname
-            prefs[keys.USER_DRINKING] = user.drinking
-            prefs[keys.USER_NAME] = user.name
+            prefs[keys.USER_EMAIL] = user.email
+            prefs[keys.USER_AGE] = user.age
         }
     }
 }
