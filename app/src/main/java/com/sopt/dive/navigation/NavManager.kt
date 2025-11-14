@@ -1,19 +1,27 @@
 package com.sopt.dive.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.SavedStateHandle
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.sopt.dive.data.User
-import com.sopt.dive.data.getUserDummyData
-import com.sopt.dive.ui.main.HomeScreen
-import com.sopt.dive.ui.main.MyPageScreen
-import com.sopt.dive.ui.main.SearchScreen
-import com.sopt.dive.ui.signin.SignInScreen
-import com.sopt.dive.ui.signup.SignUpScreen
+import com.sopt.dive.data.dataStore.MyProfileRepository
+import com.sopt.dive.ui.auth.signin.AutoSignInRoute
+import com.sopt.dive.ui.auth.signin.SignInRoute
+import com.sopt.dive.ui.auth.signin.SignInViewModel
+import com.sopt.dive.ui.auth.signin.SignInViewModelFactory
+import com.sopt.dive.ui.main.home.HomeViewModel
+import com.sopt.dive.ui.auth.signup.SignUpRoute
+import com.sopt.dive.ui.auth.signup.SignUpViewModel
+import com.sopt.dive.ui.auth.signup.SignUpViewModelFactory
+import com.sopt.dive.ui.main.home.HomeRoute
+import com.sopt.dive.ui.main.home.HomeViewModelFactory
+import com.sopt.dive.ui.main.mypage.MyPageRoute
+import com.sopt.dive.ui.main.search.SearchRoute
 
 enum class Screen() {
     Root,
@@ -22,6 +30,7 @@ enum class Screen() {
     MyPage,
     SignIn,
     SignUp,
+    AutoSignIn,
 }
 
 @Composable
@@ -36,18 +45,48 @@ fun NavigationMainScreen(
     ) {
         navigation(
             route = Screen.Root.name,
-            startDestination = Screen.SignIn.name
+            startDestination = Screen.AutoSignIn.name
         ) {
-            fun appHandle(): SavedStateHandle =
-                navController.getBackStackEntry(Screen.Root.name).savedStateHandle
+            composable(Screen.AutoSignIn.name) { backStackEntry ->
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
 
-            composable(Screen.SignIn.name) {
-                val registeredUserId = appHandle().get<String>("user_id").orEmpty()
-                val registeredUserPw = appHandle().get<String>("user_pw").orEmpty()
+                val authViewModel: SignInViewModel =
+                    viewModel(rootEntry, factory = SignInViewModelFactory(repository))
 
-                SignInScreen(
-                    registeredUserId = registeredUserId,
-                    registeredUserPw = registeredUserPw,
+                AutoSignInRoute(
+                    signInViewModel = authViewModel,
+                    autoSignInSuccess = {
+                        navController.navigate(Screen.Home.name) {
+                            popUpTo(Screen.AutoSignIn.name) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    autoSignInFail = {
+                        navController.navigate(Screen.SignIn.name) {
+                            popUpTo(Screen.AutoSignIn.name) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    modifier = modifier,
+                )
+            }
+
+            composable(Screen.SignIn.name) { backStackEntry ->
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val authViewModel: SignInViewModel =
+                    viewModel(rootEntry, factory = SignInViewModelFactory(repository))
+
+                SignInRoute(
+                    signInViewModel = authViewModel,
                     onSignUpClick = { navController.navigate(Screen.SignUp.name) },
                     onSignInClick = {
                         navController.navigate(Screen.Home.name) {
@@ -60,44 +99,64 @@ fun NavigationMainScreen(
                     modifier = modifier,
                 )
             }
+
             composable(Screen.SignUp.name) {
-                SignUpScreen(
-                    onSignUpClick = { user ->
-                        appHandle().set("user_id", user.id)
-                        appHandle().set("user_pw", user.pw)
-                        appHandle().set("user_nickname", user.nickname)
-                        appHandle().set("user_drinking", user.drinking)
-                        appHandle().set("user_name", user.name)
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val signUpViewModel: SignUpViewModel =
+                    viewModel(factory = SignUpViewModelFactory(repository))
+
+                SignUpRoute(
+                    signUpViewModel = signUpViewModel,
+                    onSignUpClick = {
                         navController.popBackStack()
                     },
-                    modifier = modifier,
+                    modifier = Modifier,
                 )
             }
 
-            composable(Screen.Home.name) {
-                val users = getUserDummyData() + getUserDummyData()
+            composable(Screen.Home.name) { backStackEntry ->
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
 
-                HomeScreen(
-                    userName = appHandle().get<String>("user_name").orEmpty(),
-                    userNickname = appHandle().get<String>("user_nickname").orEmpty(),
-                    users = users,
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val homeViewModel: HomeViewModel =
+                    viewModel(rootEntry, factory = HomeViewModelFactory(repository))
+
+                HomeRoute(
+                    homeViewModel = homeViewModel,
                     modifier = modifier,
                 )
             }
             composable(Screen.Search.name) {
-                SearchScreen(
+                SearchRoute(
                     modifier = modifier,
                 )
             }
-            composable(Screen.MyPage.name) {
-                MyPageScreen(
-                    user = User(
-                        id = appHandle().get<String>("user_id").orEmpty(),
-                        pw = appHandle().get<String>("user_pw").orEmpty(),
-                        nickname = appHandle().get<String>("user_nickname").orEmpty(),
-                        drinking = appHandle().get<String>("user_drinking").orEmpty(),
-                        name = appHandle().get<String>("user_name").orEmpty(),
-                    ),
+            composable(Screen.MyPage.name) { backStackEntry ->
+                val rootEntry =
+                    remember(backStackEntry) { navController.getBackStackEntry(Screen.Root.name) }
+
+                val context = LocalContext.current
+                val repository = remember { MyProfileRepository(context) }
+
+                val homeViewModel: HomeViewModel =
+                    viewModel(rootEntry, factory = HomeViewModelFactory(repository))
+
+                MyPageRoute(
+                    homeViewModel = homeViewModel,
+                    onSignOut = {
+                        navController.navigate(Screen.SignIn.name)
+                        {
+                            popUpTo(Screen.MyPage.name) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    },
                     modifier = modifier,
                 )
             }
