@@ -1,5 +1,6 @@
 package com.sopt.dive.ui.main.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.dive.R
@@ -8,9 +9,11 @@ import com.sopt.dive.data.Difficulty
 import com.sopt.dive.data.User
 import com.sopt.dive.data.UserData
 import com.sopt.dive.data.dataStore.MyProfileRepository
+import com.sopt.dive.network.factory.ServicePool
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -32,6 +35,9 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
                 if (_uiState.value.userDataList.isEmpty()) {
                     setDummyUserDataList()
                 }
+            }
+            launch {
+                getMyProfileFromServer()
             }
         }
     }
@@ -100,6 +106,27 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
                     ),
                 )
             )
+        }
+    }
+
+    fun setIsLoading(state: Boolean) {
+        _uiState.update {
+            it.copy(isLoading = state)
+        }
+    }
+
+    fun getMyProfileFromServer() {
+        viewModelScope.launch {
+            try{
+                setIsLoading(true)
+                val userId = repository.getUserId().first()
+                val myPageResponse = ServicePool.myPageService.getMyProfile(userId)
+                Log.d("SHC", "${myPageResponse.data}")
+            } catch (e: Exception) {
+                Log.e("SHC", "${e.message}")
+            } finally {
+                setIsLoading(false)
+            }
         }
     }
 }
