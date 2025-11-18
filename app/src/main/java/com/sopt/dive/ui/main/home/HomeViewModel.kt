@@ -25,21 +25,11 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
     //TODO("전에 다른 곳에서는 uiStateTest방법을 사용했는데, 둘이 차이점 알아보기")
 
     init {
+        getMyProfileFromLocal()
         viewModelScope.launch {
-            launch {
-                repository.getMyProfile().collect { myProfile ->
-                    setMyProfile(myProfile)
-                }
-            }
-            launch {
-                if (_uiState.value.userDataList.isEmpty()) {
-                    setDummyUserDataList()
-                }
-            }
-            launch {
-                getMyProfileFromServer()
-            }
+            if (_uiState.value.userDataList.isEmpty()) setDummyUserDataList()
         }
+        getMyProfileFromServer()
     }
 
     fun setMyProfile(user: User) {
@@ -115,9 +105,17 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
         }
     }
 
+    fun getMyProfileFromLocal() {
+        viewModelScope.launch {
+            repository.getMyProfile().collect { myProfile ->
+                setMyProfile(myProfile)
+            }
+        }
+    }
+
     fun getMyProfileFromServer() {
         viewModelScope.launch {
-            try{
+            try {
                 setIsLoading(true)
                 val userId = repository.getUserId().first()
                 val myPageResponse = ServicePool.myPageService.getMyProfile(userId)
