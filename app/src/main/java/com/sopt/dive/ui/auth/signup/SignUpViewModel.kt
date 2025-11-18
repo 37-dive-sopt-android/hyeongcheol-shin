@@ -110,11 +110,7 @@ class SignUpViewModel(
                         setToastEvent("회원가입에 실패하였습니다.")
                     }
                 } catch (e: Exception) {
-                    _signUpUiState.update {
-                        Log.d("SHC", "${e.message}")
-                        setToastEvent("네트워크 오류가 발생했습니다: ${e.message}")
-                        it.copy(isLoading = false)
-                    }
+                    setToastEvent("회원가입에 실패했습니다.: ${e.message}")
                 } finally {
                     _signUpUiState.update {
                         it.copy(isLoading = false)
