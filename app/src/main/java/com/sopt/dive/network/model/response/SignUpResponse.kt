@@ -1,22 +1,10 @@
-package com.sopt.dive.network.model.signup
+package com.sopt.dive.network.model.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class SignUpResponseDto(
-    @SerialName("success")
-    val success: Boolean,
-    @SerialName("code")
-    val code: String,
-    @SerialName("message")
-    val message: String,
-    @SerialName("data")
-    val data: SignUpDataResponseDto
-)
-
-@Serializable
-data class SignUpDataResponseDto(
     @SerialName("id")
     val id: Long,
     @SerialName("username")

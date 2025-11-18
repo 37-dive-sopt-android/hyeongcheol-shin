@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.dataStore.MyProfileRepository
 import com.sopt.dive.network.factory.ServicePool
-import com.sopt.dive.network.model.signin.SignInRequest
+import com.sopt.dive.network.model.request.SignInRequest
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -26,10 +26,8 @@ class SignInViewModel(
 
     init {
         viewModelScope.launch {
-            launch {
-                repository.getIsSignedIn().collect { isSignedIn ->
-                    setIsSignedIn(isSignedIn)
-                }
+            repository.getIsSignedIn().collect { isSignedIn ->
+                setIsSignedIn(isSignedIn)
             }
         }
     }
