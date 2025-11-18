@@ -46,13 +46,13 @@ fun SignUpRoute(
     }
 
     SignUpScreen(
-        inputUserId = signUpUiState.inputUserId,
+        inputUserName = signUpUiState.inputUserName,
         inputUserPw = signUpUiState.inputUserPw,
         inputUserNickname = signUpUiState.inputUserNickname,
-        inputUserDrinking = signUpUiState.inputUserDrinking,
-        inputUserName = signUpUiState.inputUserName,
-        updateInputUserId = {
-            signUpViewModel.updateInputUserId(it)
+        inputUserEmail = signUpUiState.inputUserEmail,
+        inputUserAge = signUpUiState.inputUserAge,
+        updateInputUserName = {
+            signUpViewModel.updateInputUserName(it)
         },
         updateInputUserPw = {
             signUpViewModel.updateInputUserPw(it)
@@ -60,12 +60,13 @@ fun SignUpRoute(
         updateInputUserNickname = {
             signUpViewModel.updateInputUserNickname(it)
         },
-        updateInputUserDrinking = {
-            signUpViewModel.updateInputUserDrinking(it)
+        updateInputUserEmail = {
+            signUpViewModel.updateInputUserEmail(it)
         },
-        updateInputUserName = {
-            signUpViewModel.updateInputUserName(it)
+        updateInputUserAge = {
+            signUpViewModel.updateInputUserAge(it)
         },
+        isLoading = signUpUiState.isLoading,
         onSignUpClick = {
             signUpViewModel.signUp(onSignUpClick)
         },
@@ -75,16 +76,17 @@ fun SignUpRoute(
 
 @Composable
 fun SignUpScreen(
-    inputUserId: String,
+    inputUserName: String,
     inputUserPw: String,
     inputUserNickname: String,
-    inputUserDrinking: String,
-    inputUserName: String,
-    updateInputUserId: (String) -> Unit,
+    inputUserEmail: String,
+    inputUserAge: Int,
+    updateInputUserName: (String) -> Unit,
     updateInputUserPw: (String) -> Unit,
     updateInputUserNickname: (String) -> Unit,
-    updateInputUserDrinking: (String) -> Unit,
-    updateInputUserName: (String) -> Unit,
+    updateInputUserEmail: (String) -> Unit,
+    updateInputUserAge: (String) -> Unit,
+    isLoading: Boolean,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -110,18 +112,18 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             CustomTextField(
-                title = "ID",
-                value = inputUserId,
-                onValueChange = { updateInputUserId(it) },
-                label = "아이디",
-                placeholder = "6 ~ 10 자리 입력",
+                title = "username",
+                value = inputUserName,
+                onValueChange = { updateInputUserName(it) },
+                label = "username",
+                placeholder = "아이디 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "PW",
                 value = inputUserPw,
                 onValueChange = { updateInputUserPw(it) },
-                label = "비밀번호",
+                label = "password",
                 placeholder = "8 ~ 12 자리 입력",
                 imeAction = ImeAction.Next,
             )
@@ -129,33 +131,37 @@ fun SignUpScreen(
                 title = "NICKNAME",
                 value = inputUserNickname,
                 onValueChange = { updateInputUserNickname(it) },
-                label = "별명",
-                placeholder = "한 글자 이상 입력",
+                label = "name",
+                placeholder = "이름 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
-                title = "주량",
-                value = inputUserDrinking,
-                onValueChange = { updateInputUserDrinking(it) },
-                label = "소주 몇병?",
-                placeholder = "숫자만 입력",
+                title = "email",
+                value = inputUserEmail,
+                onValueChange = { updateInputUserEmail(it) },
+                label = "email",
+                placeholder = "이메일 형태로 입력",
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+            )
+            CustomTextField(
+                title = "age",
+                value = inputUserAge.toString(),
+                onValueChange = { updateInputUserAge(it) },
+                label = "age",
+                placeholder = "숫자로 입력",
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next,
-            )
-            CustomTextField(
-                title = "NAME",
-                value = inputUserName,
-                onValueChange = { updateInputUserName(it) },
-                label = "이름",
-                placeholder = "한글로 입력",
             )
         }
         Spacer(Modifier.weight(1f))
         CustomButton(
             text = "Sign Up",
             onClick = {
-                onSignUpClick()
+                if(!isLoading){
+                    onSignUpClick()
+                }
             },
+            isEnabled = !isLoading,
             modifier = Modifier.padding(vertical = 16.dp),
         )
     }

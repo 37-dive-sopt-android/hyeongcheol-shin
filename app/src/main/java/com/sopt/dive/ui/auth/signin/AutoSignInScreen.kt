@@ -45,7 +45,7 @@ fun AutoSignInRoute(
 
 @Composable
 fun AutoSignInScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
