@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.User
 import com.sopt.dive.data.dataStore.MyProfileRepository
+import com.sopt.dive.network.factory.ServicePool
+import com.sopt.dive.network.model.request.SignUpRequest
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class SignUpViewModel(
     private val repository: MyProfileRepository
@@ -22,11 +25,13 @@ class SignUpViewModel(
     private val _toastEvent = MutableSharedFlow<String>()
     val toastEvent: SharedFlow<String> = _toastEvent.asSharedFlow()
 
-    val koreanRegex = Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣]*$")
+    private val emailRegex = Regex(
+        "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    )
 
-    fun updateInputUserId(inputUserId: String) {
+    fun updateInputUserName(inputUserName: String) {
         _signUpUiState.update {
-            it.copy(inputUserId = inputUserId)
+            it.copy(inputUserName = inputUserName)
         }
     }
 
@@ -36,25 +41,21 @@ class SignUpViewModel(
         }
     }
 
-    fun updateInputUserDrinking(inputUserDrinking: String) {
-        _signUpUiState.update {
-            it.copy(inputUserDrinking = inputUserDrinking.filter { drinking -> drinking.isDigit() })
-        }
-    }
-
     fun updateInputUserNickname(inputUserNickname: String) {
         _signUpUiState.update {
             it.copy(inputUserNickname = inputUserNickname)
         }
     }
 
-    fun updateInputUserName(inputUserName: String) {
+    fun updateInputUserEmail(inputUserEmail: String) {
         _signUpUiState.update {
-            if (koreanRegex.matches(inputUserName)) {
-                it.copy(inputUserName = inputUserName)
-            } else {
-                it
-            }
+            it.copy(inputUserEmail = inputUserEmail)
+        }
+    }
+
+    fun updateInputUserAge(inputUserAge: String) {
+        _signUpUiState.update {
+            it.copy(inputUserAge = inputUserAge.filter { it.isDigit() }.toInt())
         }
     }
 
@@ -67,31 +68,66 @@ class SignUpViewModel(
     fun getSignUpUser(): User {
         val inputUserData = _signUpUiState.value
         return User(
-            id = inputUserData.inputUserId,
+            name = inputUserData.inputUserName,
             pw = inputUserData.inputUserPw,
             nickname = inputUserData.inputUserNickname,
-            drinking = inputUserData.inputUserDrinking,
-            name = inputUserData.inputUserName
+            email = inputUserData.inputUserEmail,
+            age = inputUserData.inputUserAge
         )
     }
 
-    fun isSignUpCheck(): Boolean {
+    private fun isValidPassword(password: String): Boolean {
+        if (password.length !in 8..64) return false
+
+        val hasUpperCase = password.any { it.isUpperCase() }
+        val hasLowerCase = password.any { it.isLowerCase() }
+        val hasDigit = password.any { it.isDigit() }
+        val hasSpecialChar = password.any { !it.isLetterOrDigit() }
+
+        return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar
+    }
+
+    fun signUpAvailable(): Boolean {
         val inputUserData = _signUpUiState.value
-        return inputUserData.inputUserId.length in 6..10 &&
-                inputUserData.inputUserPw.length in 8..12 &&
-                inputUserData.inputUserNickname.isNotBlank() &&
-                (inputUserData.inputUserDrinking.toIntOrNull() != null && inputUserData.inputUserDrinking.toInt() >= 0) &&
-                inputUserData.inputUserName.isNotBlank()
+        return (inputUserData.inputUserName.length <= 50 && inputUserData.inputUserName.isNotBlank()) &&
+                isValidPassword(inputUserData.inputUserPw) &&
+                (inputUserData.inputUserNickname.isNotBlank() && inputUserData.inputUserNickname.length <= 100)&&
+                (inputUserData.inputUserEmail.isNotBlank() && emailRegex.matches(inputUserData.inputUserEmail)) &&
+                (inputUserData.inputUserAge >= 0)
     }
 
 
-    fun signUp(onSignInSuccess: () -> Unit) {
-        if (isSignUpCheck()) {
+    fun signUp(onSignUpSuccess: () -> Unit) {
+        if (signUpAvailable()) {
             viewModelScope.launch {
-                repository.saveMyProfile(getSignUpUser())
-                repository.setSignInStatus(false)
-                setToastEvent("회원가입에 성공했습니다.")
-                onSignInSuccess()
+
+                try {
+                    _signUpUiState.update {
+                        it.copy(isLoading = true)
+                    }
+                    val signUpUser = getSignUpUser()
+                    val signUpRequest = SignUpRequest(
+                        userName = signUpUser.name,
+                        password = signUpUser.pw,
+                        name = signUpUser.nickname,
+                        email = signUpUser.email,
+                        age = signUpUser.age
+                    )
+
+                    val response = ServicePool.signUpService.createAccount(signUpRequest)
+                    if (response.success) {
+                        repository.saveMyProfile(signUpUser)
+                        setToastEvent("회원가입에 성공했습니다.")
+                        onSignUpSuccess()
+                    }
+                } catch (e: Exception) {
+                    setToastEvent("회원가입에 실패했습니다.: ${e.message}")
+                } finally {
+                    _signUpUiState.update {
+                        it.copy(isLoading = false)
+                    }
+                }
+
             }
         } else {
             viewModelScope.launch {

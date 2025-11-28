@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.dive.ui.components.CustomButton
 import com.sopt.dive.ui.components.CustomTextField
 
@@ -33,7 +34,7 @@ fun SignUpRoute(
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val signUpUiState by signUpViewModel.signUpUiState.collectAsState()
+    val signUpUiState by signUpViewModel.signUpUiState.collectAsStateWithLifecycle()
     val toastEvent by signUpViewModel.toastEvent.collectAsState(initial = "")
     val context = LocalContext.current
 
@@ -46,13 +47,9 @@ fun SignUpRoute(
     }
 
     SignUpScreen(
-        inputUserId = signUpUiState.inputUserId,
-        inputUserPw = signUpUiState.inputUserPw,
-        inputUserNickname = signUpUiState.inputUserNickname,
-        inputUserDrinking = signUpUiState.inputUserDrinking,
-        inputUserName = signUpUiState.inputUserName,
-        updateInputUserId = {
-            signUpViewModel.updateInputUserId(it)
+        uiState = signUpUiState,
+        updateInputUserName = {
+            signUpViewModel.updateInputUserName(it)
         },
         updateInputUserPw = {
             signUpViewModel.updateInputUserPw(it)
@@ -60,11 +57,11 @@ fun SignUpRoute(
         updateInputUserNickname = {
             signUpViewModel.updateInputUserNickname(it)
         },
-        updateInputUserDrinking = {
-            signUpViewModel.updateInputUserDrinking(it)
+        updateInputUserEmail = {
+            signUpViewModel.updateInputUserEmail(it)
         },
-        updateInputUserName = {
-            signUpViewModel.updateInputUserName(it)
+        updateInputUserAge = {
+            signUpViewModel.updateInputUserAge(it)
         },
         onSignUpClick = {
             signUpViewModel.signUp(onSignUpClick)
@@ -75,16 +72,12 @@ fun SignUpRoute(
 
 @Composable
 fun SignUpScreen(
-    inputUserId: String,
-    inputUserPw: String,
-    inputUserNickname: String,
-    inputUserDrinking: String,
-    inputUserName: String,
-    updateInputUserId: (String) -> Unit,
+    uiState: SignUpUiState,
+    updateInputUserName: (String) -> Unit,
     updateInputUserPw: (String) -> Unit,
     updateInputUserNickname: (String) -> Unit,
-    updateInputUserDrinking: (String) -> Unit,
-    updateInputUserName: (String) -> Unit,
+    updateInputUserEmail: (String) -> Unit,
+    updateInputUserAge: (String) -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -110,44 +103,45 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             CustomTextField(
-                title = "ID",
-                value = inputUserId,
-                onValueChange = { updateInputUserId(it) },
-                label = "아이디",
-                placeholder = "6 ~ 10 자리 입력",
+                title = "username",
+                value = uiState.inputUserName,
+                onValueChange = { updateInputUserName(it) },
+                label = "username",
+                placeholder = "아이디 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "PW",
-                value = inputUserPw,
+                value = uiState.inputUserPw,
                 onValueChange = { updateInputUserPw(it) },
-                label = "비밀번호",
+                label = "password",
                 placeholder = "8 ~ 12 자리 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
                 title = "NICKNAME",
-                value = inputUserNickname,
+                value = uiState.inputUserNickname,
                 onValueChange = { updateInputUserNickname(it) },
-                label = "별명",
-                placeholder = "한 글자 이상 입력",
+                label = "name",
+                placeholder = "이름 입력",
                 imeAction = ImeAction.Next,
             )
             CustomTextField(
-                title = "주량",
-                value = inputUserDrinking,
-                onValueChange = { updateInputUserDrinking(it) },
-                label = "소주 몇병?",
-                placeholder = "숫자만 입력",
+                title = "email",
+                value = uiState.inputUserEmail,
+                onValueChange = { updateInputUserEmail(it) },
+                label = "email",
+                placeholder = "이메일 형태로 입력",
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+            )
+            CustomTextField(
+                title = "age",
+                value = uiState.inputUserAge.toString(),
+                onValueChange = { updateInputUserAge(it) },
+                label = "age",
+                placeholder = "숫자로 입력",
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next,
-            )
-            CustomTextField(
-                title = "NAME",
-                value = inputUserName,
-                onValueChange = { updateInputUserName(it) },
-                label = "이름",
-                placeholder = "한글로 입력",
             )
         }
         Spacer(Modifier.weight(1f))
@@ -156,6 +150,7 @@ fun SignUpScreen(
             onClick = {
                 onSignUpClick()
             },
+            isEnabled = !uiState.isLoading,
             modifier = Modifier.padding(vertical = 16.dp),
         )
     }
