@@ -25,6 +25,10 @@ class SignUpViewModel(
     private val _toastEvent = MutableSharedFlow<String>()
     val toastEvent: SharedFlow<String> = _toastEvent.asSharedFlow()
 
+    private val emailRegex = Regex(
+        "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    )
+
     fun updateInputUserName(inputUserName: String) {
         _signUpUiState.update {
             it.copy(inputUserName = inputUserName)
@@ -72,18 +76,29 @@ class SignUpViewModel(
         )
     }
 
-    fun isSignUpCheck(): Boolean {
+    private fun isValidPassword(password: String): Boolean {
+        if (password.length !in 8..64) return false
+
+        val hasUpperCase = password.any { it.isUpperCase() }
+        val hasLowerCase = password.any { it.isLowerCase() }
+        val hasDigit = password.any { it.isDigit() }
+        val hasSpecialChar = password.any { !it.isLetterOrDigit() }
+
+        return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar
+    }
+
+    fun signUpAvailable(): Boolean {
         val inputUserData = _signUpUiState.value
-        return inputUserData.inputUserName.length in 6..10 &&
-                inputUserData.inputUserPw.length in 8..12 &&
-                inputUserData.inputUserNickname.isNotBlank() &&
-                inputUserData.inputUserEmail.isNotBlank() &&
+        return (inputUserData.inputUserName.length <= 50 && inputUserData.inputUserName.isNotBlank()) &&
+                isValidPassword(inputUserData.inputUserPw) &&
+                (inputUserData.inputUserNickname.isNotBlank() && inputUserData.inputUserNickname.length <= 100)&&
+                (inputUserData.inputUserEmail.isNotBlank() && emailRegex.matches(inputUserData.inputUserEmail)) &&
                 (inputUserData.inputUserAge >= 0)
     }
 
 
     fun signUp(onSignUpSuccess: () -> Unit) {
-        if (isSignUpCheck()) {
+        if (signUpAvailable()) {
             viewModelScope.launch {
 
                 try {
