@@ -10,6 +10,7 @@ import com.sopt.dive.data.User
 import com.sopt.dive.data.UserData
 import com.sopt.dive.data.dataStore.MyProfileRepository
 import com.sopt.dive.network.factory.ServicePool
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +24,9 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
     //val uiState get() = _uiState
     //TODO("전에 다른 곳에서는 uiStateTest방법을 사용했는데, 둘이 차이점 알아보기")
+
+    private val _networkError = MutableStateFlow<NetworkError?>(null)
+    val networkError: StateFlow<NetworkError?> = _networkError.asStateFlow()
 
     init {
         getMyProfileFromLocal()
@@ -115,15 +119,59 @@ class HomeViewModel(private val repository: MyProfileRepository) : ViewModel() {
 
     fun getMyProfileFromServer() {
         viewModelScope.launch {
+            getMyProfileFromServerRetry()
+        }
+    }
+
+    fun getNetworkError(exception: Exception): NetworkError {
+        return when {
+            exception.message?.contains("network", ignoreCase = true) == true ||
+                    exception.message?.contains("timeout", ignoreCase = true) == true ||
+                    exception.message?.contains("timeout", ignoreCase = true) == true -> {
+                NetworkError.NetworkException
+            }
+
+            exception.message?.contains("server", ignoreCase = true) == true ||
+                    exception.message?.contains("500", ignoreCase = true) == true ||
+                    exception.message?.contains("502", ignoreCase = true) == true ||
+                    exception.message?.contains("503", ignoreCase = true) == true -> {
+                NetworkError.ServerError
+            }
+
+            else -> {
+                NetworkError.UnknownError(exception.message ?: "알 수 없는 오류")
+            }
+        }
+    }
+
+    suspend fun getMyProfileFromServerRetry(retryMaxCnt: Int = 2) {
+        var retryCnt = 0
+        while (retryCnt < retryMaxCnt) {
             try {
                 setIsLoading(true)
+                _networkError.value = null
+
                 val userId = repository.getUserId().first()
                 val myPageResponse = ServicePool.myPageService.getMyProfile(userId)
                 Log.d("SHC", "${myPageResponse.data}")
-            } catch (e: Exception) {
-                Log.e("SHC", "${e.message}")
-            } finally {
+
+
                 setIsLoading(false)
+                return
+            } catch (e: Exception) {
+                val error = getNetworkError(e)
+
+                _networkError.value = error
+                Log.e("SHC", "${e.message}")
+
+                if (retryCnt < retryMaxCnt - 1) {
+                    val delayTime = 1000L * (retryCnt + 1)
+                    delay(delayTime)
+                    retryCnt++
+                } else {
+                    setIsLoading(false)
+                    return
+                }
             }
         }
     }
