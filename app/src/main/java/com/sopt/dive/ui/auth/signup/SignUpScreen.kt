@@ -33,7 +33,7 @@ fun SignUpRoute(
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val signUpUiState by signUpViewModel.signUpUiState.collectAsState()
+    val signUpUiState by signUpViewModel.signUpUiState.collectAsStateWithLifecycle()
     val toastEvent by signUpViewModel.toastEvent.collectAsState(initial = "")
     val context = LocalContext.current
 
