@@ -89,11 +89,9 @@ class SignInViewModel(
                     updateInputUserPw("")
                     setToastEvent("로그인에 성공했습니다.")
                     onSignInSuccess()
-                } else {
-                    setToastEvent("로그인에 실패했습니다.")
                 }
             } catch (e: Exception) {
-                setToastEvent("네트워크 오류가 발생했습니다")
+                setToastEvent("로그인에 실패했습니다. : ${e.message}")
                 Log.e("SHC", "${e.message}")
             } finally {
                 setIsLoading(false)

@@ -45,8 +45,7 @@ fun SignInRoute(
     }
 
     SignInScreen(
-        inputUserId = authUiState.inputUserId,
-        inputUserPw = authUiState.inputUserPw,
+        uiState = authUiState,
         updateInputUserId = {
             signInViewModel.updateInputUserId(it)
         },
@@ -63,8 +62,7 @@ fun SignInRoute(
 
 @Composable
 fun SignInScreen(
-    inputUserId: String,
-    inputUserPw: String,
+    uiState: SignInUiState,
     updateInputUserId: (String) -> Unit,
     updateInputUserPw: (String) -> Unit,
     onSignInClick: () -> Unit,
@@ -92,7 +90,7 @@ fun SignInScreen(
         ) {
             CustomTextField(
                 title = "ID",
-                value = inputUserId,
+                value = uiState.inputUserId,
                 onValueChange = {
                     updateInputUserId(it)
                 },
@@ -102,7 +100,7 @@ fun SignInScreen(
             )
             CustomTextField(
                 title = "PW",
-                value = inputUserPw,
+                value = uiState.inputUserPw,
                 onValueChange = {
                     updateInputUserPw(it)
                 },
@@ -117,10 +115,10 @@ fun SignInScreen(
         ) {
             CustomButton(
                 text = "Welcome to Sopt",
-                isEnabled = (inputUserId.isNotEmpty() && inputUserPw.isNotEmpty()),
+                isEnabled = (uiState.inputUserId.isNotEmpty() && uiState.inputUserPw.isNotEmpty() && !uiState.isLoading),
                 onClick = {
                     onSignInClick()
-                }
+                },
             )
             Text(
                 text = "회원가입하기",

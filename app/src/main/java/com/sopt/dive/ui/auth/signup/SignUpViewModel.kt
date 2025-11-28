@@ -117,11 +117,8 @@ class SignUpViewModel(
                     val response = ServicePool.signUpService.createAccount(signUpRequest)
                     if (response.success) {
                         repository.saveMyProfile(signUpUser)
-                        repository.setSignInStatus(false)
                         setToastEvent("회원가입에 성공했습니다.")
                         onSignUpSuccess()
-                    } else {
-                        setToastEvent("회원가입에 실패하였습니다.")
                     }
                 } catch (e: Exception) {
                     setToastEvent("회원가입에 실패했습니다.: ${e.message}")
