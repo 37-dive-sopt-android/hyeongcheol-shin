@@ -1,5 +1,5 @@
 # 두🫛두🫛 SOPT 주간 다이어리 - 매주 안드로이드 캐릭터가 하나씩 추가됩니다!!
-![w12](https://github.com/user-attachments/assets/a9838eff-ba96-4e1e-8896-576e269bb78b)
+<img width="512" height="512" alt="w13" src="https://github.com/user-attachments/assets/abc1f6ea-19eb-4f90-a3a1-34ef161dcc42" />
 
 (누가봐도 Gemini로 만든 이미지 ʅ(ᐙʅ) ㅎㅎ) 다이어리 이미지가 점점 망가져간다 ㅋㅋㅋ
 
